@@ -23,6 +23,6 @@ const Conta = sequelize.define(
         }
     },
     {
-        
+
     },
 );
