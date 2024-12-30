@@ -21,6 +21,7 @@ const Conta = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         }
+        
     },
     {
 
