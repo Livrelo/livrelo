@@ -11,21 +11,21 @@ class LivroCategoria extends Model {
                     type: DataTypes.INTEGER,
                     references: {
                         model: Livro,
-                        key: 'id' 
+                        key: 'idLivro' 
                     },
                     primaryKey: true,
                     allowNull: false,
-                    field: 'livroId'
+                    field: 'idLivro'
                 },
                 categoriaId: {
                     type: DataTypes.INTEGER,
                     references: {
                         model: Categoria, 
-                        key: 'id'         
+                        key: 'idCategoria'         
                     },
                     primaryKey: true,
                     allowNull: false,
-                    field: 'categoriaId'
+                    field: 'idCategoria'
                 }
             },
             {

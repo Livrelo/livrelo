@@ -4,10 +4,11 @@ class Livro extends Model {
     static init(sequelize){
         super.init(
             {
-                id: {
+                idLivro: {
                     type: DataTypes.INTEGER,
                     autoIncrement: true,
-                    primaryKey: true
+                    primaryKey: true,
+                    field: 'idLivro'
                 },
                 nome: {
                    type: DataTypes.STRING,

@@ -4,10 +4,11 @@ class Categoria extends Model {
     static init(sequelize){
         super.init(
             {
-                id: {
+                idCategoria: {
                     type: DataTypes.INTEGER,
                     autoIncrement: true,
-                    primaryKey: true
+                    primaryKey: true,
+                    field: 'idCategoria'
                 },
                 nome: {
                     type: DataTypes.STRING,
