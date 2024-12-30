@@ -11,7 +11,7 @@ class Bibliotecario extends Model{
                     type:DataTypes.INTEGER,
                     references:{
                         model: Conta,
-                        key: 'id',
+                        key: 'idConta',
                     },
                     primaryKey:true,
                     allowNull:false,

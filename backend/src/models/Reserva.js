@@ -24,13 +24,13 @@ class Reserva extends Model{
                         field:'livroId'
                     },
                     cpfUsuario:{
-                    type:DataTypes.STRING,
-                    references:{
-                        model:Usuario,
-                        key:'id'
-                    },
-                    allowNull:false,
-                    field: 'usuarioCpf'
+                        type:DataTypes.STRING,
+                        references:{
+                            model:Usuario,
+                            key:'cpf'
+                        },
+                        allowNull:false,
+                        field: 'usuarioCpf'
                     },
                     dataReserva:{
                         tyep: DataTypes.DATE,
