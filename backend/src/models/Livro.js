@@ -19,14 +19,16 @@ class Livro extends Model {
                 },
                 nomeAutor: {
                     type: DataTypes.STRING,
-                    allowNull: false
+                    allowNull: false,
+                    field: 'nomeAutor'
                 },
                 ano: {
                     type: DataTypes.INTEGER,
                     allowNull: false
                 },
                 nomeEditora: {
-                    type: DataTypes.STRING
+                    type: DataTypes.STRING,
+                    field: 'nomeEditora'
                 },
                 status: {
                     type: DataTypes.STRING,
