@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 
+import Emprestimo from "./Emprestimo.js";
 class Devolucao extends Model {
     static init(sequelize){
         super.init(

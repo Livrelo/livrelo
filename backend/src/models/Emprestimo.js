@@ -1,5 +1,8 @@
 import { Model, DataTypes } from 'sequelize';
 
+import Livro from "./Livro.js";
+import Usuario from "./usuario.js";
+//import Reserva from "./Reserva.js";
 
 class Emprestimo extends Model{
     static init(sequelize){
