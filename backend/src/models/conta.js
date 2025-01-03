@@ -1,29 +1,34 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize(databaseConfig);
+import { DataTypes, Model } from "sequelize";
 
-const Conta = sequelize.define(
-    'Conta',
-    {
-        idConta: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            primaryKey: true
-        },
-        nome: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        senha: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        }
-        
-    },
-    {
+class Conta extends Model {
+    static init(sequelize){
+        super.init(
+            {
+                idConta: {
+                    type: DataTypes.INTEGER,
+                    autoIncrement: true,
+                    primaryKey: true,
+                    field: 'idConta'
+                },
+                nome: {
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                },
+                email: {
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                },
+                senha: {
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                }
+            },
+            {
+                sequelize,
+                tableName: 'Conta'
+            }
+        )
+    }
+}
 
-    },
-);
+export default Conta;

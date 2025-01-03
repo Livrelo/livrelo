@@ -1,7 +1,7 @@
-const { Sequelize, DataTypes, Model} = require('sequelize');
-const sequelize = new Sequelize(databaseConfig);
 
-const{Conta} = require("./conta");
+import { DataTypes, Model } from 'sequelize';
+
+import Conta from './Conta.js';
 
 class Bibliotecario extends Model{
     static init(sequelize){
@@ -15,7 +15,7 @@ class Bibliotecario extends Model{
                     },
                     primaryKey:true,
                     allowNull:false,
-                    field: 'contaId'
+                    field: 'idConta'
                 }
             },
             {
@@ -26,5 +26,6 @@ class Bibliotecario extends Model{
     }
 }
 
-var Bibliotecario = sequelize.model("Binliotecario", Bibliotecario);
-module.exports = Bibliotecario;
+
+export default Bibliotecario;
+

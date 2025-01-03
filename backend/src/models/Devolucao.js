@@ -11,7 +11,7 @@ class Devolucao extends Model {
                     field: 'idEmprestimo',
                     references:{
                         model: Emprestimo,
-                        key: idEmprestimo
+                        key: 'idEmprestimo'
                     }
                 },
                 dataDevolucao: {
