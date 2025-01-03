@@ -35,7 +35,7 @@ class DatabaseSingleton {
 
     static async initModels() {
         // const models = [ Livro, Categoria, LivroCategoria, Devolucao, Emprestimo , Conta, Usuario, Bibliotecario ]; //adicionar nesse array novos models que eles serão criados no banco de dados.
-        const models = [ Livro, Categoria, LivroCategoria, Conta, Usuario, Bibliotecario, Reserva, Emprestimo];
+        const models = [ Livro, Categoria, LivroCategoria, Conta, Usuario, Bibliotecario, Reserva, Emprestimo, Devolucao ];
 
         try {
             for(const model of models){
