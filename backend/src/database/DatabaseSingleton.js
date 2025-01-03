@@ -5,6 +5,8 @@ import databaseConfig from "./config.js";
 import Livro from "../models/Livro.js";
 import Categoria from "../models/Categoria.js";
 import LivroCategoria from "../models/LivroCategoria.js";
+import Devolucao from "../models/Devolucao.js";
+import Emprestimo from "../models/Emprestimo.js";
 
 class DatabaseSingleton {
     static instance = null;
@@ -28,7 +30,7 @@ class DatabaseSingleton {
     }
 
     static async initModels() {
-        const models = [ Livro, Categoria, LivroCategoria ]; //adicionar nesse array novos models que eles serão criados no banco de dados.
+        const models = [ Livro, Categoria, LivroCategoria, Devolucao, Emprestimo ]; //adicionar nesse array novos models que eles serão criados no banco de dados.
 
         try {
             for(const model of models){
