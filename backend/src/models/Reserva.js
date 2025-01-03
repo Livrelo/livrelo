@@ -1,8 +1,7 @@
-const { Sequelize, DataTypes, Model} = require('sequelize');
-const sequelize = new Sequelize(databaseConfig);
-const {Livro}  = require("./Livro");
-const{Usuario} = require("./usuario");
+import { DataTypes, Model } from 'sequelize';
 
+import Livro from './Livro.js';
+import Usuario from './usuario.js';
 
 class Reserva extends Model{
    static init(sequelize){
@@ -12,16 +11,16 @@ class Reserva extends Model{
                         type:DataTypes.INTEGER,
                         allowNull: false,
                         primaryKey:true,
-                        field: 'reservaId'
+                        field: 'idReserva'
                     },
                     idLivro:{
                         type:DataTypes.INTEGER,
                         references:{
                             model:Livro,
-                            key:'id'
+                            key:'idLivro'
                         },
                         allowNull: false,
-                        field:'livroId'
+                        field:'idLivro'
                     },
                     cpfUsuario:{
                         type:DataTypes.STRING,
@@ -30,17 +29,17 @@ class Reserva extends Model{
                             key:'cpf'
                         },
                         allowNull:false,
-                        field: 'usuarioCpf'
+                        field: 'cpfUsuario'
                     },
                     dataReserva:{
-                        tyep: DataTypes.DATE,
+                        type: DataTypes.DATE,
                         allowNull: false,
-                        field: 'reservaData'
+                        field: 'dataReserva'
                     },
                     prazoReserva:{
-                        tyep: DataTypes.DATE,
+                        type: DataTypes.DATE,
                         allowNull: false,
-                        field: 'reservaPrazo'
+                        field: 'prazoReserva'
                     },
                     status:{
                         type: DataTypes.STRING,
@@ -55,5 +54,4 @@ class Reserva extends Model{
     } 
 }
 
-var Reserva = sequelize.model("Reserva", Reserva);
-module.exports = Reserva;
+export default Reserva;

@@ -7,6 +7,10 @@ import Categoria from "../models/Categoria.js";
 import LivroCategoria from "../models/LivroCategoria.js";
 import Devolucao from "../models/Devolucao.js";
 import Emprestimo from "../models/Emprestimo.js";
+import Conta from "../models/Conta.js";
+import Usuario from "../models/usuario.js";
+import Bibliotecario from "../models/Bibliotecario.js";
+import Reserva from "../models/Reserva.js";
 
 class DatabaseSingleton {
     static instance = null;
@@ -30,15 +34,17 @@ class DatabaseSingleton {
     }
 
     static async initModels() {
-        const models = [ Livro, Categoria, LivroCategoria, Devolucao, Emprestimo ]; //adicionar nesse array novos models que eles serão criados no banco de dados.
+        // const models = [ Livro, Categoria, LivroCategoria, Devolucao, Emprestimo , Conta, Usuario, Bibliotecario ]; //adicionar nesse array novos models que eles serão criados no banco de dados.
+        const models = [ Livro, Categoria, LivroCategoria, Conta, Usuario, Bibliotecario, Reserva, Emprestimo];
 
         try {
             for(const model of models){
                 model.init(this.instance);
-                await model.sync({ force: true }); 
+                // await model.sync({ force: true }); 
                 // force: true somente para desenvolvimento!!
                 // "force: true" serve para reinicar todas as tabelas do banco de dados para fins de testes.
             }
+            await this.instance.sync();
             
             console.log("Modelos inicializados e sincronizados.");
         } catch (error) {

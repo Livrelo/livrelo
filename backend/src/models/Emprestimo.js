@@ -1,8 +1,8 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 
 import Livro from "./Livro.js";
 import Usuario from "./usuario.js";
-//import Reserva from "./Reserva.js";
+import Reserva from './Reserva.js';
 
 class Emprestimo extends Model{
     static init(sequelize){
@@ -20,7 +20,7 @@ class Emprestimo extends Model{
                     field: 'idReserva',
                     references: {
                         model: Reserva,
-                        key: idReserva
+                        key: 'idReserva'
                     }
                 },
                 idLivro: {
@@ -29,7 +29,7 @@ class Emprestimo extends Model{
                     field: 'idLivro',
                     references: {
                         model: Livro,
-                        key: idLivro
+                        key: 'idLivro'
                     }
                 },
                 cpf: {
@@ -38,7 +38,7 @@ class Emprestimo extends Model{
                     field: 'cpf',
                     references: {
                         model: Usuario,
-                        key: cpf
+                        key: 'cpf'
                     }
                 },
                 dataInicio: {
