@@ -8,7 +8,7 @@ import LivroCategoria from "../models/LivroCategoria.js";
 import Devolucao from "../models/Devolucao.js";
 import Emprestimo from "../models/Emprestimo.js";
 import Conta from "../models/Conta.js";
-import Usuario from "../models/usuario.js";
+import Usuario from "../models/Usuario.js";
 import Bibliotecario from "../models/Bibliotecario.js";
 import Reserva from "../models/Reserva.js";
 

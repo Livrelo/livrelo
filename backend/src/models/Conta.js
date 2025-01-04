@@ -13,14 +13,27 @@ class Conta extends Model {
                 nome: {
                     type: DataTypes.STRING,
                     allowNull: false,
+                    field: 'nome',
                 },
                 email: {
                     type: DataTypes.STRING,
                     allowNull: false,
+                    field: 'email',
                 },
                 senha: {
                     type: DataTypes.STRING,
                     allowNull: false,
+                    field: 'senha',
+                },
+                created_at: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                    field: 'created_at',
+                },
+                updated_at: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                    field: 'updated_at',
                 }
             },
             {
