@@ -9,17 +9,29 @@ class Usuario extends Model {
                 cpf: {
                     type: DataTypes.STRING,
                     allowNull: false,
-                    primaryKey: true
+                    primaryKey: true,
+                    field: 'cpf',
                 },
-                conta_idConta: {
+                conta_id_conta: {
                     type: DataTypes.INTEGER,
                     allowNull: false,
-                    
+                    field: 'conta_id_conta',
+
                     references: {
                         model: Conta,
                         key: 'idConta'
                     }
                 },
+                created_at: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                    field: 'created_at',
+                },
+                updated_at: {
+                    type: DataTypes.DATE,
+                    allowNull: false,
+                    field: 'updated_at',
+                }
             },
             {
                 sequelize,
