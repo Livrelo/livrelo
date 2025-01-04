@@ -2,6 +2,7 @@
 import DatabaseSingleton from "./database/DatabaseSingleton.js";
 
 import express from "express";
+import routes from "./routes/routes.js";
 
 class App {
     constructor(){
@@ -21,7 +22,7 @@ class App {
     }
 
     routes(){
-        
+        this.server.use(routes);
     }
 }
 
