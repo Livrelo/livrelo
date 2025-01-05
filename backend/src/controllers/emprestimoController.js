@@ -79,9 +79,10 @@ class emprestimoController{
     //ATUALIZAR EMPRESTIMO SERIA RENOVAR, INSERINDO UMA NOVA DATAFIM - PUT
 
     static async update(req, res){
+        const { idEmprestimo } = req.params.idEmprestimo;
         const { newDataFim } = req.body;
         try {
-            const emprestimoAtualizado = await emprestimoService.update(newDataFim);
+            const emprestimoAtualizado = await emprestimoService.update(idEmprestimo, newDataFim);
             return res.status(200).json(emprestimoAtualizado);
         } catch (error) {
             return res.status(400).send({
@@ -94,3 +95,5 @@ class emprestimoController{
 
 
 }
+
+export default emprestimoController;
