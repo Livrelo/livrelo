@@ -5,9 +5,9 @@ const emprestimoRouter = e.Router();
 
 emprestimoRouter.get("/emprestimos", emprestimoController.findAll);
 emprestimoRouter.get("/emprestimos/:cpf", emprestimoController.findByCPF);
-emprestimoRouter.get("/emprestimos/:id", emprestimoController.findByID);
+emprestimoRouter.get("/emprestimo/:idEmprestimo", emprestimoController.findByID);
 emprestimoRouter.get("/emprestimosAtrasados", emprestimoController.findEmprestimosEmAtraso);
 emprestimoRouter.post("/emprestimo", emprestimoController.create);
-emprestimoRouter.put("/emprestimo/:id", emprestimoController.update);
+emprestimoRouter.put("/emprestimo/:idEmprestimo", emprestimoController.update);
 
 export default emprestimoRouter;
