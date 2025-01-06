@@ -7,7 +7,7 @@ emprestimoRouter.get("/emprestimos", emprestimoController.findAll);
 emprestimoRouter.get("/emprestimos/:cpf", emprestimoController.findByCPF);
 emprestimoRouter.get("/emprestimo/:idEmprestimo", emprestimoController.findByID);
 emprestimoRouter.get("/emprestimosAtrasados", emprestimoController.findEmprestimosEmAtraso);
-emprestimoRouter.post("/emprestimo", emprestimoController.create);
+emprestimoRouter.post("/emprestimo/:idReserva/:idLivro", emprestimoController.create);
 emprestimoRouter.put("/emprestimo/:idEmprestimo", emprestimoController.update);
 
 export default emprestimoRouter;

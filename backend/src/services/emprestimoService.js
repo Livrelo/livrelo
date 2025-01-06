@@ -54,12 +54,13 @@ class emprestimoService {
     }
 
     //CRIAÇÃO/REGISTRO DE EMPRESTIMO -> POST
-    static async create(dataInicio, dataFim, CPF, idReserva) {
+    static async create(dataInicio, dataFim, cpf, idReserva, idLivro) {
         const novoEmprestimo = await Emprestimo.create({
             dataInicio: dataInicio,
             dataFim: dataFim,
-            cpf: CPF,
+            cpf: cpf,
             idReserva: idReserva,
+            idLivro: idLivro,
         });
         return novoEmprestimo;
     }

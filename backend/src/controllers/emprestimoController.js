@@ -62,11 +62,14 @@ class emprestimoController{
     //CRIAÇÃO/REGISTRO DE EMPRESTIMO -> POST
 
     static async create(req, res){
-        const { dataInicio, dataFim } = req.body;
-        const CPF = req.params.CPF;
-        const idReserva = req.params.idReserva;
+        const { dataInicio, dataFim, cpf } = req.body;
+        let idReserva = req.params.idReserva;
+        if (idReserva === 'null') {
+            idReserva = null; 
+        }
+        const idLivro = req.params.idLivro;
         try {
-            const emprestimoCriado = await emprestimoService.create(dataInicio, dataFim, CPF, idReserva);
+            const emprestimoCriado = await emprestimoService.create(dataInicio, dataFim, cpf, idReserva, idLivro);
             return res.status(200).json(emprestimoCriado);
         } catch (error) {
             return res.status(400).send({
