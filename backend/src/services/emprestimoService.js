@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
-import Emprestimo from "../models/Emprestimo";
-import devolucaoService from "./devolucaoService";
+import Emprestimo from "../models/Emprestimo.js";
+import devolucaoService from "./devolucaoService.js";
 class emprestimoService {
     //CONSULTAS DE EMPRESTIMOS ABAIXO -> GET 
 

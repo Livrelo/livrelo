@@ -49,3 +49,4 @@ class devolucaoController{
 
    
 }
+export default devolucaoController;

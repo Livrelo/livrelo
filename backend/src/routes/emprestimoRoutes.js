@@ -1,5 +1,5 @@
 import e from "express";
-import emprestimoController from "../controllers/emprestimoController";
+import emprestimoController from "../controllers/emprestimoController.js";
 
 const emprestimoRouter = e.Router();
 
