@@ -1,6 +1,6 @@
 import { Op } from "sequelize";
 import Emprestimo from "../models/Emprestimo";
-
+import devolucaoService from "./devolucaoService";
 class emprestimoService {
     //CONSULTAS DE EMPRESTIMOS ABAIXO -> GET 
 
@@ -27,16 +27,29 @@ class emprestimoService {
         return emprestimo;
     }
 
-    //obter empréstimos em atraso 
+    //obter emprestimos em atraso
     static async findEmprestimoEmAtraso() {
         const dataAtual = new Date();
-        const emprestimosEmAtraso = await Emprestimo.findAll({
+
+        //obter todos os empréstimos com dataFim < hoje (terminados)
+        const emprestimosFinalizados = await Emprestimo.findAll({
             where: {
                 dataFim: {
                     [Op.lt]: dataAtual,
                 },
             },
         });
+
+        //filtrar emprestimos sem data de devolucao
+        //da pra fazer com left join, mas é melhor reutilizar a funçao ja existente de devolucaoService para verificar por ID
+        const emprestimosEmAtraso = [];
+        for (const emprestimo of emprestimosFinalizados) {
+            const devolucao = await devolucaoService.findByID(emprestimo.idEmprestimo).catch(() => null);
+            if (!devolucao) {
+                emprestimosEmAtraso.push(emprestimo);
+            }
+        }
+
         return emprestimosEmAtraso;
     }
 
