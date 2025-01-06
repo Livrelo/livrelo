@@ -6,7 +6,7 @@ class UsuarioService{
         
         const usuario = await Usuario.findAll({
             where: {
-                idConta: idConta,
+                conta_id_conta: idConta,
             },
         });
 
@@ -14,7 +14,6 @@ class UsuarioService{
     }
 
     static async create(usuario){
-
         const usuarioCriado = await Usuario.create(usuario);
         return usuarioCriado;
     }
@@ -27,7 +26,7 @@ class UsuarioService{
             throw new Error("Usuario não encontrado");
         }
 
-        const usuarioAtualizado = await Usuario.update({...usuario});
+        const usuarioAtualizado = await usuarioBD.update({...usuario});
         
         await usuarioBD.save();
 
@@ -35,13 +34,17 @@ class UsuarioService{
     }
 
     static async delete(cpf){
-        
+        const usuarioDeletar = await Usuario.findByPk(cpf);
+
+        await usuarioDeletar.destroy();
+        /*
         const usuarioDeletado = await Usuario.destroy({
             where:{
                 cpf: cpf
             }
         })
-        return usuarioDeletado;
+        */
+        return usuarioDeletar;
     }
 
 
