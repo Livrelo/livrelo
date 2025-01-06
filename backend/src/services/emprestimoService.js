@@ -27,7 +27,7 @@ class emprestimoService {
         return emprestimo;
     }
 
-    //obter empréstimos em atraso
+    //obter empréstimos em atraso 
     static async findEmprestimoEmAtraso() {
         const dataAtual = new Date();
         const emprestimosEmAtraso = await Emprestimo.findAll({
