@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 import Emprestimo from "../models/Emprestimo.js";
 import devolucaoService from "./devolucaoService.js";
-class emprestimoService {
+class EmprestimoService {
     //CONSULTAS DE EMPRESTIMOS ABAIXO -> GET 
 
     //obter todos os empréstimos existentes
@@ -78,4 +78,4 @@ class emprestimoService {
     }
 }
 
-export default emprestimoService;
+export default EmprestimoService;

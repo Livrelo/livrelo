@@ -1,13 +1,13 @@
-import emprestimoService from "../services/emprestimoService.js";
+import EmprestimoService from "../services/EmprestimoService.js";
 
-class emprestimoController{
+class EmprestimoController{
 
     //CONSULTAS DE EMPRESTIMOS ABAIXO -> GET 
 
     //obter todos os emprestimos existentes
     static async findAll(req, res){
         try {
-            const emprestimos = await emprestimoService.findAll();
+            const emprestimos = await EmprestimoService.findAll();
             return res.status(200).json(emprestimos);
         } catch (error) {
             return res.status(400).send({
@@ -21,7 +21,7 @@ class emprestimoController{
     static async findByCPF(req, res){
         const CPF = req.params.CPF;
         try {
-            const emprestimosCPF = await emprestimoService.findByCPF(CPF);
+            const emprestimosCPF = await EmprestimoService.findByCPF(CPF);
             return res.status(200).json(emprestimosCPF);
         } catch (error) {
             return res.status(400).send({
@@ -35,7 +35,7 @@ class emprestimoController{
     static async findByID(req, res){
         const { idEmprestimo } = req.params.idEmprestimo;
         try {
-            const emprestimo = await emprestimoService.findByID(idEmprestimo);
+            const emprestimo = await EmprestimoService.findByID(idEmprestimo);
             return res.status(200).json(emprestimo);
         } catch (error) {
             return res.status(400).send({
@@ -49,7 +49,7 @@ class emprestimoController{
     static async findEmprestimosEmAtraso(req, res){
         
         try {
-            const emprestimosEmAtraso = await emprestimoService.findEmprestimosEmAtraso();
+            const emprestimosEmAtraso = await EmprestimoService.findEmprestimosEmAtraso();
             return res.status(200).json(emprestimosEmAtraso);
         } catch (error) {
             return res.status(400).send({
@@ -69,7 +69,7 @@ class emprestimoController{
         }
         const idLivro = req.params.idLivro;
         try {
-            const emprestimoCriado = await emprestimoService.create(dataInicio, dataFim, cpf, idReserva, idLivro);
+            const emprestimoCriado = await EmprestimoService.create(dataInicio, dataFim, cpf, idReserva, idLivro);
             return res.status(200).json(emprestimoCriado);
         } catch (error) {
             return res.status(400).send({
@@ -85,7 +85,7 @@ class emprestimoController{
         const { idEmprestimo } = req.params.idEmprestimo;
         const { newDataFim } = req.body;
         try {
-            const emprestimoAtualizado = await emprestimoService.update(idEmprestimo, newDataFim);
+            const emprestimoAtualizado = await EmprestimoService.update(idEmprestimo, newDataFim);
             return res.status(200).json(emprestimoAtualizado);
         } catch (error) {
             return res.status(400).send({
@@ -99,4 +99,4 @@ class emprestimoController{
 
 }
 
-export default emprestimoController;
+export default EmprestimoController;

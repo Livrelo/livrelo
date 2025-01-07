@@ -1,4 +1,4 @@
-import devolucaoService from "../services/emprestimoService.js";
+import devolucaoService from "../services/EmprestimoService.js";
 
 class devolucaoController{
     //CONSULTAS DE DEVOLUÇÕES ABAIXO -> GET
