@@ -1,10 +1,10 @@
 import e from "express";
-import devolucaoController from "../controllers/DevolucaoController";
+import DevolucaoController from "../controllers/devolucaoController.js"
 
 const devolucaoRouter = e.Router();
 
-devolucaoRouter.get("/devolucao", devolucaoController.findAll);
-devolucaoRouter.get("/devolucao/:idEmprestimo", devolucaoController.findByID);
-devolucaoRouter.post("/devolucao", devolucaoController.create);
+devolucaoRouter.get("/devolucao", DevolucaoController.findAll);
+devolucaoRouter.get("/devolucao/:idEmprestimo", DevolucaoController.findByID);
+devolucaoRouter.post("/devolucao/:idEmprestimo", DevolucaoController.create);
 
 export default devolucaoRouter;

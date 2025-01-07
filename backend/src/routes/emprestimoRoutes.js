@@ -1,13 +1,8 @@
-import e from "express";
-import emprestimoController from "../controllers/EmprestimoController.js";
+import express from "express";
 
-const emprestimoRouter = e.Router();
 
-emprestimoRouter.get("/emprestimos", emprestimoController.findAll);
-emprestimoRouter.get("/emprestimos/:cpf", emprestimoController.findByCPF);
-emprestimoRouter.get("/emprestimo/:idEmprestimo", emprestimoController.findByID);
-emprestimoRouter.get("/emprestimosAtrasados", emprestimoController.findEmprestimosEmAtraso);
-emprestimoRouter.post("/emprestimo/:idReserva/:idLivro", emprestimoController.create);
-emprestimoRouter.put("/emprestimo/:idEmprestimo", emprestimoController.update);
+const routes = express.Router();
 
-export default emprestimoRouter;
+
+
+export default routes;
