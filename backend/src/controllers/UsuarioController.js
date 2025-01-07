@@ -30,12 +30,12 @@ class UsuarioController{
                 }
             */
 
-            const conta = req.body;
+            const usuario = req.body;
 
-            const contaCriada = await UsuarioService.create({...conta});
+            const usuarioCriado = await UsuarioService.create({...usuario});
             return res.status(201).send({
                 message: 'Usuario criado com sucesso!',
-                conta: contaCriada
+                conta: usuarioCriado
             });
 
 
