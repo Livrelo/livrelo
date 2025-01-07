@@ -1,6 +1,6 @@
 import Devolucao from "../models/Devolucao.js";
 
-class devolucaoService{
+class DevolucaoService{
     //CONSULTAS DE DEVOLUÇÕES ABAIXO -> GET
 
     //obter todas as devoluções
@@ -11,11 +11,11 @@ class devolucaoService{
 
     //obter devolução de um empréstimo -> deve ser usada por emprestimoService para ver se o emprestimo está atrasado, ou seja, se tem data de devolução
     static async findByID(idEmprestimo){
-       const devolucao = await Devolucao.findByPk(idEmprestimo);
-       if(!devolucao){
-            throw new Error(`Não há devolução para esse empréstimo`); 
-       }
-       return devolucao;
+        const devolucao = await Devolucao.findByPk(idEmprestimo);
+        if(!devolucao){
+                throw new Error(`Não há devolução para esse empréstimo`); 
+        }
+        return devolucao;
     }
 
     //REGISTRO DE UMA DEVOLUÇÃO -> POST
@@ -29,6 +29,6 @@ class devolucaoService{
 
     //NÃO É NECESSÁRIO DELETAR NEM ATUALIZAR DEVOLUÇÃO
 
-   
 }
-export default devolucaoService;
+export default DevolucaoService;
+

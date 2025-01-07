@@ -1,5 +1,5 @@
 import e from "express";
-import devolucaoController from "../controllers/devolucaoController";
+import devolucaoController from "../controllers/DevolucaoController";
 
 const devolucaoRouter = e.Router();
 
