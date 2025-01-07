@@ -87,6 +87,7 @@ class ContaController{
     static async update(req, res){
         try{
             const idConta = req.params.idConta;
+            //console.log(idConta);
             const conta = req.body;
             const contaAtualizada = await ContaService.update(conta, idConta);
 
@@ -105,8 +106,8 @@ class ContaController{
 
     static async delete(req, res){
         try{
-            const idConta = req.param.idConta;
-
+            const idConta = req.params.idConta;
+            //console.log(idConta);
             const contaDeletada = await ContaService.delete(idConta);
 
             return res.status(200).send({

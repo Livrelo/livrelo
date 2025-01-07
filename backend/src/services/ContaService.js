@@ -11,7 +11,7 @@ class ContaService{
             },
         });
 
-        console.log(conta);
+        //console.log(conta);
 
         if(!conta[0]){
             throw new Error("Conta não encontrada!")
@@ -65,6 +65,11 @@ class ContaService{
 
     static async delete(idConta){
         const contaDeletar = await Conta.findByPk(idConta);
+        //console.log(contaDeletar);
+
+        if(!contaDeletar){
+            throw new Error("Conta não encontrada!")
+        }
 
         await contaDeletar.destroy();
 
