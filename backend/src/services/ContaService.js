@@ -11,7 +11,11 @@ class ContaService{
             },
         });
 
-        return conta;
+        if(!conta[0]){
+            throw new Error("Conta não encontrada!")
+        }
+
+        return conta[0];
     }
 
     // ANALISAR APLICABILIDADE

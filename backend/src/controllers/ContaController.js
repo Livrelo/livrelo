@@ -15,6 +15,7 @@ class ContaController{
             const conta = await ContaService.logIn(data);
 
             return res.status(200).send({
+                message: 'LogIn efetuado com sucesso!',
                 conta: conta,
             });
 
