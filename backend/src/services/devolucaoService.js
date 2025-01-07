@@ -1,4 +1,4 @@
-import Devolucao from "../models/Devolucao";
+import Devolucao from "../models/Devolucao.js";
 
 class DevolucaoService{
     //CONSULTAS DE DEVOLUÇÕES ABAIXO -> GET
@@ -31,3 +31,4 @@ class DevolucaoService{
 
 }
 export default DevolucaoService;
+
