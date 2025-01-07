@@ -1,13 +1,13 @@
 import e from "express";
-import emprestimoController from "../controllers/EmprestimoController.js";
+import EmprestimoController from "../controllers/emprestimoController.js";
 
 const emprestimoRouter = e.Router();
 
-emprestimoRouter.get("/emprestimos", emprestimoController.findAll);
-emprestimoRouter.get("/emprestimos/:cpf", emprestimoController.findByCPF);
-emprestimoRouter.get("/emprestimo/:idEmprestimo", emprestimoController.findByID);
-emprestimoRouter.get("/emprestimosAtrasados", emprestimoController.findEmprestimosEmAtraso);
-emprestimoRouter.post("/emprestimo/:idReserva/:idLivro", emprestimoController.create);
-emprestimoRouter.put("/emprestimo/:idEmprestimo", emprestimoController.update);
+emprestimoRouter.get("/emprestimos", EmprestimoController.findAll);
+emprestimoRouter.get("/emprestimos/:cpf", EmprestimoController.findByCPF);
+emprestimoRouter.get("/emprestimo/:idEmprestimo", EmprestimoController.findByID);
+emprestimoRouter.get("/emprestimosAtrasados", EmprestimoController.findEmprestimosEmAtraso);
+emprestimoRouter.post("/emprestimo/:idReserva/:idLivro", EmprestimoController.create);
+emprestimoRouter.put("/emprestimo/:idEmprestimo", EmprestimoController.update);
 
 export default emprestimoRouter;

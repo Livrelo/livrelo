@@ -12,10 +12,10 @@ class DevolucaoService{
     //obter devolução de um empréstimo -> deve ser usada por emprestimoService para ver se o emprestimo está atrasado, ou seja, se tem data de devolução
     static async findByID(idEmprestimo){
         const devolucao = await Devolucao.findByPk(idEmprestimo);
-        if(!devolucao){
-                throw new Error(`Não há devolução para esse empréstimo`); 
-        }
-        return devolucao;
+        // if(!devolucao){
+        //         throw new Error(`Não há devolução para esse empréstimo`); 
+        // }
+        return devolucao || null;
     }
 
     //REGISTRO DE UMA DEVOLUÇÃO -> POST

@@ -1,4 +1,4 @@
-import EmprestimoService from "../services/EmprestimoService.js";
+import EmprestimoService from "../services/emprestimoService.js";
 
 class EmprestimoController{
 
@@ -19,9 +19,9 @@ class EmprestimoController{
 
     //obter emprestimos pelo CPF do usuario
     static async findByCPF(req, res){
-        const CPF = req.params.CPF;
+        const cpf  = req.params.cpf;
         try {
-            const emprestimosCPF = await EmprestimoService.findByCPF(CPF);
+            const emprestimosCPF = await EmprestimoService.findByCPF(cpf);
             return res.status(200).json(emprestimosCPF);
         } catch (error) {
             return res.status(400).send({
@@ -33,7 +33,7 @@ class EmprestimoController{
 
     //obter emprestimo pelo seu proprio id
     static async findByID(req, res){
-        const { idEmprestimo } = req.params.idEmprestimo;
+        const { idEmprestimo } = req.params;
         try {
             const emprestimo = await EmprestimoService.findByID(idEmprestimo);
             return res.status(200).json(emprestimo);
@@ -49,7 +49,7 @@ class EmprestimoController{
     static async findEmprestimosEmAtraso(req, res){
         
         try {
-            const emprestimosEmAtraso = await EmprestimoService.findEmprestimosEmAtraso();
+            const emprestimosEmAtraso  = await EmprestimoService.findEmprestimoEmAtraso();
             return res.status(200).json(emprestimosEmAtraso);
         } catch (error) {
             return res.status(400).send({
@@ -82,7 +82,7 @@ class EmprestimoController{
     //ATUALIZAR EMPRESTIMO SERIA RENOVAR, INSERINDO UMA NOVA DATAFIM - PUT
 
     static async update(req, res){
-        const { idEmprestimo } = req.params.idEmprestimo;
+        const { idEmprestimo } = req.params;
         const { newDataFim } = req.body;
         try {
             const emprestimoAtualizado = await EmprestimoService.update(idEmprestimo, newDataFim);
