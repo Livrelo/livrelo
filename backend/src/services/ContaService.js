@@ -11,6 +11,8 @@ class ContaService{
             },
         });
 
+        console.log(conta);
+
         if(!conta[0]){
             throw new Error("Conta não encontrada!")
         }
@@ -29,6 +31,19 @@ class ContaService{
     */
 
     static async create(conta){
+
+        const emailExiste = await Conta.findOne({
+            where: {
+                email: conta.email
+            }
+        })
+
+        //console.log(emailExiste);
+
+        if(emailExiste){
+            throw new Error("Esse email já está em uso!");
+        }
+
         const contaCriada = await Conta.create(conta);
         return contaCriada;
     }
