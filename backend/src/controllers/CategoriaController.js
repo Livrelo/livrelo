@@ -14,9 +14,17 @@ class CategoriaController{
     }
     static async findById(req, res){
         try{
-            
+            const id = req.params.id;
+            const categoria = await CategoriaService.findById(id);
+            return res.status(200).send({
+                message: 'Categoria encontrada com sucesso',
+                categoria: categoria
+            });
         }catch(error){
-            
+            return res.status(400).send({
+                message: 'Erro ao tentar encontrar categoria',
+                error: error.message
+            })
         }
     }
     static async create(req, res){
