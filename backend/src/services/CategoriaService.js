@@ -5,8 +5,9 @@ class CategoriaService{
         const categorias = await Categoria.findAll();
         return categorias;
     }
-    static async findById(){
-
+    static async findById(id){
+        const categoria = await Categoria.findByPk(id);
+        return categoria;
     }
     static async create(){
 
