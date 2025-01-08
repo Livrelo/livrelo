@@ -7,6 +7,11 @@ class CategoriaService{
     }
     static async findById(id){
         const categoria = await Categoria.findByPk(id);
+
+        if(!categoria){
+            throw new Error("Categoria não encontrada.")
+        }
+
         return categoria;
     }
     static async create(categoria){
@@ -17,7 +22,7 @@ class CategoriaService{
         const categoriaDB = await Categoria.findByPk(id);
 
         if(!categoriaDB){
-            throw new Error('Categoria não encontrada');
+            throw new Error('Categoria não encontrada.');
         }
 
         const categoriaAtualizada = await categoriaDB.update({...categoria});
@@ -29,6 +34,12 @@ class CategoriaService{
                 idCategoria: id
             }
         })
+
+        if(!categoriaDeletada){
+        throw new Error('Categoria não encontrada.');
+        }
+
+
         return categoriaDeletada;
     }
 }

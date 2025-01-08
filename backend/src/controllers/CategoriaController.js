@@ -1,4 +1,4 @@
-import CategoriaService from "../services/CategoriaService";
+import CategoriaService from "../services/CategoriaService.js";
 
 class CategoriaController{
     static async findAll(req, res){
@@ -16,6 +16,7 @@ class CategoriaController{
         try{
             const id = req.params.id;
             const categoria = await CategoriaService.findById(id);
+
             return res.status(200).send({
                 message: 'Categoria encontrada com sucesso',
                 categoria: categoria
