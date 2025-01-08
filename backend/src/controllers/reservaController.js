@@ -1,4 +1,4 @@
-import ReservaServices from "../services/reservaServices";
+import ReservaServices from "../services/reservaServices.js";
 
 class ReservaController{
     
@@ -60,7 +60,7 @@ class ReservaController{
         } catch (e){
             return res.status(400).send({
                 message: 'Ocorreu um erro ao atualizar a reserva.',
-                error: error.message
+                error: e.message
             });
         }
     }

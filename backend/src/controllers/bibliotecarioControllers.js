@@ -1,5 +1,5 @@
 import { json } from "sequelize";
-import BibliotecarioService from "../services/bibliotecarioService"
+import BibliotecarioService from "../services/bibliotecarioService.js"
 
 class BibliotecarioController{
 
@@ -32,7 +32,8 @@ class BibliotecarioController{
 
     static async create(req, res) {
         try{
-            const response = await BibliotecarioService.create();
+            const bibliotecario = req.body;
+            const response = await BibliotecarioService.create({...bibliotecario});
             return res.status(200).json({bibliotecario: response});
         }catch (e) {
             return res.status(400).json({error: e.message});

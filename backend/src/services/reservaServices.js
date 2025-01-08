@@ -1,5 +1,5 @@
 import { Op } from "sequelize";
-import Reserva from "../models/Reserva";
+import Reserva from "../models/Reserva.js";
 
 class ReservaServices{
     static async findAll(){
@@ -16,16 +16,10 @@ class ReservaServices{
         return reserva
     }
 
-    static async create(idLivro, cpf, data, prazo, status){
+    static async create(reserva){
       return  await Reserva.create(
-            {   
-                idLivro: idLivro,
-                cpfUsuario: cpf,
-                dataReserva: data,
-                prazoReserva: prazo,
-                status: status,
-            },
-            { fields:['cpfUsuario', 'dataReserva', 'prazoReserva'] },
+                reserva
+            // { fields:['cpfUsuario', 'dataReserva', 'prazoReserva'] },
         );
     }
 
@@ -40,11 +34,9 @@ class ReservaServices{
     }
 
     static async delete(id){
-        return await Reserva.destroy({
-            where:{
-                idReserva: id,
-            }
-        })
+        const reservaDb = await Reserva.findByPk(id);
+        await reservaDb.destroy();
+        return reservaDb;
     }
 }
 

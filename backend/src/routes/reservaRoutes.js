@@ -1,5 +1,5 @@
 import e from "express"
-import ReservaController from "../controllers/reservaController"
+import ReservaController from "../controllers/reservaController.js"
 
 const reservaRouter = e.Router();
 

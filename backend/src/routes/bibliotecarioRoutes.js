@@ -1,5 +1,5 @@
 import e from "express"
-import BibliotecarioController from "../controllers/bibliotecarioControllers"
+import BibliotecarioController from "../controllers/bibliotecarioControllers.js"
 
 const bibliotecarioRouter = e.Router();
 

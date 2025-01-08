@@ -1,5 +1,5 @@
 // import sequelize from "../database/DatabaseSingleton";
-import Bibliotecario from "../models/Bibliotecario";
+import Bibliotecario from "../models/Bibliotecario.js";
 
 class BibliotecarioServices{
 
@@ -16,8 +16,8 @@ class BibliotecarioServices{
     }
     
     //criar bibliotecario
-    static async create(){
-        return await Bibliotecario.create()
+    static async create(bibliotecario){
+        return await Bibliotecario.create(bibliotecario)
     }
 
 }
