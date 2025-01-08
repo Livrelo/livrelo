@@ -9,14 +9,27 @@ class CategoriaService{
         const categoria = await Categoria.findByPk(id);
         return categoria;
     }
-    static async create(){
-
+    static async create(categoria){
+        const categoriaCriada = await Categoria.create(categoria);
+        return categoriaCriada;
     }
-    static async update(){
+    static async update(id, categoria){
+        const categoriaDB = await Categoria.findByPk(id);
 
+        if(!categoriaDB){
+            throw new Error('Categoria não encontrada');
+        }
+
+        const categoriaAtualizada = await categoriaDB.update({...categoria});
+        return categoriaAtualizada;
     }
-    static async delete(){
-
+    static async delete(id){
+        const categoriaDeletada = await Categoria.destroy({
+            where: {
+                idCategoria: id
+            }
+        })
+        return categoriaDeletada;
     }
 }
 
