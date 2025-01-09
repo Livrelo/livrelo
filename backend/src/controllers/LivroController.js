@@ -38,8 +38,9 @@ class LivroController {
             //  status: 'Disponível'
             //}
             const livro = req.body;
+            const livroImage = req.file ? req.file.filename : null;
             
-            const livroCriado = await LivroService.create({...livro});
+            const livroCriado = await LivroService.create({...livro, livroImage});
             return res.status(201).send({
                 message: 'Livro Criado com sucesso',
                 livro: livroCriado
