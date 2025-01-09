@@ -10,7 +10,7 @@ class LivroCategoriaController {
             for(const livro of livros){
                 const categorias = await LivroCategoriaService.findCategoriasByLivroId(livro.idLivro);
                 livrosCategorias.push({
-                    livro,
+                    livro: livro.dataValues,
                     categorias
                 });
             }
@@ -53,7 +53,11 @@ class LivroCategoriaController {
     static async create(req, res){
         try{
             const { idLivro, idCategoria } = req.body;
-            const livroCategoriaCriado = await LivroCategoriaService.create(idLivro, idCategoria);
+
+            const livroCategoriaCriado = await LivroCategoriaService.create(
+                idLivro,
+                idCategoria
+            );
             return res.status(200).send({
                 message: 'Categoria adicionada com sucesso ao Livro',
                 livroCategoria: livroCategoriaCriado
