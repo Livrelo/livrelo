@@ -7,7 +7,7 @@ class LivroCategoria extends Model {
     static init(sequelize){
         super.init(
             {
-                livroId: {
+                idLivro: {
                     type: DataTypes.INTEGER,
                     references: {
                         model: Livro,
@@ -17,7 +17,7 @@ class LivroCategoria extends Model {
                     allowNull: false,
                     field: 'idLivro'
                 },
-                categoriaId: {
+                idCategoria: {
                     type: DataTypes.INTEGER,
                     references: {
                         model: Categoria, 
