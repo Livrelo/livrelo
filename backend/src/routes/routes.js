@@ -1,5 +1,6 @@
 import e from "express";
 
+import contaRouter from "./contaRoutes.js";
 import emprestimoRouter from "./emprestimoRoutes.js";
 import devolucaoRouter from "./devolucaoRoutes.js";
 import reservaRouter from "./reservaRoutes.js"
@@ -13,6 +14,7 @@ import usuarioRouter from "./usuarioRoutes.js";
 const routes = e.Router();
 //testar rotas aqui
 
+routes.use(contaRouter);
 routes.use(emprestimoRouter);
 routes.use(devolucaoRouter);
 routes.use(usuarioRouter);
