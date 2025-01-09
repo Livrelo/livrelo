@@ -14,4 +14,5 @@ routes.use(categoriaRoutes);
 routes.use(livroCategoriaRoutes);
 routes.use(usuarioRouter);
 
+
 export default routes;
