@@ -18,7 +18,7 @@ class App {
 
 
     middlewares(){
-        this.server.use(express.json())
+        this.server.use(express.json());
     }
 
     routes(){
