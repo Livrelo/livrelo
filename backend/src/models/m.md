@@ -35,5 +35,4 @@ CREATE TABLE Devolucao
 	idEmprestimo INTEGER PRIMARY KEY,
 	dataDevolucao DATE,
 	FOREIGN KEY (idEmprestimo) REFERENCES Emprestimo(idEmprestimo),
-
 )
