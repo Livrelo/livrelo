@@ -1,4 +1,5 @@
 import Conta from "../models/Conta.js";
+import bcrypt from "bcrypt";
 
 class ContaService{
 
@@ -7,7 +8,6 @@ class ContaService{
         const conta = await Conta.findAll({
             where: {
                 email: data.email,
-                senha: data.senha,
             },
         });
 
@@ -15,6 +15,12 @@ class ContaService{
 
         if(!conta[0]){
             throw new Error("Conta não encontrada!")
+        }
+
+        const validationSenha = await bcrypt.compare(data.senha, conta[0].senha);
+
+        if(!validationSenha){
+            throw new Error("Email ou senha não estão corretos!");
         }
 
         return conta[0];

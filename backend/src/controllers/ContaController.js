@@ -1,5 +1,12 @@
 import { canTreatArrayAsAnd } from "sequelize/lib/utils";
 import ContaService from "../services/ContaService.js";
+import bcrypt from "bcrypt";
+
+const salt_rounds = process.env.SALT_ROUNDS;
+
+async function crypt(senha){
+    return await bcrypt.hash(senha, Number(salt_rounds));
+}
 
 class ContaController{
 
@@ -7,6 +14,7 @@ class ContaController{
         try{
             const email = req.body.email
             const senha = req.body.senha
+
             const data = {
                 email: email,
                 senha: senha,
@@ -70,6 +78,8 @@ class ContaController{
 
             const conta = req.body;
 
+            conta.senha = await crypt(conta.senha);
+
             const contaCriada = await ContaService.create({...conta});
             return res.status(201).send({
                 message: 'Conta criada com sucesso!',
@@ -89,6 +99,9 @@ class ContaController{
             const idConta = req.params.idConta;
             //console.log(idConta);
             const conta = req.body;
+
+            conta.senha = await crypt(conta.senha);
+
             const contaAtualizada = await ContaService.update(conta, idConta);
 
             return res.status(200).send({
