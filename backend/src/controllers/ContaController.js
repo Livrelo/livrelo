@@ -2,6 +2,7 @@ import { canTreatArrayAsAnd } from "sequelize/lib/utils";
 import ContaService from "../services/ContaService.js";
 import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
+import { blacklistTokens } from "../middlewares/Auth.js";
 
 const salt_rounds = process.env.SALT_ROUNDS;
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -43,6 +44,13 @@ class ContaController{
     }
 
     static async logOut(req, res){
+
+        const token = req.headers["x-access-token"];
+
+        if(token){
+            blacklistTokens.push(token);
+        }
+
         return res.status(200).send({
             conta: null
         })
