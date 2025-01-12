@@ -1,0 +1,1 @@
+iremos utilizar o MUI, que tem componentes prontos p react, ja está instalado nas dependencias 
