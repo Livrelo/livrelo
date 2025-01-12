@@ -1,0 +1,9 @@
+.home-container {
+    margin-top: 80px;
+}
+
+.books-grid {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
