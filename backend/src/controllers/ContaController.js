@@ -1,8 +1,10 @@
 import { canTreatArrayAsAnd } from "sequelize/lib/utils";
 import ContaService from "../services/ContaService.js";
 import bcrypt from "bcrypt";
+import jsonwebtoken from "jsonwebtoken";
 
 const salt_rounds = process.env.SALT_ROUNDS;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 async function crypt(senha){
     return await bcrypt.hash(senha, Number(salt_rounds));
@@ -22,9 +24,14 @@ class ContaController{
 
             const conta = await ContaService.logIn(data);
 
+            const token = jsonwebtoken.sign({ id: conta.idConta, email: conta.email }, String(JWT_SECRET), {
+                expiresIn: "1h", // Token expira em 1 hora
+              });
+
             return res.status(200).send({
                 message: 'LogIn efetuado com sucesso!',
                 conta: conta,
+                token: token,
             });
 
         }catch(error){
