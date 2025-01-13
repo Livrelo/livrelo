@@ -31,6 +31,15 @@ class ReservaJaAssociada extends ReservaError{
         })
     }
 }
+class ReservaIndisponivel extends ReservaError{
+    constructor(){
+        super({
+            httpCode: HttpCode.CONFLICT,
+            message: 'Indisponivel para reserva' ,
+            type: 'ERR_SERVICE_RESERVA-EMPRESTIMO_EXISTENTE'
+        })
+    }
+}
 
-export default {ReservaJaAssociada, ReservaNaoEncontrada};
+export default {ReservaJaAssociada, ReservaNaoEncontrada, ReservaIndisponivel};
 

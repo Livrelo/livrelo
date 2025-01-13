@@ -1,8 +1,9 @@
 import { Op } from "sequelize";
 import Reserva from "../models/Reserva.js";
+import Emprestimo from "../models/Emprestimo.js";
 import Error from "../errors/reservaError.js"
 
-const { ReservaJaAssociada, ReservaNaoEncontrada } = Error;
+const { ReservaJaAssociada, ReservaNaoEncontrada, ReservaIndisponivel} = Error;
 
 class ReservaServices{
     static async findAll(){
@@ -26,8 +27,17 @@ class ReservaServices{
             }
         }) 
 
+        let livroEmprestado = await Emprestimo.findAll({
+            where:{
+                idLivro: reserva.idLivro ,
+                dataFim:{[Op.gte]: reserva.dataReserva}, // Empréstimo termina depois ou no início da reserva      
+            }
+        }) 
+
         if(reservaExist.length>0){
             throw new ReservaJaAssociada;
+        }else if(livroEmprestado.length>0){
+            throw new ReservaIndisponivel;
         }
 
         return await Reserva.create(reserva);
