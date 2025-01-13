@@ -1,3 +1,6 @@
+body{
+    margin:0;
+}
 body .navbar {
     background-color: #ffffff;
     border-bottom: 2px solid #162E62;
