@@ -39,6 +39,7 @@ const livros = [
         imagem: "https://m.media-amazon.com/images/I/41qHtQr4lkL._SY445_SX342_.jpg",
     },
 ];
+//aqui na home tem que ter uma funçao pra verificar se está logado ou nao, se sim ok se nao tem que carregar outro tipo de pagina com uma mini introducao etc
 
 function Home() {
   return (
