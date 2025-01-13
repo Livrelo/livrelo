@@ -30,6 +30,10 @@ class Livro extends Model {
                     type: DataTypes.STRING,
                     field: 'nomeEditora'
                 },
+                livroImage: {
+                    type: DataTypes.STRING,
+                    field: 'livroImage'
+                },
                 status: {
                     type: DataTypes.STRING,
                     allowNull: false,
