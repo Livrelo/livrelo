@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../../../components/navbar/Navbar';
+import Footer from '../../../components/footer/Footer';
 import LivroCard from '../../../components/livro-card/LivroCard';
 import Grid from '@mui/material/Grid';
 import './styles.css'; 
@@ -54,6 +55,7 @@ function Home() {
             ))}
         </Grid>
       </div>
+      <Footer />
     </div>
   );
 }

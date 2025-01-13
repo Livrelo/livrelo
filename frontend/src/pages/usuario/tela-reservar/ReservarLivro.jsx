@@ -5,6 +5,7 @@ import Input from "../../../components/Input/Input";
 import { Button, Typography, Box } from "@mui/material";
 import Navbar from "../../../components/navbar/Navbar";
 import "./styles.css";
+import Footer from "../../../components/footer/Footer";
 
 export default function ReservarLivroYup() {
     //livro pra testarrrrrrrrrr dps colocar logica pra puxar do back
@@ -95,6 +96,7 @@ export default function ReservarLivroYup() {
                     </Box>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

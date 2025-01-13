@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../../../components/navbar/Navbar";
 import LivroEmprestado from "../../../components/livro-emprestado/LivroEmprestado";
 import "./styles.css";
+import Footer from "../../../components/footer/Footer";
 
 export default function Emprestimos() {
 
@@ -33,6 +34,7 @@ export default function Emprestimos() {
                     ))}
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

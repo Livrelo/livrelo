@@ -5,6 +5,7 @@ body .content {
     align-items: center;
     margin-top: 90px;
     background-color: #f9f9f9;
+    height: 75vh;
 }
 
 body .reservar-livro-container {

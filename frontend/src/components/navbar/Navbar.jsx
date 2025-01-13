@@ -139,6 +139,7 @@ function Navbar() {
                         <MenuItem onClick={() => handleNavigation('/')}>Home</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/reservas')}>Minhas reservas</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/emprestimos')}>Meus empréstimos</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/perfil')}>Meu perfil</MenuItem>
                     </Menu>
                 </Box>
             </Toolbar>

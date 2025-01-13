@@ -3,6 +3,7 @@ import LivroReservado from "../../../components/livro-reservado/LivroReservado";
 import Navbar from '../../../components/navbar/Navbar';
 import { Box } from '@mui/material';
 import './styles.css'; 
+import Footer from '../../../components/footer/Footer';
 
 const livrosReservados = [
     {
@@ -74,6 +75,7 @@ export default function Reservas() {
                     ))}
                 </Box>
             </div>
+            <Footer />
         </div>
     );
 }
