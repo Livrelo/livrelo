@@ -1,0 +1,11 @@
+body .input .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+body .input .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #162e62;
+}
+
+body .input .MuiInputLabel-root.Mui-focused {
+    color: #162e62; 
+}
