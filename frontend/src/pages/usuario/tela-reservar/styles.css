@@ -59,3 +59,23 @@ body .reservar-livro-button:hover {
     margin-top: 20px;
     background-color: #0d2352;
 }
+@media (max-width: 768px) {
+    body .reservar-livro-container {
+        flex-direction: column; 
+        align-items: center; 
+        text-align: center; 
+        gap: 10px; 
+    }
+
+    body .livro-imagem {
+        width: 150px; 
+    }
+
+    body .livro-titulo {
+        font-size: 1rem; 
+    }
+
+    body .formulario-container {
+        width: 100%; 
+    }
+}

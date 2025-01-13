@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField } from "@mui/material";
-import { Field, ErrorMessage } from "formik";
+import { Field } from "formik";
 import "./styles.css";
 
 function Input({ name, label, type = "text", ...props }) {
