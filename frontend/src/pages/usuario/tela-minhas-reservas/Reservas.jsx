@@ -64,7 +64,7 @@ export default function Reservas() {
             <Navbar />
             <div className="page-content">
                 <Box sx={{ padding: '20px' }}>
-                    <h2 className="titulo">Meus Livros Reservados</h2>
+                    <h2 className="titulo">Livros Reservados</h2>
                     {livrosReservados.map((livro) => (
                         <LivroReservado
                             key={livro.id}
