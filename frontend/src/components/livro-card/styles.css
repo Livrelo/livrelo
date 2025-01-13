@@ -1,0 +1,17 @@
+.livro-card {
+    width: 190px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease-in-out;
+   
+}
+
+.livro-card:hover {
+    transform: scale(1.02);
+
+}
+
+.card-media {
+    height: 300px;
+}
