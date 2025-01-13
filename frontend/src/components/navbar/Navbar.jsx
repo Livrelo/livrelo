@@ -4,7 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
+import { Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import livrelo from './LIVRELO.png';
@@ -12,6 +12,7 @@ import logo from './logo.png';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import { useNavigate } from 'react-router-dom'; 
 import './styles.css';
 
 const Search = styled('div')(({ theme, focused }) => ({
@@ -59,12 +60,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-
-
-
 function Navbar() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate(); 
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -76,6 +75,10 @@ function Navbar() {
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
+    };
+
+    const handleNavigation = (route) => {
+        navigate(route); 
     };
 
     return (
@@ -90,22 +93,24 @@ function Navbar() {
                     sx={{ height: 50 }}  
                 />
 
-                
                 <Box
                     component="img"
                     className="navbar-livrelo"
                     alt="Livrelo"
                     src={livrelo}
-                    href="/"
                     sx={{ height: 25, marginRight: 'auto' }}  
                 />
 
-               
                 <Box className="navbar-buttons">
-                    <Button className="navbar-button">Home</Button>
-                    <Button className="navbar-button">Minhas reservas</Button>
-
-                    <Button className="navbar-button">Meus empréstimos</Button>
+                    <Button onClick={() => handleNavigation('/')} className="navbar-button">
+                        Home
+                    </Button>
+                    <Button onClick={() => handleNavigation('/reservas')} className="navbar-button">
+                        Minhas reservas
+                    </Button>
+                    <Button onClick={() => handleNavigation('/emprestimos')} className="navbar-button">
+                        Meus empréstimos
+                    </Button>
                     
                     <Search>
                         <SearchIconWrapper>
@@ -118,7 +123,9 @@ function Navbar() {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <Button className="navbar-button">Meu perfil</Button>
+                    <Button onClick={() => handleNavigation('/perfil')} className="navbar-button">
+                        Meu perfil
+                    </Button>
                 </Box>
                 <Box className="menu-icon-box">
                     <IconButton onClick={handleMenuOpen}>
@@ -129,9 +136,9 @@ function Navbar() {
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
                     >
-                        <MenuItem onClick={handleMenuClose}>Home</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>Minhas reservas</MenuItem>
-                        <MenuItem onClick={handleMenuClose}>Meus empréstimos</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/')}>Home</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/reservas')}>Minhas reservas</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/emprestimos')}>Meus empréstimos</MenuItem>
                     </Menu>
                 </Box>
             </Toolbar>
