@@ -6,7 +6,7 @@ class UsuarioService{
         
         const usuario = await Usuario.findAll({
             where: {
-                conta_id_conta: idConta,
+                idConta: idConta,
             },
         });
 

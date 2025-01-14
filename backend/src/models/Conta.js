@@ -25,16 +25,6 @@ class Conta extends Model {
                     allowNull: false,
                     field: 'senha',
                 },
-                created_at: {
-                    type: DataTypes.DATE,
-                    allowNull: false,
-                    field: 'created_at',
-                },
-                updated_at: {
-                    type: DataTypes.DATE,
-                    allowNull: false,
-                    field: 'updated_at',
-                }
             },
             {
                 sequelize,

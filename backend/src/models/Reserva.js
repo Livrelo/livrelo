@@ -9,7 +9,7 @@ class Reserva extends Model{
                 {
                     idReserva:{
                         type:DataTypes.INTEGER,
-                        allowNull: false,
+                        autoIncrement: true,
                         primaryKey:true,
                         field: 'idReserva'
                     },

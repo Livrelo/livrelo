@@ -1,5 +1,6 @@
 import Conta from "../models/Conta.js";
 import bcrypt from "bcrypt";
+import UsuarioService from "./UsuarioService.js";
 
 class ContaService{
 
@@ -26,6 +27,13 @@ class ContaService{
         return conta[0];
     }
 
+    static async getRole(idConta){
+        const usuario = await UsuarioService.findByIdConta(idConta);
+
+        const role = usuario ? 'usuario' : 'bibliotecario';
+
+        return role;
+    }
     // ANALISAR APLICABILIDADE
 
     /*
@@ -50,7 +58,9 @@ class ContaService{
             throw new Error("Esse email já está em uso!");
         }
 
+        
         const contaCriada = await Conta.create(conta);
+        
         return contaCriada;
     }
 

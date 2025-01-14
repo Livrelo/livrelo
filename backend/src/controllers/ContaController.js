@@ -1,60 +1,11 @@
 import { canTreatArrayAsAnd } from "sequelize/lib/utils";
 import ContaService from "../services/ContaService.js";
-import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
-import { blacklistTokens } from "../middlewares/Auth.js";
+import { crypt } from "../middlewares/Auth.js";
 
-const salt_rounds = process.env.SALT_ROUNDS;
-const JWT_SECRET = process.env.JWT_SECRET;
 
-async function crypt(senha){
-    return await bcrypt.hash(senha, Number(salt_rounds));
-}
 
 class ContaController{
-
-    static async logIn(req, res){
-        try{
-            const email = req.body.email
-            const senha = req.body.senha
-
-            const data = {
-                email: email,
-                senha: senha,
-            }
-
-            const conta = await ContaService.logIn(data);
-
-            const token = jsonwebtoken.sign({ id: conta.idConta, email: conta.email }, String(JWT_SECRET), {
-                expiresIn: "1h", // Token expira em 1 hora
-              });
-
-            return res.status(200).send({
-                message: 'LogIn efetuado com sucesso!',
-                conta: conta,
-                token: token,
-            });
-
-        }catch(error){
-            return res.status(400).send({
-                message: 'Ocorreu um erro encontrando essa conta em específico!',
-                error: error.message
-            });
-        }
-    }
-
-    static async logOut(req, res){
-
-        const token = req.headers["x-access-token"];
-
-        if(token){
-            blacklistTokens.push(token);
-        }
-
-        return res.status(200).send({
-            conta: null
-        })
-    }
 
     // ANALISAR APLICABILIDADE
 
@@ -113,11 +64,13 @@ class ContaController{
         try{
             const idConta = req.params.idConta;
             //console.log(idConta);
-            const conta = req.body;
+            const contaAtualizar = {...req.body};
+            
+            if(contaAtualizar.senha){
+                contaAtualizar.senha = await crypt(contaAtualizar.senha);
+            }
 
-            conta.senha = await crypt(conta.senha);
-
-            const contaAtualizada = await ContaService.update(conta, idConta);
+            const contaAtualizada = await ContaService.update(contaAtualizar, idConta);
 
             return res.status(200).send({
                 message: 'Conta atualizada com sucesso!',

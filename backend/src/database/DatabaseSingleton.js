@@ -44,7 +44,7 @@ class DatabaseSingleton {
                 // force: true somente para desenvolvimento!!
                 // "force: true" serve para reinicar todas as tabelas do banco de dados para fins de testes.
             }
-            await this.instance.sync();
+            await this.instance.sync({force : true});
             
             console.log("Modelos inicializados e sincronizados.");
         } catch (error) {
