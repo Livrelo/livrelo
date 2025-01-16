@@ -35,7 +35,7 @@ function SignIn() {
                 <div className="wrap-form-SignIn">
                     <form className="login-form">
                         <span className="tittle">Entrar</span>
-                        <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '70ch' } }} noValidate autoComplete="off"
+                        <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '70ch' } }} noValidate autoComplete="off"
                         marginX={8}
                         marginY={2}
                         >
@@ -44,7 +44,7 @@ function SignIn() {
                             </ThemeProvider>
                             
                         </Box>
-                        <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '70ch' } }} noValidate autoComplete="off"
+                        <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '70ch' } }} noValidate autoComplete="off"
                         marginX={8}
                         marginY={2}
                         >   
@@ -52,7 +52,7 @@ function SignIn() {
                                 <TextField id="outlined-basic" label="Senha" color='blues' variant="outlined" margin="normal"/>
                             </ThemeProvider>
                         </Box>
-                        <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '30ch' } }} noValidate autoComplete="off"
+                        <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '30ch' } }} noValidate autoComplete="off"
                         marginX={28}
                         marginY={5}
                         >   
@@ -63,7 +63,7 @@ function SignIn() {
 
                         <span className="label-SignUp">Ainda não possui conta?</span>  
 
-                        <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '25ch' } }} noValidate autoComplete="off"
+                        <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '25ch' } }} noValidate autoComplete="off"
                         marginX={30.5}
                         marginY={0}
                         >   

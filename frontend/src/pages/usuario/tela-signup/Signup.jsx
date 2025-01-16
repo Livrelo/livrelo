@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import Header from "../../components/header-signup/Header.jsx"
+import Header from "../../../components/header-signup/Header.jsx"
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -34,7 +34,7 @@ function Signup(){
                 <div className="wrap-form-SignUp">
                     <form className="Signup-form">
                         <span className="tittle-SignUp">Cadastro</span>
-                        <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '75ch' } }} noValidate autoComplete="off"
+                        <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '75ch' } }} noValidate autoComplete="off"
                         marginX={8}
                         marginY={1}
                         >
@@ -43,7 +43,7 @@ function Signup(){
                             </ThemeProvider>
                             
                         </Box>
-                        <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '75ch' } }} noValidate autoComplete="off"
+                        <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '75ch' } }} noValidate autoComplete="off"
                         marginX={8}
                         marginY={1}
                         >   
@@ -51,7 +51,7 @@ function Signup(){
                                 <TextField id="outlined-basic" label="Nome" color='blues' variant="outlined" margin="normal"/>
                             </ThemeProvider>
                         </Box>
-                        <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '75ch' } }} noValidate autoComplete="off"
+                        <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '75ch' } }} noValidate autoComplete="off"
                         marginX={8}
                         marginY={1}
                         >
@@ -60,7 +60,7 @@ function Signup(){
                             </ThemeProvider>
                             
                         </Box>
-                        <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '75ch' } }} noValidate autoComplete="off"
+                        <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '75ch' } }} noValidate autoComplete="off"
                         marginX={8}
                         marginY={1}
                         >   
@@ -68,7 +68,7 @@ function Signup(){
                                 <TextField id="outlined-basic" label="Senha" color='blues' variant="outlined" margin="normal"/>
                             </ThemeProvider>
                         </Box>
-                        <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '30ch' } }} noValidate autoComplete="off"
+                        <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '30ch' } }} noValidate autoComplete="off"
                         marginX={30}
                         marginY={5}
                         >   
@@ -79,7 +79,7 @@ function Signup(){
 
                         <span className="label-SignIn">Já possui conta?</span>  
 
-                        <Box component="form" sx={{ '& > :not(style)': { m: 1, width: '25ch' } }} noValidate autoComplete="off"
+                        <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '25ch' } }} noValidate autoComplete="off"
                         marginX={32.5}
                         marginY={0}
                         >   
