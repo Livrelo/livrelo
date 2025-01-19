@@ -9,7 +9,10 @@ import HomeB from './pages/bibliotecario/tela-home-b/HomeB';
 import AcervoB from './pages/bibliotecario/tela-acervo/AcervoB';
 import EmprestimosB from './pages/bibliotecario/tela-emprestimos/EmprestimosB';
 import ReservasB from './pages/bibliotecario/tela-reservas/ReservasB';
-
+import SignIn from './pages/usuario/tela-signin/SignIn';
+import Signup from './pages/usuario/tela-signup/Signup.jsx';
+import Detalhamento from './pages/usuario/tela-detalhamentoLivro/Detalhamento.jsx';
+import UpdateUser from './pages/usuario/tela-updateUser/UpdateUser.jsx';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -23,6 +26,10 @@ root.render(
         <Route path="/acervo-b" element={<AcervoB />} />
         <Route path="/emprestimos-b" element={<EmprestimosB />} />
         <Route path="/reservas-b" element={<ReservasB />} />
+        <Route path='/signin' element={<SignIn/>}/>
+        <Route path='/signup' element={<Signup/>}/>
+        <Route path='/detalhamento/:id' element={<Detalhamento/>}/>
+        <Route path='/update_user/:id' element={<UpdateUser/>}/>
 
       </Routes>
     </BrowserRouter>

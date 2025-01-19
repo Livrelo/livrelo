@@ -1,0 +1,51 @@
+.Container_Update_User{
+    margin: 170px 100px 170px 100px;
+    display: flex;
+}
+
+.quadro_InputsText{
+    position: relative;
+    /* left: -5%; */
+    border:2.5px solid #162E62;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90vw;
+    height: 70vh;
+    background-color:rgba(255, 255, 255, 1.0);
+    border-radius: 10px;
+    padding: 20px 55px 20px 55px;
+    box-shadow: 0 5px 10px 0px rgba(12, 27, 68, 0.3);
+}
+
+.quadro_titulo{
+    color:#162E62;
+    display: flex;
+    margin-left: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-weight: 100;
+    font-family: 'inter', Geneva, Verdana, sans-serif;
+}
+
+.input_update{
+    width: 50%;
+}
+.input_update label{
+    font-size: 20px;
+}
+.input_update div{
+    font-size: 20px;
+}
+.form-update{
+    margin: 10px 20px ;
+    align-items: center;
+    justify-content: center;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    color: #8f222294;
+}

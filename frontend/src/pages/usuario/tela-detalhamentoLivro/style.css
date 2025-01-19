@@ -1,0 +1,78 @@
+*{
+    margin: 0;
+}
+.Container_Detalhamento_Livro{
+    margin: 170px 0px 170px 100px;
+    display: flex;
+    flex-direction: row;
+}
+.imgLivro_nomeLivro{
+    display: flex;
+    flex-direction: column;
+    margin-right: 10%;
+}
+
+.imgLivro{
+    width: 350px;
+    height: 480px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px 0px rgba(0, 0, 0, 0.507);
+}
+.nomeLivro{
+    position: relative;
+    width: 300px;
+    font-size: 150%;
+    top:4%;
+    margin-left: 17%;
+    display: flex;
+    font-family: 'inter', Geneva, Verdana, sans-serif;
+}
+
+.quadro_info_livro{
+    position: relative;
+    left: -5%;
+    border:2.5px solid #162E62;
+    /* display: flex; */
+    width: 100vw;
+    height: 350px;
+    background-color:rgba(255, 255, 255, 1.0);
+    border-radius: 10px;
+    padding: 10px 35px 20px 35px;
+    box-shadow: 0 5px 10px 0px rgba(12, 27, 68, 0.3);
+}
+.info_livro_titulo{
+    color:#162E62;
+    display: flex;
+    margin-left: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-weight: 100;
+    font-family: 'inter', Geneva, Verdana, sans-serif;
+}
+
+.info_livro{
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    margin-left: 40px;
+}
+
+.atributo_livro{
+    font-size: 25px;
+    padding: 2px;
+    margin-bottom: 20px;
+    font-weight: 100;
+    font-family: 'inter', Geneva, Verdana, sans-serif;
+}
+.div_btn_reservar{
+    margin-left: 70%;
+    margin-top: -2%;
+}
+.btn_reservar{
+    font-family: 'inter', Geneva, Verdana, sans-serif;
+    box-shadow: -2px 7px 10px 0px rgba(12, 27, 68, 0.3);
+    width: 250px;
+}
