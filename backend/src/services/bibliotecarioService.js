@@ -1,5 +1,8 @@
 // import sequelize from "../database/DatabaseSingleton";
 import Bibliotecario from "../models/Bibliotecario.js";
+import Error from "../errors/bibliotecarioError.js";
+
+const {BibliotecarioNaoEncontrado} = Error
 
 class BibliotecarioServices{
 
@@ -12,6 +15,9 @@ class BibliotecarioServices{
     //obter bibliotecario por id
     static async findById(id){
         const bibliotecario = await Bibliotecario.findByPk(id);
+        if(!bibliotecario){
+            throw new BibliotecarioNaoEncontrado();
+        }
         return bibliotecario;
     }
     
