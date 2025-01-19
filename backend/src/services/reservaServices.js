@@ -1,7 +1,10 @@
 import { Op } from "sequelize";
 import Reserva from "../models/Reserva.js";
+import Livro from "../models/Livro.js";
 
 class ReservaServices{
+    static diasReserva = 2;
+
     static async findAll(){
         return await Reserva.findAll();
     }
@@ -17,7 +20,22 @@ class ReservaServices{
     }
 
     static async create(reserva){
-      return  await Reserva.create(
+        reserva.status = "Em andamento.";
+        
+        const {status} = await Livro.findByPk(reserva.idLivro);
+        if(status !== 'Disponível'){
+            throw new Error('Livro não disponível para reserva');
+        }
+
+
+        const timestamp = Date.parse(reserva.dataReserva);
+        const dataReserva = new Date(timestamp);
+        const prazoReserva = new Date(timestamp + (86400000 * this.diasReserva));
+
+        reserva.dataReserva = dataReserva;
+        reserva.prazoReserva = prazoReserva;
+        
+        return  await Reserva.create(
                 reserva
             // { fields:['cpfUsuario', 'dataReserva', 'prazoReserva'] },
         );
