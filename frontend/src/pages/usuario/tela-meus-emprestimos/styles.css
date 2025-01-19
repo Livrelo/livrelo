@@ -1,0 +1,22 @@
+body .page-content-emprestimos {
+    padding: 20px;
+    margin-top: 80px;
+    background-color: #f9f9f9;
+}
+
+body .emprestimos-title {
+    font-size: 1.8rem;
+    font-family: 'Inter', sans-serif; 
+    font-weight: bold;
+    text-align: center;
+    color: #162e62;
+    margin-bottom: 20px;
+}
+
+body .emprestimos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+}

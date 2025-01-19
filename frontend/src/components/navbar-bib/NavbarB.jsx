@@ -7,8 +7,8 @@ import MenuItem from '@mui/material/MenuItem';
 import { Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
-import livrelo from './LIVRELO.png';
-import logo from './logo.png';
+import livrelobib from './LIVRELOB.png';
+import logo from "./../navbar/logo.png";
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -60,7 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-function Navbar() {
+export default function NavbarB() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate(); 
@@ -95,21 +95,27 @@ function Navbar() {
 
                 <Box
                     component="img"
-                    className="navbar-livrelo"
-                    alt="Livrelo"
-                    src={livrelo}
+                    className="navbar-livrelo-b"
+                    alt="Livrelo bibliotecário"
+                    src={livrelobib}
                     sx={{ height: 25, marginRight: 'auto' }}  
                 />
 
                 <Box className="navbar-buttons">
-                    <Button onClick={() => handleNavigation('/')} className="navbar-button">
+                    <Button onClick={() => handleNavigation('/home-b')} className="navbar-button">
                         Home
                     </Button>
-                    <Button onClick={() => handleNavigation('/reservas')} className="navbar-button">
-                        Minhas reservas
+                    <Button onClick={() => handleNavigation('/acervo-b')} className="navbar-button">
+                        Acervo completo
                     </Button>
-                    <Button onClick={() => handleNavigation('/emprestimos')} className="navbar-button">
-                        Meus empréstimos
+                    <Button onClick={() => handleNavigation('/emprestimos-b')} className="navbar-button">
+                        Empréstimos
+                    </Button>
+                    <Button onClick={() => handleNavigation('/reservas-b')} className="navbar-button">
+                        Reservas
+                    </Button>
+                    <Button onClick={() => handleNavigation('/pendencias-b')} className="navbar-button">
+                        Pendências
                     </Button>
                     
                     <Search>
@@ -123,9 +129,6 @@ function Navbar() {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <Button onClick={() => handleNavigation('/perfil')} className="navbar-button">
-                        Meu perfil
-                    </Button>
                 </Box>
                 <Box className="menu-icon-box">
                     <IconButton onClick={handleMenuOpen}>
@@ -136,10 +139,11 @@ function Navbar() {
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
                     >
-                        <MenuItem onClick={() => handleNavigation('/')}>Home</MenuItem>
-                        <MenuItem onClick={() => handleNavigation('/reservas')}>Minhas reservas</MenuItem>
-                        <MenuItem onClick={() => handleNavigation('/emprestimos')}>Meus empréstimos</MenuItem>
-                        <MenuItem onClick={() => handleNavigation('/perfil')}>Meu perfil</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/home-b')}>Home</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/acervo-b')}>Acervo completo</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/emprestimos-b')}>Empréstimos</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/reservas-b')}>Reservas</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/pendencias-b')}>Pendências</MenuItem>
                     </Menu>
                 </Box>
             </Toolbar>
@@ -147,4 +151,3 @@ function Navbar() {
     );
 }
 
-export default Navbar;

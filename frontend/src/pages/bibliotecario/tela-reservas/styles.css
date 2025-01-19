@@ -1,0 +1,6 @@
+body .page-content-reservas {
+    padding: 20px;
+    min-height: calc(100vh - 100px);
+    margin-top: 60px;
+}
+

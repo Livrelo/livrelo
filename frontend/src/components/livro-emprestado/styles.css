@@ -1,0 +1,76 @@
+body .livro-emprestado-container {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #162E62;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body .livro-emprestado-titulo {
+    color: #162E62;
+    font-size: 1.2rem;
+    text-align: left;
+    flex: 2;
+}
+
+body .livro-emprestado-data {
+    color: #7e7e7e;
+    font-size: 1rem;
+    text-align: center;
+    margin-right: 5px;
+
+}
+
+body .livro-emprestado-status {
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif; 
+    padding: 7px;
+    border-radius: 5px;
+    flex: 1;
+    margin-left: 10px;
+    text-align: center;
+    color: white;
+}
+
+body .livro-emprestado-status.no-prazo {
+    background-color: #77bd88;
+}
+
+body .livro-emprestado-status.atrasado {
+    background-color: #eb8a93;
+}
+body .livro-emprestado-status.finalizado {
+    background-color: #8496c0;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    body .livro-emprestado-container {
+        width: 80%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    body .livro-emprestado-titulo,
+    body .livro-emprestado-data,
+    body .livro-emprestado-status {
+        flex: none;
+        width: 90%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    body .livro-emprestado-status {
+        margin-left: 0;
+        padding: 8px 15px;
+    }
+}
+

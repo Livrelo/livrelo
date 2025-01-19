@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Box, Typography } from '@mui/material';
-import './styles.css'; // Certifique-se de importar o CSS corretamente
+import './styles.css';
 
 export default function LivroReservado({ titulo, dataRetirada }) {
     return (

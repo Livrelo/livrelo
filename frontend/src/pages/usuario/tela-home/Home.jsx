@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../../../components/navbar/Navbar';
+import Footer from '../../../components/footer/Footer';
 import LivroCard from '../../../components/livro-card/LivroCard';
 import Grid from '@mui/material/Grid';
 import './styles.css'; 
@@ -38,6 +39,7 @@ const livros = [
         imagem: "https://m.media-amazon.com/images/I/41qHtQr4lkL._SY445_SX342_.jpg",
     },
 ];
+//aqui na home tem que ter uma funçao pra verificar se está logado ou nao, se sim ok se nao tem que carregar outro tipo de pagina com uma mini introducao etc
 
 function Home() {
   return (
@@ -54,6 +56,7 @@ function Home() {
             ))}
         </Grid>
       </div>
+      <Footer />
     </div>
   );
 }
