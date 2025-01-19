@@ -1,0 +1,32 @@
+body .page-content-emprestimos {
+    padding: 20px;
+    min-height: calc(100vh - 100px);
+    margin-top: 60px;
+}
+
+body .emprestimos-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+body .emprestimos-header h2 {
+    text-align: center;
+    margin: 0;
+    flex-grow: 1; 
+}
+
+body .add-emprestimo-button {
+    background-color: #162E62;
+    color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+body .add-emprestimo-button:hover {
+    background-color: #115293;
+    transform: scale(1.1);
+}

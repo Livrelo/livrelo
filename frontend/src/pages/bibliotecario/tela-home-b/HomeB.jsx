@@ -51,7 +51,7 @@ export default function HomeB() {
                                 title="Livros Reservados"
                                 value="20" //contagem de reservas
                                 buttonLabel="Ver Reservas"
-                                onButtonClick={() => handleNavigation("/reservas-n")}
+                                onButtonClick={() => handleNavigation("/reservas-b")}
                             />
                         </Grid>
                         {/* 2 cards maiores dps */}
@@ -61,7 +61,7 @@ export default function HomeB() {
                                 title="Livros Emprestados"
                                 value="30" //contagem de emprestimos
                                 buttonLabel="Ver Empréstimos"
-                                onButtonClick={() => handleNavigation("/emprestimos-n")}
+                                onButtonClick={() => handleNavigation("/emprestimos-b")}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
