@@ -51,6 +51,10 @@ class Emprestimo extends Model{
                     allowNull: false,
                     field: 'dataFim',
                 },
+                status: {
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                }
                 
             },
             {

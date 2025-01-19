@@ -1,4 +1,7 @@
 import ReservaServices from "../services/reservaServices.js";
+import httpCodes from "../utils/httpCodes.js";
+
+const {HttpCode, HttpError} = httpCodes
 
 class ReservaController{
     
@@ -8,10 +11,14 @@ class ReservaController{
             const reservas = await ReservaServices.findAll();
             return res.status(200).json(reservas);
         } catch (e){
-            return res.status(400).send({
-                message: "Erro ao carregar as reservas",
-                error: e.message
-            });
+            if(e instanceof HttpError){
+                return res.status(e.httpCode).send({
+                    message: "Erro ao carregar as reservas",
+                    error: e.message
+                });
+            }
+
+            return res.status(HttpCode.INTERNAL_SERVER_ERROR).json({ message: e.message });
         }
     }
 
@@ -22,27 +29,34 @@ class ReservaController{
             const reserva = await ReservaServices.findbyId(reservaId);
             return res.status(200).json(reserva);
         } catch (e){
-            return res.status(400).send({
-                message: 'Erro ao carregar a reserva.',
-                error: e.message
-
-            })
+            if(e instanceof HttpError)
+                return res.status(e.httpCode).send({
+                    message: "Erro ao carregar a reserva",
+                    error: e.message
+                });
+    
+                return res.status(HttpCode.INTERNAL_SERVER_ERROR).json({ message: e.message });
         }
     }
 
     static async create(req, res){
         try{
             const reserva = req.body;
+            
             const response = await ReservaServices.create({...reserva});
-            return res.status(200).send({
+            
+            return res.status(201).send({
                 message: 'Reserva criada com sucesso.',
                 reserva: response
             });
-        }catch(error){
-            return res.status(400).send({
-                message: 'Ocorreu um erro ao criar uma reserva.',
-                error: error.message
-            });
+        }catch(e){
+            if(e instanceof HttpError)
+                return res.status(e.httpCode).send({
+                    message: "Ocorreu um erro ao criar uma reserva.",
+                    error: e.message
+                });
+    
+                return res.status(HttpCode.INTERNAL_SERVER_ERROR).json({ message: e.message });
         }
     }
 

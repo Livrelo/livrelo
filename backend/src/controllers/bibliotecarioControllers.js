@@ -1,5 +1,8 @@
 import { json } from "sequelize";
-import BibliotecarioService from "../services/bibliotecarioService.js"
+import BibliotecarioService from "../services/bibliotecarioService.js";
+import httpCodes from "../utils/httpCodes.js";
+
+const {HttpCode, HttpError} = httpCodes
 
 class BibliotecarioController{
 
@@ -9,10 +12,14 @@ class BibliotecarioController{
             const bibliotecarios = await BibliotecarioService.findAll();
             return res.status(200).json(bibliotecarios);
         } catch (e) {
-            return res.status(400).send({
-                message: 'Erro ao carregar os bibliotecários',
-                error: e.message
-            });
+            if(e instanceof HttpError){
+                return res.status(e.httpCode).send({
+                    message: "Erro ao carregar os bibliotecários",
+                    error: e.message
+                });
+            }
+
+            return res.status(HttpCode.INTERNAL_SERVER_ERROR).json({ message: e.message });
         }
     }
     
@@ -23,10 +30,14 @@ class BibliotecarioController{
             const bibliotecario = await BibliotecarioService.findById(bibId);
             return res.status(200).json(bibliotecario)
         } catch (e) {
-            return res.status(400).send({
-                message: 'Erro ao carregar o bibliotecario',
-                error: e.message
-            });
+            if(e instanceof HttpError){
+                return res.status(e.httpCode).send({
+                    message: "Erro ao carregar o bibliotecário",
+                    error: e.message
+                });
+            }
+
+            return res.status(HttpCode.INTERNAL_SERVER_ERROR).json({ message: e.message });
         }
     }
 
@@ -36,7 +47,7 @@ class BibliotecarioController{
             const response = await BibliotecarioService.create({...bibliotecario});
             return res.status(200).json({bibliotecario: response});
         }catch (e) {
-            return res.status(400).json({error: e.message});
+            return res.status(HttpCode.INTERNAL_SERVER_ERROR).json({ message: e.message });
         }
     }
 }

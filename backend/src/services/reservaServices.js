@@ -1,6 +1,10 @@
 import { Op } from "sequelize";
 import Reserva from "../models/Reserva.js";
 import Livro from "../models/Livro.js";
+import Emprestimo from "../models/Emprestimo.js";
+import Error from "../errors/reservaError.js"
+
+const { ReservaJaAssociada, ReservaNaoEncontrada, ReservaIndisponivel} = Error;
 
 class ReservaServices{
     static diasReserva = 2;
@@ -11,9 +15,8 @@ class ReservaServices{
 
     static async findbyId(id){
         const reserva =  await Reserva.findByPk(id);
-
         if(!reserva){
-            throw new Error("Reserva não encontrada");
+            throw new ReservaNaoEncontrada();
         }
 
         return reserva
@@ -27,6 +30,26 @@ class ReservaServices{
             throw new Error('Livro não disponível para reserva');
         }
 
+        let reservaExist = await Reserva.findAll({
+            where:{
+                idLivro: reserva.idLivro ,
+                status : 'Ativa'
+            }
+        }) 
+
+        let livroEmprestado = await Emprestimo.findAll({
+            where:{
+                idLivro: reserva.idLivro ,
+                dataFim:{[Op.gte]: reserva.dataReserva}, // Empréstimo termina depois ou no início da reserva      
+            }
+        }) 
+
+        if(reservaExist.length>0){
+            throw new ReservaJaAssociada;
+        }else if(livroEmprestado.length>0){
+            throw new ReservaIndisponivel;
+        }
+
 
         const timestamp = Date.parse(reserva.dataReserva);
         const dataReserva = new Date(timestamp);
@@ -34,17 +57,15 @@ class ReservaServices{
 
         reserva.dataReserva = dataReserva;
         reserva.prazoReserva = prazoReserva;
-        
-        return  await Reserva.create(
-                reserva
-            // { fields:['cpfUsuario', 'dataReserva', 'prazoReserva'] },
-        );
+
+        return await Reserva.create(reserva);
+       
     }
 
     static async update(reserva, idReserva){
         const reservaDb = await Reserva.findByPk(idReserva);
         if (!reservaDb) {
-            throw new Error("Reserva não encontrada");
+            throw new ReservaNaoEncontrada();
         }
         const reservaAtt = await reservaDb.update({ ...reserva });
         await reservaDb.save();
@@ -53,6 +74,9 @@ class ReservaServices{
 
     static async delete(id){
         const reservaDb = await Reserva.findByPk(id);
+        if (!reservaDb) {
+            throw new ReservaNaoEncontrada();
+        }
         await reservaDb.destroy();
         return reservaDb;
     }
