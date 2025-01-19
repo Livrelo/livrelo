@@ -2,9 +2,7 @@ import { Op } from "sequelize";
 import Reserva from "../models/Reserva.js";
 import Livro from "../models/Livro.js";
 import Emprestimo from "../models/Emprestimo.js";
-import Error from "../errors/reservaError.js"
-
-const { ReservaJaAssociada, ReservaNaoEncontrada, ReservaIndisponivel} = Error;
+import { ReservaJaAssociada, ReservaNaoEncontrada, ReservaIndisponivel } from "../errors/reservaError.js"
 
 class ReservaServices{
     static diasReserva = 2;
@@ -23,10 +21,10 @@ class ReservaServices{
     }
 
     static async create(reserva){
-        reserva.status = "Em andamento.";
+       
         
         const {status} = await Livro.findByPk(reserva.idLivro);
-        if(status !== 'Disponível'){
+        if(status !== 'Disponivel'){
             throw new Error('Livro não disponível para reserva');
         }
 
@@ -45,9 +43,9 @@ class ReservaServices{
         }) 
 
         if(reservaExist.length>0){
-            throw new ReservaJaAssociada;
+            throw new ReservaJaAssociada();
         }else if(livroEmprestado.length>0){
-            throw new ReservaIndisponivel;
+            throw new ReservaIndisponivel();
         }
 
 
@@ -55,6 +53,7 @@ class ReservaServices{
         const dataReserva = new Date(timestamp);
         const prazoReserva = new Date(timestamp + (86400000 * this.diasReserva));
 
+        reserva.status = "Ativa";
         reserva.dataReserva = dataReserva;
         reserva.prazoReserva = prazoReserva;
 

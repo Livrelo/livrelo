@@ -41,5 +41,5 @@ class ReservaIndisponivel extends ReservaError{
     }
 }
 
-export default {ReservaJaAssociada, ReservaNaoEncontrada, ReservaIndisponivel};
+export { ReservaJaAssociada, ReservaNaoEncontrada, ReservaIndisponivel };
 

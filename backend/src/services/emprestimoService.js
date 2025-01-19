@@ -1,9 +1,11 @@
 import { Op } from "sequelize";
 import Emprestimo from "../models/Emprestimo.js";
 import devolucaoService from "./devolucaoService.js";
+import Reserva from "../models/Reserva.js";
+import { ReservaNaoEncontrada } from "../errors/reservaError.js";
 class EmprestimoService {
     //CONSULTAS DE EMPRESTIMOS ABAIXO -> GET 
-
+    static diasEmprestimo = 14;
     //obter todos os empréstimos existentes
     static async findAll() {
         const emprestimos = await Emprestimo.findAll();
@@ -58,13 +60,28 @@ class EmprestimoService {
     }
 
     //CRIAÇÃO/REGISTRO DE EMPRESTIMO -> POST
-    static async create(dataInicio, dataFim, cpf, idReserva, idLivro) {
+    static async create(cpf, idReserva, idLivro) {
+        //atualizar status reserva reserva
+        const reserva = await Reserva.findByPk(idReserva);
+
+        if(!reserva){
+            throw new ReservaNaoEncontrada();
+        }
+
+        reserva.status = 'Finalizada';
+        await reserva.save();
+
+        const timestamp = Date.now();
+        const dataEmprestimo = new Date(timestamp);
+        const dataFimEmprestimo = new Date(timestamp + (86400000 * this.diasEmprestimo));
+
         const novoEmprestimo = await Emprestimo.create({
-            dataInicio: dataInicio,
-            dataFim: dataFim,
+            dataInicio: dataEmprestimo,
+            dataFim: dataFimEmprestimo,
             cpf: cpf,
             idReserva: idReserva,
             idLivro: idLivro,
+            status: 'Ativo'
         });
         return novoEmprestimo;
     }
