@@ -3,6 +3,8 @@ import Emprestimo from "../models/Emprestimo.js";
 import devolucaoService from "./devolucaoService.js";
 import Reserva from "../models/Reserva.js";
 import { ReservaNaoEncontrada } from "../errors/reservaError.js";
+import { LimiteEmprestimoError, EmprestimoAtrasadoError } from "../errors/emprestimosError.js";
+import Livro from "../models/Livro.js";
 class EmprestimoService {
     //CONSULTAS DE EMPRESTIMOS ABAIXO -> GET 
     static diasEmprestimo = 14;
@@ -58,22 +60,63 @@ class EmprestimoService {
         console.log("Empréstimos em atraso:", emprestimosEmAtraso); 
         return emprestimosEmAtraso;
     }
+    static async findEmprestimosEmAtrasoByCPF(cpf){
+        const dataAtual = new Date();
+
+        const emprestimosEmAtraso = await Emprestimo.findAll({
+            where:{
+                cpf: cpf,
+                dataFim:{ [Op.lte]:dataAtual},
+            }
+        })
+        return emprestimosEmAtraso;
+    }
 
     //CRIAÇÃO/REGISTRO DE EMPRESTIMO -> POST
     static async create(cpf, idReserva, idLivro) {
+
+
+        const emprestimosEmAtraso = await this.findEmprestimosEmAtrasoByCPF(cpf);
+
+        if(emprestimosEmAtraso.length > 0){
+            throw new EmprestimoAtrasadoError();
+        }
+
+        const emprestimos = await Emprestimo.findAll({
+            where:{
+                cpf: cpf,
+                status: 'Ativo'
+            }
+        })
+
+
+
+        if(emprestimos.length >= 5){
+            throw new LimiteEmprestimoError();
+        }
+
+
         //atualizar status reserva reserva
         const reserva = await Reserva.findByPk(idReserva);
 
-        if(!reserva){
+        if(!reserva && idReserva){
             throw new ReservaNaoEncontrada();
+        } 
+        
+        if(reserva){
+            reserva.status = 'Finalizada';
+            await reserva.save();
         }
 
-        reserva.status = 'Finalizada';
-        await reserva.save();
 
         const timestamp = Date.now();
         const dataEmprestimo = new Date(timestamp);
         const dataFimEmprestimo = new Date(timestamp + (86400000 * this.diasEmprestimo));
+
+        //mudar status do livro
+        const livro = await Livro.findByPk(idLivro);
+        livro.status = "Emprestado";
+        await livro.save();
 
         const novoEmprestimo = await Emprestimo.create({
             dataInicio: dataEmprestimo,

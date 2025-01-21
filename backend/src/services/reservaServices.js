@@ -3,6 +3,8 @@ import Reserva from "../models/Reserva.js";
 import Livro from "../models/Livro.js";
 import Emprestimo from "../models/Emprestimo.js";
 import { ReservaJaAssociada, ReservaNaoEncontrada, ReservaIndisponivel, ReservaFinalizada, LimiteReservaError } from "../errors/reservaError.js"
+import EmprestimoService from "./emprestimoService.js";
+import { EmprestimoAtrasadoError } from "../errors/emprestimosError.js";
 
 class ReservaServices{
     static diasReserva = 2;
@@ -23,9 +25,15 @@ class ReservaServices{
     static async create(reserva, cpf){
        
         
-        const {status} = await Livro.findByPk(reserva.idLivro);
-        if(status !== 'Disponivel'){
+        const livro = await Livro.findByPk(reserva.idLivro);
+        if(livro.status !== 'Disponivel'){
             throw new Error('Livro não disponível para reserva');
+        }
+
+        const emprestimosAtrasados = await EmprestimoService.findEmprestimosEmAtrasoByCPF(cpf);
+
+        if(emprestimosAtrasados.length > 0){
+            throw new EmprestimoAtrasadoError();
         }
 
         const reservasUser = await Reserva.findAll({
@@ -49,13 +57,14 @@ class ReservaServices{
             throw new ReservaJaAssociada();
         }
 
+        //todo: Livro -> status : "Disponivel"
         let livroEmprestado = await Emprestimo.findAll({
             where:{
                 idLivro: reserva.idLivro ,
                 dataFim:{[Op.gte]: reserva.dataReserva}, // Empréstimo termina depois ou no início da reserva      
                 status:"Ativo"
             }
-        }) 
+        })
         if(livroEmprestado.length>0){
             throw new ReservaIndisponivel();
         }
@@ -68,6 +77,10 @@ class ReservaServices{
         reserva.status = "Ativa";
         reserva.dataReserva = dataReserva;
         reserva.prazoReserva = prazoReserva;
+
+        //mudar status do livro
+        livro.status = "Reservado"
+        await livro.save();
 
         return await Reserva.create(reserva);
        
@@ -94,15 +107,18 @@ class ReservaServices{
 
     static async cancel(idReserva){
         const reservaDB = await Reserva.findByPk(idReserva);
-        console.log(reservaDB.status);
+        
         if (!reservaDB) {
             throw new ReservaNaoEncontrada();
         }
         
-        console.log(reservaDB.status === "Finalizada");
         if(reservaDB.status === "Finalizada"){
             throw new ReservaFinalizada();
         }
+        
+        const livro = await Livro.findByPk(reservaDB.idLivro);
+        livro.status = "Disponivel";
+        await livro.save()
         
         reservaDB.status = "Cancelada";
         await reservaDB.save();

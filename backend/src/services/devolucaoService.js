@@ -1,5 +1,6 @@
 import Devolucao from "../models/Devolucao.js";
 import Emprestimo from "../models/Emprestimo.js";
+import Livro from "../models/Livro.js";
 
 class DevolucaoService{
     //CONSULTAS DE DEVOLUÇÕES ABAIXO -> GET
@@ -25,6 +26,11 @@ class DevolucaoService{
         const emprestimo = await Emprestimo.findByPk(idEmprestimo);
         emprestimo.status = "Finalizado";
         
+        //mudar status do livro
+        const livro = await Livro.findByPk(emprestimo.idLivro);
+        livro.status = "Disponivel";
+        await livro.save();
+
         const novaDevolucao = await Devolucao.create({
             idEmprestimo: idEmprestimo,
             dataDevolucao: dataDevolucao,

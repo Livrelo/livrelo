@@ -44,7 +44,7 @@ class ReservaIndisponivel extends ReservaError{
 class ReservaFinalizada extends ReservaError{
     constructor(){
         super({
-            httpCode: HttpCode.CONFLICT,
+            httpCode: HttpCode.FORBIDDEN,
             message: 'Reserva já foi finalizada',
             type: 'ERR_SERVICE_RESERVA_FINALIZADA'
         })
@@ -54,7 +54,7 @@ class ReservaFinalizada extends ReservaError{
 class LimiteReservaError extends ReservaError{
     constructor(){
         super({
-            httpCode: HttpCode.CONFLICT,
+            httpCode: HttpCode.FORBIDDEN,
             message: 'Limite de Reservas excedido.',
             type: 'ERR_SERVICE_LIMITE_RESERVA_EXCEDIDO'
         })
