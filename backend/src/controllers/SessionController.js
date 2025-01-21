@@ -21,7 +21,6 @@ class SessionController {
             const contaCriada = await ContaService.create(conta);
 
     
-            console.log(contaCriada);
     
             const usuario = {
                 cpf: req.body.cpf,
@@ -58,7 +57,6 @@ class SessionController {
 
             const account = await ContaService.getAccount(idConta);
 
-            console.log(account);
             
 
             const token = jsonwebtoken.sign({ id: conta.idConta, email: conta.email, role: account.role, cpf: account.cpf }, JWT_SECRET, {

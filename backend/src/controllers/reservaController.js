@@ -43,7 +43,6 @@ class ReservaController{
         try{
             const reserva = req.body;
 
-            console.log(req);
             const cpf = req.cpf ? req.cpf : null;
             
             const response = await ReservaServices.create({...reserva}, cpf);

@@ -12,7 +12,7 @@ class ContaService{
             },
         });
 
-        //console.log(conta);
+        
 
         if(!conta[0]){
             throw new Error("Conta não encontrada!")
@@ -57,7 +57,7 @@ class ContaService{
             }
         })
 
-        //console.log(emailExiste);
+
 
         if(emailExiste){
             throw new Error("Esse email já está em uso!");
@@ -86,7 +86,6 @@ class ContaService{
 
     static async delete(idConta){
         const contaDeletar = await Conta.findByPk(idConta);
-        //console.log(contaDeletar);
 
         if(!contaDeletar){
             throw new Error("Conta não encontrada!")

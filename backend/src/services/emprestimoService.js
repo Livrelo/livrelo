@@ -37,7 +37,6 @@ class EmprestimoService {
     //obter emprestimos em atraso
     static async findEmprestimoEmAtraso() {
         const dataAtual = new Date();
-        console.log(dataAtual);
         //obter todos os empréstimos com dataFim < hoje (terminados)
         const emprestimosFinalizados = await Emprestimo.findAll({
             where: {
@@ -46,18 +45,18 @@ class EmprestimoService {
                 },
             },
         });
-        console.log("Empréstimos Finalizados:", emprestimosFinalizados);
+    
         //filtrar emprestimos sem data de devolucao
         //da pra fazer com left join, mas é melhor reutilizar a funçao ja existente de devolucaoService para verificar por ID
         const emprestimosEmAtraso = [];
         for (const emprestimo of emprestimosFinalizados) {
             const devolucao = await devolucaoService.findByID(emprestimo.idEmprestimo);
-            console.log("Devolução encontrada:", devolucao);
+            
             if (!devolucao) {
                 emprestimosEmAtraso.push(emprestimo);
             }
         }
-        console.log("Empréstimos em atraso:", emprestimosEmAtraso); 
+    
         return emprestimosEmAtraso;
     }
     static async findEmprestimosEmAtrasoByCPF(cpf){
