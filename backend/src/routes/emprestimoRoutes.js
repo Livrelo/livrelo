@@ -8,7 +8,8 @@ emprestimoRouter.get("/emprestimos", EmprestimoController.findAll);
 emprestimoRouter.get("/emprestimos/:cpf", EmprestimoController.findByCPF);
 emprestimoRouter.get("/emprestimo/:idEmprestimo", EmprestimoController.findByID);
 emprestimoRouter.get("/emprestimosAtrasados", EmprestimoController.findEmprestimosEmAtraso);
-emprestimoRouter.post("/emprestimo/:idLivro/:idReserva", EmprestimoController.create);
+emprestimoRouter.get("/emprestimosAtrasados/:cpf", EmprestimoController.findEmprestimosEmAtrasoByCPF)
+emprestimoRouter.post("/emprestimo/:idLivro", EmprestimoController.create);
 emprestimoRouter.put("/emprestimo/:idEmprestimo", EmprestimoController.update);
 
 export default emprestimoRouter;

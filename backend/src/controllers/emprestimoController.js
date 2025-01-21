@@ -1,5 +1,7 @@
 import EmprestimoService from "../services/emprestimoService.js";
+import HttpUtils from "../utils/httpCodes.js";
 
+const { HttpCode, HttpError } = HttpUtils;
 class EmprestimoController{
 
     //CONSULTAS DE EMPRESTIMOS ABAIXO -> GET 
@@ -58,12 +60,25 @@ class EmprestimoController{
             });
         }
     }
+    static async findEmprestimosEmAtrasoByCPF(req, res){
+        try{
+
+            const cpf = req.params.cpf;
+            const emprestimosEmAtraso = await EmprestimoService.findEmprestimosEmAtrasoByCPF(cpf);
+
+            return res.status(200).send(emprestimosEmAtraso)
+        }catch(error){
+            return res.status(400).send({
+                message: error.message
+            })
+        }
+    }
 
     //CRIAÇÃO/REGISTRO DE EMPRESTIMO -> POST
 
     static async create(req, res){
         const idLivro = req.params.idLivro;
-        let idReserva = req.params.idReserva;
+        let idReserva = req.query.idReserva;
         
         const { cpf } = req.body;
 
@@ -74,11 +89,14 @@ class EmprestimoController{
         try {
             const emprestimoCriado = await EmprestimoService.create(cpf, idReserva, idLivro);
             return res.status(200).json(emprestimoCriado);
-        } catch (error) {
-            return res.status(400).send({
-                message: 'Erro ao criar o empréstimo',
-                error: error.message
-            });
+        } catch (e) {
+            if(e instanceof HttpError)
+                return res.status(e.httpCode).send({
+                    message: "Ocorreu um erro ao criar um empréstimo.",
+                    error: e.message
+                });
+    
+                return res.status(HttpCode.INTERNAL_SERVER_ERROR).json({ message: e.message });
         }
     }
     
