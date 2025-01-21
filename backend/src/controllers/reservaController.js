@@ -42,8 +42,11 @@ class ReservaController{
     static async create(req, res){
         try{
             const reserva = req.body;
+
+            console.log(req);
+            const cpf = req.cpf ? req.cpf : null;
             
-            const response = await ReservaServices.create({...reserva});
+            const response = await ReservaServices.create({...reserva}, cpf);
             
             return res.status(201).send({
                 message: 'Reserva criada com sucesso.',
@@ -93,6 +96,28 @@ class ReservaController{
                 message: 'Ocorreu um erro ao deletar a reserva.',
                 error: error.message
             });
+        }
+    }
+
+    static async cancel(req, res){
+        try{
+            const idReserva = req.params.id;
+
+            const reserva = await ReservaServices.cancel(idReserva);
+
+            return res.status(200).send({
+                message: 'Reserva cancelada com sucesso.',
+                reserva: reserva
+            })
+        }catch(e){
+            if(e instanceof HttpError){
+                return res.status(e.httpCode).send({
+                    message: "Ocorreu um erro ao criar uma reserva.",
+                    error: e.message
+                });
+            }
+    
+            return res.status(HttpCode.INTERNAL_SERVER_ERROR).json({ message: e.message });
         }
     }
 }

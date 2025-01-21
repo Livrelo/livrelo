@@ -27,12 +27,17 @@ class ContaService{
         return conta[0];
     }
 
-    static async getRole(idConta){
+    static async getAccount(idConta){
         const usuario = await UsuarioService.findByIdConta(idConta);
+        const account = usuario[0] ? {
+            cpf: usuario[0].cpf,
+            role: 'usuario'
+        } : {
+            cpf: null,
+            role: 'bibliotecario'
+        };
 
-        const role = usuario ? 'usuario' : 'bibliotecario';
-
-        return role;
+        return account;
     }
     // ANALISAR APLICABILIDADE
 

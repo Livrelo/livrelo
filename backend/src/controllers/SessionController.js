@@ -56,9 +56,12 @@ class SessionController {
 
             const idConta = conta.idConta;
 
-            const role = await ContaService.getRole(idConta);
+            const account = await ContaService.getAccount(idConta);
 
-            const token = jsonwebtoken.sign({ id: conta.idConta, email: conta.email, role: role }, JWT_SECRET, {
+            console.log(account);
+            
+
+            const token = jsonwebtoken.sign({ id: conta.idConta, email: conta.email, role: account.role, cpf: account.cpf }, JWT_SECRET, {
                 expiresIn: "1h", // Token expira em 1 hora
             });
 

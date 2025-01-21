@@ -9,5 +9,6 @@ reservaRouter.get("/reserva/:id", ReservaController.findById);
 reservaRouter.post("/reserva", authenticateToken, authorizeTypes(['usuario']), ReservaController.create);
 reservaRouter.put("/reserva/:id", ReservaController.update);
 reservaRouter.delete("/reserva/:id", ReservaController.delete);
+reservaRouter.put("/reserva/cancelamento/:id", ReservaController.cancel);
 
 export default reservaRouter;
