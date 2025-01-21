@@ -51,7 +51,7 @@ class UsuarioController{
 
         try{
             const cpf = req.params.cpf;
-            console.log(cpf);
+            
             const usuario = req.body;
             const usuarioAtualizado = await UsuarioService.update(usuario, cpf);
 

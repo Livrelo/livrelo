@@ -1,4 +1,6 @@
 import Devolucao from "../models/Devolucao.js";
+import Emprestimo from "../models/Emprestimo.js";
+import Livro from "../models/Livro.js";
 
 class DevolucaoService{
     //CONSULTAS DE DEVOLUÇÕES ABAIXO -> GET
@@ -20,10 +22,23 @@ class DevolucaoService{
 
     //REGISTRO DE UMA DEVOLUÇÃO -> POST
     static async create (idEmprestimo, dataDevolucao){
+
+        const emprestimo = await Emprestimo.findByPk(idEmprestimo);
+        emprestimo.status = "Finalizado";
+        
+        //mudar status do livro
+        const livro = await Livro.findByPk(emprestimo.idLivro);
+        livro.status = "Disponivel";
+        await livro.save();
+
         const novaDevolucao = await Devolucao.create({
             idEmprestimo: idEmprestimo,
             dataDevolucao: dataDevolucao,
         });
+
+        //salvar depois de ser criado a Devolucao com sucesso.
+        await emprestimo.save();
+
         return novaDevolucao;
     }
 
