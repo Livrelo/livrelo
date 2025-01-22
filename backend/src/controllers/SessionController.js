@@ -1,3 +1,4 @@
+import ContaResponseBuilder from "../builders/ContaResponseBuilder.js";
 import { crypt, JWT_SECRET } from "../middlewares/Auth.js";
 import ContaService from "../services/ContaService.js"
 import UsuarioService from "../services/UsuarioService.js";
@@ -65,9 +66,17 @@ class SessionController {
 
             const tokenWithBearer = `Bearer ${token}`;
 
+            const builder = new ContaResponseBuilder();
+            const responseConta = builder
+                .addContaData(conta)
+                .dataValues()
+                .withoutTimestamps()
+                .withoutPassword()
+                .build();
+
             return res.status(200).send({
                 message: 'LogIn efetuado com sucesso!',
-                conta: conta,
+                conta: responseConta,
                 token: tokenWithBearer,
             });
 
