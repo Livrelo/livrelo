@@ -1,4 +1,4 @@
-import BaseBuilder from "./BaseBuilder";
+import BaseBuilder from "./BaseBuilder.js";
 
 class ContaResponseBuilder extends BaseBuilder {
   addContaData(contas) {

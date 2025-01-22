@@ -1,8 +1,9 @@
-import BaseBuilder from "./BaseBuilder";
+import BaseBuilder from "./BaseBuilder.js";
 
 class CategoriaResponseBuilder extends BaseBuilder {
-  addCategoriaData(categorias) {
-    this.addData(categorias);
+
+  dataValues(){
+    this.response = this.response.map((categoria) => categoria.dataValues);
     return this;
   }
 }
