@@ -1,3 +1,4 @@
+import DevolucaoResponseBuilder from "../builders/DevolucaoResponseBuilder.js";
 import Devolucao from "../models/Devolucao.js";
 import Emprestimo from "../models/Emprestimo.js";
 import Livro from "../models/Livro.js";
@@ -8,7 +9,15 @@ class DevolucaoService{
     //obter todas as devoluções
     static async findAll(){
         const devolucoes = await Devolucao.findAll();
-        return devolucoes;
+
+        const builder = new DevolucaoResponseBuilder();
+        const response = builder
+            .addDevolucaoData(devolucoes)
+            .dataValues()
+            .withoutTimestamps()
+            .build();
+
+        return response;
     }
 
     //obter devolução de um empréstimo -> deve ser usada por emprestimoService para ver se o emprestimo está atrasado, ou seja, se tem data de devolução
@@ -17,7 +26,13 @@ class DevolucaoService{
         // if(!devolucao){
         //         throw new Error(`Não há devolução para esse empréstimo`); 
         // }
-        return devolucao || null;
+        const builder = new DevolucaoResponseBuilder();
+        const response = builder
+            .addDevolucaoData(devolucao)
+            .dataValues()
+            .withoutTimestamps()
+            .build();
+        return response || null;
     }
 
     //REGISTRO DE UMA DEVOLUÇÃO -> POST
@@ -39,10 +54,15 @@ class DevolucaoService{
         //salvar depois de ser criado a Devolucao com sucesso.
         await emprestimo.save();
 
-        return novaDevolucao;
-    }
 
-    //NÃO É NECESSÁRIO DELETAR NEM ATUALIZAR DEVOLUÇÃO
+        const builder = new DevolucaoResponseBuilder();
+        const response = builder
+            .addDevolucaoData(novaDevolucao)
+            .dataValues()
+            .withoutTimestamps()
+            .build();
+        return response;
+    }
 
 }
 export default DevolucaoService;

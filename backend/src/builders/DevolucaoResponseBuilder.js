@@ -5,6 +5,10 @@ class DevolucaoResponseBuilder extends BaseBuilder {
     this.addData(devolucoes);
     return this;
   }
+  dataValues(){
+    this.response = this.response.map((item) => item.dataValues);
+    return this;
+  }
 }
 
 export default DevolucaoResponseBuilder;
