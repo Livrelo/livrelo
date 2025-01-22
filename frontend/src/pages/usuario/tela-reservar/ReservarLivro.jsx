@@ -18,6 +18,7 @@ export default function ReservarLivroYup() {
         CPF: "",
         dataRetirada: "",
     };
+    
 
     const validationSchema = Yup.object({
         CPF: Yup.string()
