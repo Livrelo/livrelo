@@ -2,9 +2,14 @@ import React from "react";
 import Header from "../../components/header-signup/Header";
 import Footer from "../../components/footer/Footer";
 import "./home.css";
+import { useNavigate } from "react-router-dom";
 import { Container, Typography, Grid, Button, Box, Card, CardContent } from "@mui/material";
 
 export default function Home() {
+    const navigate = useNavigate();
+    const handleNavigation = (route) => {
+        navigate(route);
+    };
     return (
         <div>
             <Header />
@@ -27,8 +32,12 @@ export default function Home() {
                                     Cadastre-se ou faça login para acessar nosso acervo e gerenciar seus empréstimos.
                                 </Typography>
                                 <div className="botoes-acao">
-                                    <button className="botao-acao primario">Cadastro</button>
-                                    <button className="botao-acao secundario">Entrar</button>
+                                    <Button onClick={() => handleNavigation('/signup')} className="botao-acao primario">
+                                        Cadastro
+                                    </Button>
+                                    <Button onClick={() => handleNavigation('/signin')} className="botao-acao secundario">
+                                        Entrar
+                                    </Button>
                                 </div>
                             </CardContent>
                         </Card>
@@ -41,7 +50,10 @@ export default function Home() {
                                     Acesse ferramentas exclusivas para gerenciar o acervo, acompanhar empréstimos e organizar doações.
                                 </Typography>
                                 <div className="botoes-acao">
-                                    <button className="botao-acao primario">Acessar Portal</button>
+                                    <Button onClick={() => handleNavigation('/signin')} className="botao-acao secundario">
+                                        Acessar
+                                    </Button> 
+                                    {/* trocar a rota p signin de bibliotecario */}
                                 </div>
                             </CardContent>
                         </Card>
