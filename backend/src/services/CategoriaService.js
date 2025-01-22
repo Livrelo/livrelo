@@ -1,9 +1,13 @@
+import CategoriaResponseBuilder from "../builders/CategoriaResponseBuilder.js";
 import Categoria from "../models/Categoria.js";
 
 class CategoriaService{
     static async findAll(){
         const categorias = await Categoria.findAll();
-        return categorias;
+
+        const CategoriaBuilder = new CategoriaResponseBuilder();
+        const response = CategoriaBuilder.addData(categorias).dataValues().withoutTimestamps().build();
+        return response;
     }
     static async findById(id){
         const categoria = await Categoria.findByPk(id);
@@ -12,11 +16,18 @@ class CategoriaService{
             throw new Error("Categoria não encontrada.")
         }
 
-        return categoria;
+        const CategoriaBuilder = new CategoriaResponseBuilder();
+        const response = CategoriaBuilder.addData(categoria).dataValues().withoutTimestamps().build();
+        return response;
+        // return categoria;
     }
     static async create(categoria){
         const categoriaCriada = await Categoria.create(categoria);
-        return categoriaCriada;
+
+        const CategoriaBuilder = new CategoriaResponseBuilder();
+        const response = CategoriaBuilder.addData(categoriaCriada).dataValues().withoutTimestamps().build();
+        return response;
+        // return categoriaCriada;
     }
     static async update(id, categoria){
         const categoriaDB = await Categoria.findByPk(id);
@@ -26,7 +37,12 @@ class CategoriaService{
         }
 
         const categoriaAtualizada = await categoriaDB.update({...categoria});
-        return categoriaAtualizada;
+
+
+        const CategoriaBuilder = new CategoriaResponseBuilder();
+        const response = CategoriaBuilder.addData(categoriaAtualizada).dataValues().withoutTimestamps().build();
+        return response;
+        // return categoriaAtualizada;
     }
     static async delete(id){
         const categoriaDeletada = await Categoria.destroy({

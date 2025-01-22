@@ -2,16 +2,24 @@ import { Op } from "sequelize";
 import Emprestimo from "../models/Emprestimo.js";
 import devolucaoService from "./devolucaoService.js";
 import Reserva from "../models/Reserva.js";
-import { ReservaNaoEncontrada } from "../errors/reservaError.js";
+import { ReservaIndisponivel, ReservaNaoEncontrada } from "../errors/reservaError.js";
 import { LimiteEmprestimoError, EmprestimoAtrasadoError } from "../errors/emprestimosError.js";
 import Livro from "../models/Livro.js";
+import EmprestimoResponseBuilder from "../builders/EmprestimoResponseBuilder.js";
 class EmprestimoService {
     //CONSULTAS DE EMPRESTIMOS ABAIXO -> GET 
     static diasEmprestimo = 14;
     //obter todos os empréstimos existentes
     static async findAll() {
         const emprestimos = await Emprestimo.findAll();
-        return emprestimos;
+
+        const builder = new EmprestimoResponseBuilder();
+        const response = builder
+            .addEmprestimoData(emprestimos)
+            .dataValues()
+            .withoutTimestamps()
+            .build();
+        return response;
     }
 
     //obter empréstimos pelo CPF do usuário
@@ -22,7 +30,13 @@ class EmprestimoService {
         const emprestimosCPF = await Emprestimo.findAll({
             where: { cpf: cpf },
         });
-        return emprestimosCPF;
+        const builder = new EmprestimoResponseBuilder();
+        const response = builder
+            .addEmprestimoData(emprestimosCPF)
+            .dataValues()
+            .withoutTimestamps()
+            .build();
+        return response;
     }
 
     //obter empréstimo pelo seu próprio ID
@@ -31,7 +45,14 @@ class EmprestimoService {
         if (!emprestimo) {
             throw new Error(`Empréstimo não encontrado`);
         }
-        return emprestimo;
+
+        const builder = new EmprestimoResponseBuilder();
+        const response = builder
+            .addEmprestimoData(emprestimo)
+            .dataValues()
+            .withoutTimestamps()
+            .build();
+        return response;
     }
 
     //obter emprestimos em atraso
@@ -57,7 +78,13 @@ class EmprestimoService {
             }
         }
     
-        return emprestimosEmAtraso;
+        const builder = new EmprestimoResponseBuilder();
+        const response = builder
+            .addEmprestimoData(emprestimosEmAtraso)
+            .dataValues()
+            .withoutTimestamps()
+            .build();
+        return response;
     }
     static async findEmprestimosEmAtrasoByCPF(cpf){
         const dataAtual = new Date();
@@ -68,7 +95,14 @@ class EmprestimoService {
                 dataFim:{ [Op.lte]:dataAtual},
             }
         })
-        return emprestimosEmAtraso;
+
+        const builder = new EmprestimoResponseBuilder();
+        const response = builder
+            .addEmprestimoData(emprestimosEmAtraso)
+            .dataValues()
+            .withoutTimestamps()
+            .build();
+        return response;
     }
 
     //CRIAÇÃO/REGISTRO DE EMPRESTIMO -> POST
@@ -101,6 +135,10 @@ class EmprestimoService {
         if(!reserva && idReserva){
             throw new ReservaNaoEncontrada();
         } 
+
+        if(reserva.status !== "Ativa"){
+            throw new ReservaIndisponivel();
+        }
         
         if(reserva){
             reserva.status = 'Finalizada';
@@ -125,7 +163,14 @@ class EmprestimoService {
             idLivro: idLivro,
             status: 'Ativo'
         });
-        return novoEmprestimo;
+
+        const builder = new EmprestimoResponseBuilder();
+        const response = builder
+            .addEmprestimoData(novoEmprestimo)
+            .dataValues()
+            .withoutTimestamps()
+            .build();
+        return response;
     }
 
     //ATUALIZAR EMPRESTIMO SERIA RENOVAR, INSERINDO UMA NOVA DATAFIM - PUT
@@ -137,7 +182,14 @@ class EmprestimoService {
 
         emprestimoAtt.dataFim = newDataFim;
         await emprestimoAtt.save();
-        return emprestimoAtt;
+
+        const builder = new EmprestimoResponseBuilder();
+        const response = builder
+            .addEmprestimoData(emprestimoAtt)
+            .dataValues()
+            .withoutTimestamps()
+            .build();
+        return response;
     }
 }
 

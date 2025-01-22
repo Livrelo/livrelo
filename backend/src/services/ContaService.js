@@ -1,6 +1,7 @@
 import Conta from "../models/Conta.js";
 import bcrypt from "bcrypt";
 import UsuarioService from "./UsuarioService.js";
+import ContaResponseBuilder from "../builders/ContaResponseBuilder.js";
 
 class ContaService{
 
@@ -81,7 +82,15 @@ class ContaService{
 
         await contaBD.save();
 
-        return contaAtualizada;
+        const builder = new ContaResponseBuilder();
+        const contaResponse = builder
+            .addContaData(contaAtualizada)
+            .dataValues()
+            .withoutPassword()
+            .withoutTimestamps()
+            .build();
+
+        return contaResponse;
     }
 
     static async delete(idConta){
