@@ -1,9 +1,13 @@
+import LivroResponseBuilder from "../builders/LivroResponseBuilder.js";
 import Livro from "../models/Livro.js";
 
 class LivroService{
     static async findAll(){
         const livros = await Livro.findAll();
-        return livros;
+
+        const LivroBuilder = new LivroResponseBuilder()
+        const respostaLivros = LivroBuilder.addData(livros).dataValues().withoutTimestamps().build();
+        return respostaLivros;
     }
     static async findById(id){
         const livro = await Livro.findByPk(id);
@@ -12,14 +16,20 @@ class LivroService{
             throw new Error("Livro não encontrado");
         }
 
-        return livro;
+        const LivroBuilder = new LivroResponseBuilder()
+        const respostaLivro = LivroBuilder.addData(livro).dataValues().withoutTimestamps().build();
+        return respostaLivro;
     }
     static async create(livro){
 
         //todo: tratar os campos que não podem ser nulos
 
         const livroCriado = await Livro.create(livro);
-        return livroCriado;
+        
+        const LivroBuilder = new LivroResponseBuilder();
+        const respostaLivro = LivroBuilder.addData(livroCriado).dataValues().withoutTimestamps().build();
+        console.log(respostaLivro);
+        return respostaLivro;
     }
     static async update(livro, id){
 
@@ -34,7 +44,9 @@ class LivroService{
 
         await livroDB.save();
 
-        return livroAtualizado;
+        const LivroBuilder = new LivroResponseBuilder()
+        const respostaLivro = LivroBuilder.addData(livroAtualizado).dataValues().withoutTimestamps().build();
+        return respostaLivro;
     }
     static async delete(id){
         const livroDeletado = await Livro.destroy({
@@ -42,7 +54,9 @@ class LivroService{
                 idLivro: id
             }
         })
-        return livroDeletado;
+        //.destroy retorna 0 ou 1 para simbolizar que foi deletado, e não o livro em si que foi deletado, por isso não há o uso do builder.
+        
+        return livroDeletado
     }
 
 }
