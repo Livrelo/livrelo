@@ -1,15 +1,10 @@
 import * as React from 'react';
+import { Formik, Form } from "formik";
 import NavbarB from "../../../components/navbar-bib/NavbarB.jsx"
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import { createTheme, ThemeProvider } from '@mui/material/styles'; 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Input from '../../.././components/Input/Input.jsx'
+import * as Yup from "yup";
+import Input from "../../../components/Input/Input";
+import {Box, Button, createTheme,ThemeProvider} from '@mui/material/';
+import SelectInput from '../../../components/SelectInput/Select.jsx';
 import './style.css'
 
 
@@ -26,15 +21,37 @@ function UpdateLivro(){
      const st = livro.status;
      let color = "green";
         if (st === "Indisponível") color = "red";
-              
-    const inpt = [
-        {label:"Título"},
-        {label:"Descrição"},
-        {label:"Autor"},
-        {label:"Ano"},
-        {label:"Editora"}]
 
+    const initialValues = {
+        titulo: "",
+        autor: "",
+        descricao: "",
+        editora: "",
+        ano:"",
+    }
 
+    const validationSchema = Yup.object({
+            titulo: Yup.string()
+                .required("O titulo é obrigatório"),
+            autor: Yup.string()
+                .required("O nome do autor é obrigatório"),
+            descricao: Yup.string()
+            .required("A descrição é obrigatória"),
+            editora:  Yup.string()
+            .required("O nome da editora é obrigatória"),    
+            ano: Yup.date()
+                .required("O ano de lançamento do livro é obrigatório.")
+    });
+    const handleSubmit = (values) => {
+        //alguma coisa
+    };
+
+    const opcao =[
+        "Ação",
+        "Ficção",
+        "Aventura",
+        "Romance"
+    ]
         const theme = createTheme({
             palette: {
               blues: {
@@ -80,43 +97,56 @@ function UpdateLivro(){
                                     </ThemeProvider>
                                 </Box>
                             </div>
-                            <form className="info-livro-update-r">
-                              {inpt.map((input)=>(  <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '50ch' } }} noValidate autoComplete="off"
-                                marginX={"5%"}
-                                marginY={"2%"}
-                                >   
-                                    <ThemeProvider theme={theme}>
-                                        <TextField id="outlined-basic" label={input.label} color='blues' variant="outlined" margin="normal"/>
-                                    </ThemeProvider>
-                                </Box>
-                                ))}
-                                <FormControl sx={{ m: 1, ml:"6.5%", minWidth: '50ch' }}>
-                                    <InputLabel id="demo-simple-select-helper-label">Categoria</InputLabel>
-                                    <Select
-                                    labelId="demo-simple-select-helper-label"
-                                    id="demo-simple-select-helper"
-                                    // value={}
-                                    label="Categoria"
-                                    // onChange={}
-                                    >
-                                    <MenuItem value="">
-                                        <em>Nenhuma</em>
-                                    </MenuItem>
-                                    <MenuItem value={"Ação"}>Ação</MenuItem>
-                                    <MenuItem value={"Ficção"}>Ficção</MenuItem>
-                                    <MenuItem value={"Aventura"}>Aventura</MenuItem>
-                                    </Select>
-                                    <FormHelperText>Selecione a categoria mais adequada</FormHelperText>
-                                </FormControl>
-                                <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '23ch' } }} noValidate autoComplete="off"
-                                marginX={"30%"}
-                                marginY={"2%"}
-                                >  
-                                    <ThemeProvider theme={theme}>
-                                        <Button  variant="contained" color="blues" size='large'>Atualizar</Button>
-                                    </ThemeProvider>
-                                </Box>
-                            </form> 
+                            <Box className="info-livro-update-r">
+                                <Formik 
+                                    initialValues={initialValues}
+                                    validationSchema={validationSchema}
+                                >
+                                    {({isValid, dirty})=>(
+                                        <Form>
+                                            <Input
+                                                name="titulo"
+                                                label="Título"
+                                                placeholder="Digite o Título do livro"
+                                                type='text'
+                                            />
+                                            <Input
+                                                name="autor"
+                                                label="Autor"
+                                                placeholder="Digite o nome do autor do livro"
+                                                type='text'
+                                            />
+                                            <Input
+                                                name="descricao"
+                                                label="Descrição"
+                                                placeholder="Digite a descrição do livro"
+                                                type='text'
+                                            />
+                                            <Input
+                                                name="ano"
+                                                label="Ano"
+                                                placeholder="Digite o ano de lançamento do livro"
+                                                type='date'
+                                                InputLabelProps={{
+                                                    shrink: true, 
+                                                }}
+                                            />
+                                            <Input
+                                                name="editora"
+                                                label="Editora"
+                                                placeholder="Digite a editora do livro"
+                                                type='text'
+                                            />
+                                            <SelectInput label={"Categoria"} opcao={opcao} labelHelp={"Selecione a categoria mais adequada"}/>
+                                                <ThemeProvider theme={theme}>
+                                                    <Button className='btn-form-update-livro' variant="contained" color="blues" size='large' 
+                                                        disabled={!isValid || !dirty}
+                                                    >Atualizar</Button>
+                                                </ThemeProvider>
+                                        </Form>
+                                    )}
+                                </Formik>
+                            </Box> 
 
                         </div>
                 </div>

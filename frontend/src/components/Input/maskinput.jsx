@@ -1,11 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { IMaskInput } from 'react-imask';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import { TextField } from '@mui/material';
-
 const TextMaskCustom = React.forwardRef(function TextMaskCustom(props, ref) {
     const { onChange, ...other } = props;
     return (
