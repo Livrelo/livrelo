@@ -2,7 +2,7 @@ import React from 'react';
 import LivroReservado from "../../../components/livro-reservado/LivroReservado";
 import Navbar from '../../../components/navbar/Navbar';
 import { Box } from '@mui/material';
-import './styles.css'; 
+import './styles.css';
 import Footer from '../../../components/footer/Footer';
 
 const livrosReservados = [
@@ -63,16 +63,18 @@ export default function Reservas() {
     return (
         <div>
             <Navbar />
-            <div className="page-content">
+            <div className="page-content-reservas">
                 <Box sx={{ padding: '20px' }}>
                     <h2 className="titulo">Livros Reservados</h2>
-                    {livrosReservados.map((livro) => (
-                        <LivroReservado
-                            key={livro.id}
-                            titulo={livro.titulo}
-                            dataRetirada={livro.dataRetirada}
-                        />
-                    ))}
+                    <div className="reservas-list">
+                        {livrosReservados.map((livro) => (
+                            <LivroReservado
+                                key={livro.id}
+                                titulo={livro.titulo}
+                                dataRetirada={livro.dataRetirada}
+                            />
+                        ))}
+                    </div>
                 </Box>
             </div>
             <Footer />

@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../../../components/footer/Footer";
 import NavbarB from "../../../components/navbar-bib/NavbarB";
+import AddIcon from "@mui/icons-material/Add";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import ModalReserva from "../../../components/modal/ModalReserva";
 import "./styles.css";
 import TabelaReservas from "../../../components/reservas-bib/TabelaReservas";
 
 export default function ReservasB() {
-    
+
     const reservas = [
         {
             id: 1,
@@ -48,15 +52,36 @@ export default function ReservasB() {
             status: "Ativa",
         },
     ];
-    
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = () => {
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
+
     return (
         <div>
             <NavbarB />
             <div className="page-content-reservas">
-                <h2 className="titulo">Reservas</h2>
+                <div className="emprestimos-header">
+                    <h2 className="titulo">Reservas</h2>
+                    <Tooltip title="Adicionar Reservas" arrow>
+                        <IconButton
+                            color="primary"
+                            onClick={handleOpenModal}
+                            className="add-emprestimo-button"
+                        >
+                            <AddIcon sx={{ fontSize: 30 }} />
+                        </IconButton>
+                    </Tooltip>
+                </div>
                 <TabelaReservas rows={reservas} />
             </div>
             <Footer />
+            <ModalReserva open={openModal} handleClose={handleCloseModal} />
         </div>
     );
 }
