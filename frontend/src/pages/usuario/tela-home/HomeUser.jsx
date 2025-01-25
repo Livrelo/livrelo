@@ -41,7 +41,7 @@ const livros = [
 ];
 //aqui na home tem que ter uma funçao pra verificar se está logado ou nao, se sim ok se nao tem que carregar outro tipo de pagina com uma mini introducao etc
 
-function Home() {
+function HomeUser() {
   return (
     <div>
       <Navbar />
@@ -61,4 +61,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomeUser;

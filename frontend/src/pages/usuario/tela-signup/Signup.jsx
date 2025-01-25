@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../../components/header-signup/Header.jsx";
@@ -136,5 +137,3 @@ function Signup() {
       </div>
     </div>
   );
-}
-export default Signup;

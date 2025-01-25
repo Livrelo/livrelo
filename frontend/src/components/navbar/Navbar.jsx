@@ -102,7 +102,7 @@ function Navbar() {
                 />
 
                 <Box className="navbar-buttons">
-                    <Button onClick={() => handleNavigation('/')} className="navbar-button">
+                    <Button onClick={() => handleNavigation('/home')} className="navbar-button">
                         Home
                     </Button>
                     <Button onClick={() => handleNavigation('/reservas')} className="navbar-button">
@@ -136,7 +136,7 @@ function Navbar() {
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
                     >
-                        <MenuItem onClick={() => handleNavigation('/')}>Home</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/home')}>Home</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/reservas')}>Minhas reservas</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/emprestimos')}>Meus empréstimos</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/perfil')}>Meu perfil</MenuItem>
