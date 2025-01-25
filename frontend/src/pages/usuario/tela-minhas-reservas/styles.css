@@ -1,6 +1,7 @@
-.page-content {
+
+body .page-content-reservas {
     margin-top: 50px; 
-    padding: 20px;
+    flex: 1;
 
 
 }
@@ -10,5 +11,6 @@ body .titulo {
     font-family: 'Inter', sans-serif; 
     font-size: 1.8rem; 
     color: #162E62; 
+    margin-bottom: 10px;
 
 }

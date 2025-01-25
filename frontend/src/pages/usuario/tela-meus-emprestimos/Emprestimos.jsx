@@ -21,7 +21,7 @@ export default function Emprestimos() {
         <div>
             <Navbar />
             <div className="page-content-emprestimos">
-                <h1 className="emprestimos-title">Empréstimos</h1>
+                <h1 className="titulo">Empréstimos</h1>
                 <div className="emprestimos-list">
                     {emprestimos.map((livro, index) => (
                         <LivroEmprestado
