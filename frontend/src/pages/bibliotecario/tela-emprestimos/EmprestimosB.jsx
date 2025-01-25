@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../../../components/footer/Footer";
 import NavbarB from "../../../components/navbar-bib/NavbarB";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import TabelaEmprestimos from "../../../components/emprestimos-bib/TabelaEmprestimos";
+import ModalEmprestimo from "../../../components/modal/ModalEmprestimo";
 import "./styles.css";
 
 export default function EmprestimosB() {
@@ -17,16 +18,26 @@ export default function EmprestimosB() {
         { id: 6, usuario: "marcelo areas", tituloLivro: "O Senhor dos Anéis", dataEmprestimo: "02/01/2025", dataFim: "18/01/2025", status: "Atrasado", dataDevolucao: "" },
     ];
 
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = () => {
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
+
     return (
         <div>
             <NavbarB />
             <div className="page-content-emprestimos">
-            <div className="emprestimos-header">
+                <div className="emprestimos-header">
                     <h2 className="titulo">Empréstimos</h2>
                     <Tooltip title="Adicionar Empréstimos" arrow>
                         <IconButton
                             color="primary"
-                            //onClick={addEmprestimo}
+                            onClick={handleOpenModal}
                             className="add-emprestimo-button"
                         >
                             <AddIcon sx={{ fontSize: 30 }} />
@@ -36,6 +47,7 @@ export default function EmprestimosB() {
                 <TabelaEmprestimos rows={emprestimos} />
             </div>
             <Footer />
+            <ModalEmprestimo open={openModal} handleClose={handleCloseModal} />
         </div>
     );
 }

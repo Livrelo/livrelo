@@ -1,0 +1,18 @@
+.btn-cancelar{
+    color: red;
+    background-color: white;
+    border: 1px solid red;
+}
+.btn-cancelar:hover{
+    color: white;
+    background-color: red;
+}
+.btn-registrar{
+    color: #162E62;
+    background-color: white;
+    border: 1px solid #162E62;
+}
+.btn-registrar:hover{
+    color: white;
+    background-color: #162E62
+}
