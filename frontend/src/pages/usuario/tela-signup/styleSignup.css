@@ -5,71 +5,88 @@
 
 .Signup-Container {
     width: 100%;
-    min-height: 90vh;
+    min-height: 100vh;
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    /* background-image: url('./bg.jpg'); */
-    /* width: 100%; */
-    /* background-size: 40vh 4vw; */
-    /* background-repeat: repeat;  */
-    /* max-height: 100%;
-    max-width: 100%; */
 }
 
-.SignImg {
-    display: block;
-    margin-top: 2.4%;
-    opacity: 0.55;
-    height: 95.1vh;
-    width: 100%;
-    overflow: hidden;
-    background-repeat: repeat;
-}
-
-.wrap-form-SignUp {
+body .wrap-form-SignUp {
     position: relative;
-    margin-top: -50%;
+    flex-direction: column;
+    justify-content: center;
+    margin-top:-95vh;
     border:2px solid #162E62;
-    /* display: flex; */
-    width: 760px;
-    height: 700px;
+    width: 450px;
+    height: 100%;
     background-color:rgba(255, 255, 255, 1.0);
     border-radius: 10px;
-    padding: 50px 35px 20px 35px;
+    padding: 0px 35px 10px 35px;
     box-shadow: 0 5px 10px 0px rgba(12, 27, 68, 0.3);
 }
 
-.Signup-form{
+body .Signup-form{
     display: flex;
     flex-direction: column;
 }
 
-.tittle-SignUp { 
+body .tittle-SignUp { 
     color:#162E62;
     position: relative;
-    left: 35%;
-    display: block;
+    left: 25%;
+    /* display: block;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
     font-size: 50px;
     padding: 10px;
-    margin-bottom: 20px;
-    font-weight: 100;
+    margin-bottom: 5px;
+    font-weight: 400;
     font-family: 'inter', Geneva, Verdana, sans-serif;
 }
 
-.label-SignIn {
+.label-ToSignIn {
     color:#162E62;
+    text-align: center;
+    width: 160px;
     position: relative;
-    left: 37.5%;
+    margin-left: 22%;
+    margin-right: 25%;
     display: block;
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    padding: 10px;
+    padding: 10px 10px 10px 10%;
     margin-bottom: 5px;
     font-family: 'inter', Geneva, Verdana, sans-serif;
+}
+body .btn-signUp-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media(max-width:540px){
+    body .wrap-form-SignUp {
+        left:-2%;
+        width: 300px;
+    }
+    body .tittle-SignUp { 
+        left: 20%;
+        font-size: 40px;
+    }
+    
+    .label-ToSignIn {
+        width: 240px;
+        margin-left: 2%;
+        margin-right: 15%;
+        font-size: 16px;
+    }
+    body .signUp-botao,
+    body .toSignIn-botao{
+        width: 160px;
+        height: 30px;
+
+    }
 }

@@ -1,0 +1,175 @@
+body{
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container_createLivro{
+    margin: 140px 20% 20px 15%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-items:center;
+}
+.box-cadastro-livro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border:2.5px solid #162E62;
+    width:90vw;
+    /* height: 65vh; */
+    background-color:rgba(255, 255, 255, 1.0);
+    border-radius: 10px;
+    padding: 1% 2% ;
+    box-shadow: 0 5px 10px 0px rgba(12, 27, 68, 0.3);
+}
+
+.box-cadastro-title{
+    color:#162E62;
+    position: relative;
+    display: flex;
+    margin-left: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-weight: 100;
+    font-family: 'inter', Geneva, Verdana, sans-serif;
+}
+
+.cadastro-livro-create{
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+    width: 100%;
+    height: 75%;
+    margin: 10px 50px;
+}
+.cadastro-livro-create-l{
+    display: block;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    margin: -7% 5% 0% 0%; 
+}
+
+.ft{
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #aaa;
+    border-radius: 5px;
+    color:#635e5e;
+    height: 430px;
+    width: 290px;
+    margin: 0rem 15% 3rem 5%;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.ft:hover{
+    color:#000000;
+    border: 1px dashed #000000;
+    transition: 0.5s;
+
+}
+.ft:focus{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.ft_input{
+    display: none;
+}
+.ft_img{
+    max-width: 290px;
+    max-height: 450px;
+}
+
+.label-radio{
+    font-size: 20px;
+    font-weight: bold;
+    color: #999999;
+    line-height: 1.3;
+    display: block;
+    width: 100%;
+    top: 20px;
+    left: 0px;
+
+    padding-left: 5px;
+
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+}
+
+.cadastro-livro-create-r{
+    display: block;
+    align-items: center;
+    justify-content: center;
+    /* position: relative; */
+    flex-direction: column;
+    width: 70%;
+    padding: 5px;
+    margin-right: 5%;
+}
+
+body .btn-form-create-livro{
+    width: 60%;
+    margin-left: 20%;
+}
+
+@media(max-width:1160px) {
+    .container_createLivro {
+        margin: 140px 0% 20px 0%;
+    }
+    .cadastro-livro-create-l{
+        margin: -5% 0% 0% -0%; 
+    }
+} 
+
+@media(max-width:910px) {
+    /* .cadastro-livro-create{
+        width: 70%;
+        margin: 10px; 
+    }
+    .cadastro-livro-create-l{
+        width: 70%;
+        margin: 0% 0% 0% 0%; 
+    } */
+    
+}
+@media(max-width:780px) {
+    .container_createLivro{
+        margin: 140px 0% 20px 0%;
+    }
+    .box-cadastro-livro{
+        width:100%;
+        height: 65%;
+        padding: 1% 2% ;
+    }
+    .box-cadastro-title{
+        margin-left: 0%;
+    }
+    
+    .cadastro-livro-create{
+        width: 70vw;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .cadastro-livro-create-l{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: -3% -5% 0% -0%; 
+        
+    }
+    .cadastro-livro-create-r{
+        width: 90%;
+        padding: 7px;
+        margin-right: 5%;
+    }
+    
+}

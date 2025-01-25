@@ -14,6 +14,8 @@ import SignIn from './pages/usuario/tela-signin/SignIn';
 import Signup from './pages/usuario/tela-signup/Signup.jsx';
 import Detalhamento from './pages/usuario/tela-detalhamentoLivro/Detalhamento.jsx';
 import UpdateUser from './pages/usuario/tela-updateUser/UpdateUser.jsx';
+import UpdateLivro from './pages/bibliotecario/tela-updatedetalhesLivro/UpdateLivro.jsx';
+import RegisterLivro from './pages/bibliotecario/tela-registro-livro/RegisterLivro.jsx';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -32,7 +34,8 @@ root.render(
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/detalhamento/:id' element={<Detalhamento/>}/>
         <Route path='/update_user/:id' element={<UpdateUser/>}/>
-
+        <Route path="/update_book/:id" element={<UpdateLivro/>}/>
+        <Route path="/register_book" element={<RegisterLivro/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

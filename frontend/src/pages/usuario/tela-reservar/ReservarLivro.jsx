@@ -6,6 +6,7 @@ import { Button, Typography, Box } from "@mui/material";
 import Navbar from "../../../components/navbar/Navbar";
 import "./styles.css";
 import Footer from "../../../components/footer/Footer";
+import TextMaskCustom from "../../../components/Input/maskinput";
 
 export default function ReservarLivroYup() {
     //livro pra testarrrrrrrrrr dps colocar logica pra puxar do back
@@ -23,16 +24,14 @@ export default function ReservarLivroYup() {
     const validationSchema = Yup.object({
         CPF: Yup.string()
             .required("O CPF é obrigatório.")
-            .matches(/^\d{11}$/, "O CPF deve ter 11 dígitos."),
+            .matches(/^.{14}$/, "O CPF deve ter 11 dígitos."),
         dataRetirada: Yup.date()
             .required("A data de retirada é obrigatória.")
             .min(new Date(), "A data de retirada não pode ser no passado."),
     });
-
     const handleSubmit = (values) => {
-        //alguma coisa
+        console.log(values)
     };
-
     return (
         <div>
             <Navbar />
@@ -59,9 +58,11 @@ export default function ReservarLivroYup() {
                             Reservar Livro
                         </Typography>
                         <Formik
-                            initialValues={initialValues}
+                            initialValues={{...initialValues }}
                             validationSchema={validationSchema}
-                            onSubmit={handleSubmit}
+                            onSubmit={(values) => {
+                                handleSubmit(values);
+                            }}
                         >
                             {({ isValid, dirty }) => (
                                 <Form>
@@ -69,7 +70,12 @@ export default function ReservarLivroYup() {
                                         name="CPF"
                                         label="CPF"
                                         placeholder="Digite seu CPF"
-                                        type="number"
+                                        type="text"
+                                        slotProps={{
+                                            input: {
+                                              inputComponent: TextMaskCustom,
+                                            },
+                                          }}
                                     />
                                     <Input
                                         name="dataRetirada"
