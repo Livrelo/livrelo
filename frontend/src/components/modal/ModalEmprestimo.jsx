@@ -13,13 +13,13 @@ const calculateDataFim = (dataInicio) => {
     return data.toISOString().split("T")[0]; 
 };
 
-export default function ModalEmprestimo({ open, handleClose }) {
+export default function ModalEmprestimo({ open, handleClose, idReserva, idLivro }) {
     const initialValues = {
-        idLivro: "",
+        idLivro: idLivro ||"",
         dataInicio: "",
         dataFim: "",
         cpf: "",
-        idReserva: "",
+        idReserva: idReserva || "",
     };
 
     const validationSchema = Yup.object({
@@ -30,6 +30,7 @@ export default function ModalEmprestimo({ open, handleClose }) {
                 Yup.ref("dataInicio"),
                 "A data de fim deve ser posterior à data de início."
             )
+            .min(new Date(new Date().setHours(0, 0, 0, 0)), "A data de devolução não pode ser anterior à data de hoje.")
             .required("A data de fim é obrigatória."),
         cpf: Yup.string()
             .required("O CPF é obrigatório.")
@@ -59,6 +60,7 @@ export default function ModalEmprestimo({ open, handleClose }) {
                                 label="ID do Livro"
                                 placeholder="Digite o ID do Livro"
                                 required
+                                disabled={!!initialValues.idLivro}
                             />
                             <Input
                                 name="dataInicio"
@@ -96,6 +98,7 @@ export default function ModalEmprestimo({ open, handleClose }) {
                                 name="idReserva"
                                 label="ID da Reserva"
                                 placeholder="Digite o ID da Reserva (opcional)"
+                                disabled={!!initialValues.idReserva}
                             />
                         </DialogContent>
                         <DialogActions>
