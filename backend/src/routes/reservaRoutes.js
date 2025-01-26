@@ -4,11 +4,11 @@ import { authorizeTypes, authenticateToken } from "../middlewares/Auth.js";
 
 const reservaRouter = e.Router();
 
-reservaRouter.get("/reserva", ReservaController.findAll);
-reservaRouter.get("/reserva/:id", ReservaController.findById);
+reservaRouter.get("/reserva",  authenticateToken, authorizeTypes(['bibliotecario', 'usuario']), ReservaController.findAll);
+reservaRouter.get("/reserva/:id",  authenticateToken, authorizeTypes(['bibliotecario', 'usuario']), ReservaController.findById);
 reservaRouter.post("/reserva", authenticateToken, authorizeTypes(['usuario']), ReservaController.create);
-reservaRouter.put("/reserva/:id", ReservaController.update);
-reservaRouter.delete("/reserva/:id", ReservaController.delete);
-reservaRouter.put("/reserva/cancelamento/:id", ReservaController.cancel);
+reservaRouter.put("/reserva/:id",  authenticateToken, authorizeTypes(['bibliotecario']), ReservaController.update);
+reservaRouter.delete("/reserva/:id",  authenticateToken, authorizeTypes(['bibliotecario']), ReservaController.delete);
+reservaRouter.put("/reserva/cancelamento/:id",  authenticateToken, authorizeTypes(['bibliotecario', 'usuario']), ReservaController.cancel);
 
 export default reservaRouter;
