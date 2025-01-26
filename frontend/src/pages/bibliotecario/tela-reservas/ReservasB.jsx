@@ -14,6 +14,7 @@ export default function ReservasB() {
         {
             id: 1,
             usuario: "Fulano da Silva",
+            idLivro: 1,
             tituloLivro: "Dom Casmurro",
             dataRetirada: "2025-01-20",
             prazo: "2025-01-22",
@@ -22,6 +23,7 @@ export default function ReservasB() {
         {
             id: 2,
             usuario: "Harry Potter",
+            idLivro: 2,
             tituloLivro: "O Senhor dos Anéis",
             dataRetirada: "2025-01-18",
             prazo: "2025-01-20",
@@ -30,6 +32,7 @@ export default function ReservasB() {
         {
             id: 3,
             usuario: "Maria Joaquina",
+            idLivro: 3,
             tituloLivro: "1984",
             dataRetirada: "2025-01-15",
             prazo: "2025-01-17",
@@ -38,6 +41,7 @@ export default function ReservasB() {
         {
             id: 4,
             usuario: "Cirilo",
+            idLivro: 4,
             tituloLivro: "O Hobbit",
             dataRetirada: "2025-01-22",
             prazo: "2025-01-24",
@@ -46,6 +50,7 @@ export default function ReservasB() {
         {
             id: 5,
             usuario: "Ana Carolina",
+            idLivro: 5,
             tituloLivro: "A Revolução dos Bichos",
             dataRetirada: "2025-01-19",
             prazo: "2025-01-21",
