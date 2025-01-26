@@ -1,5 +1,11 @@
+
+body{
+    margin: 0;
+    width: 100vw;
+}
 .Container_Update_User{
-    margin: 170px 100px 170px 100px;
+    width: 100%;
+    margin: 190px 3% 23% 1%;
     display: flex;
 }
 
@@ -10,8 +16,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90vw;
-    height: 70vh;
+    width: 60vw;
+    height: 50%;
     background-color:rgba(255, 255, 255, 1.0);
     border-radius: 10px;
     padding: 20px 55px 20px 55px;
@@ -31,21 +37,46 @@
     font-family: 'inter', Geneva, Verdana, sans-serif;
 }
 
-.input_update{
-    width: 50%;
-}
-.input_update label{
-    font-size: 20px;
-}
-.input_update div{
-    font-size: 20px;
-}
 .form-update{
     margin: 10px 20px ;
     align-items: center;
     justify-content: center;
-    width: 60vw;
+    width: 70vw;
     display: flex;
     flex-direction: column;
     color: #8f222294;
+}
+body form{
+    width: 50vw;
+}
+.btn_update-user_div{
+    display: flex;
+    justify-content: center;
+    width: 105%;
+    margin-left: -2%;
+}
+body .btn_update-user,
+body .btn_delete-user{
+    margin-inline:3%;
+}
+
+@media(max-width:870px){
+    .quadro_titulo{
+        font-size: 35px;
+        padding: 5px;
+        margin-left: 0px;
+    }
+    body form{
+        width: 55vw;
+    }
+}
+
+@media(max-width:600px){
+    .quadro_titulo{
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+    body form{
+        width: 65vw;
+    }
 }
