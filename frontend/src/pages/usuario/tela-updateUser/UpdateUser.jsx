@@ -61,7 +61,7 @@ function UpdateUser() {
                     }}
                     >
                     {({ isValid, dirty }) => (
-                        <Form>
+                        <Form className="inputs_form_update">
                         <Input
                             name="CPF"
                             label="CPF"

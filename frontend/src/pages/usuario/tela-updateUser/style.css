@@ -46,7 +46,7 @@ body{
     flex-direction: column;
     color: #8f222294;
 }
-body form{
+body .inputs_form_update{
     width: 50vw;
 }
 .btn_update-user_div{
@@ -66,7 +66,7 @@ body .btn_delete-user{
         padding: 5px;
         margin-left: 0px;
     }
-    body form{
+    body .inputs_form_update{
         width: 55vw;
     }
 }
@@ -76,7 +76,7 @@ body .btn_delete-user{
         font-size: 30px;
         margin-bottom: 10px;
     }
-    body form{
+    body .inputs_form_update{
         width: 65vw;
     }
 }
