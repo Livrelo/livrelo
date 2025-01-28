@@ -21,8 +21,7 @@ const validationSchema = Yup.object({
         .min(new Date(new Date().setHours(0, 0, 0, 0)), "A data de devolução não pode ser anterior à data de hoje."),
 })
 
-const handleSubmit = (e,values, { resetForm }) => {
-    e.preventDefault();
+const handleSubmit = (values, { resetForm }) => {
     console.log(values)
     console.log(open);
     console.log("oiiii");
@@ -35,10 +34,11 @@ const handleSubmit = (e,values, { resetForm }) => {
             <DialogTitle className="Modal_title_renovacao"> Registre Renovação</DialogTitle>
             <Formik initialValues={initialValues} validationSchema={validationSchema}
                 onSubmit={(values) => {
+                    console.log(values)
                     handleSubmit(values);
                 }}    
             >
-                {({isValid, dirty})=>(
+                {({isValid, dirty, setFieldValue})=>(
                     <Form>
                         <DialogContent>
                             <Input
@@ -47,7 +47,11 @@ const handleSubmit = (e,values, { resetForm }) => {
                                 type="date"
                                 InputLabelProps={{ shrink: true }}
                                 required
-                                // onChange={(e) => {setFieldValue("dataFim", e.target.value)}}
+                                onChange={(e) => {
+                                    let dataString = e.target.value;
+                                    let data = new Date(dataString);
+                                    console.log(data)
+                                    setFieldValue("dataFim",e.target.value)}}
                             />
                         </DialogContent>
                         <DialogActions>

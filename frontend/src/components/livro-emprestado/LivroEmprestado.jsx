@@ -1,9 +1,8 @@
-import {React, useState} from "react";
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import "./styles.css";
-import ModalRenovacao from "../modal_renovação/ModalRenovacao";
 
-export default function LivroEmprestado({titulo, dataFim, dataDevolucao, status }) {
+export default function LivroEmprestado({onClick,titulo, dataFim, dataDevolucao, status }) {
     const isFinalizado = !!dataDevolucao;
 
     //talvez mudar quando integrar com back
@@ -19,19 +18,8 @@ export default function LivroEmprestado({titulo, dataFim, dataDevolucao, status 
         ? "atrasado"
         : "no-prazo";
 
-    const[openModalRenovacao, setOpenModalRenovacao]= useState(false);
-
-    const handleOpen = ()=>{
-        console.log("handle open "+ openModalRenovacao)
-        setOpenModalRenovacao(true)
-        console.log("handle open "+ openModalRenovacao)
-    }
-    const handleCloseModalRenovacao = ()=>{
-        setOpenModalRenovacao(false);
-        console.log("fechamento "+ openModalRenovacao);
-    }
     return (
-        <Box onClick={handleOpen} className="livro-emprestado-container">
+        <Box onClick={onClick} className="livro-emprestado-container">
             <Typography className="livro-emprestado-titulo">{titulo}</Typography>
             <Typography className="livro-emprestado-data">
                 {isFinalizado ? `Devolvido em: ${dataDevolucao}` : `Devolver até: ${dataFim}`}
@@ -39,11 +27,6 @@ export default function LivroEmprestado({titulo, dataFim, dataDevolucao, status 
             <Box className={`livro-emprestado-status ${statusClass}`}>
                 {statusMessage}
             </Box>
-            <ModalRenovacao 
-                datafim={dataFim}
-                open={openModalRenovacao}
-                onClose={handleCloseModalRenovacao}
-            />
         </Box>
     );
 }
