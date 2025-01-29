@@ -58,7 +58,7 @@ const handleSubmit = (values, { resetForm }) => {
                             <Button variant="contained" onClick={onClose} className="btn-cancelar">
                                 Cancelar
                             </Button>
-                            <Button variant="contained" type="submit" className="btn-registrar"// disabled={!isValid || !dirty}
+                            <Button variant="contained" type="submit" className="btn-registrar" //onClick={handleSubmit}// disabled={!isValid || !dirty}
                             >
                                 Registrar
                             </Button>

@@ -14,8 +14,7 @@ export default function ModalCancelarReserva({ open, handleClose, idReserva, tit
     };
 
 
-    const handleSubmit = (values, { resetForm }) => {
-        resetForm();
+    const handleSubmit = () => {
         handleClose();
         //cancela reserva utilizando o id da reserva passado pelo cardddd
     };
@@ -26,7 +25,7 @@ export default function ModalCancelarReserva({ open, handleClose, idReserva, tit
             <DialogTitle className="titulo">Cancelar reserva</DialogTitle>
             <DialogContent>
                 <Typography className="livro-reservado-titulo">
-                    Tem certeza que deseja cancelar o livro {titulo}?
+                    Tem certeza que deseja cancelar a reserva do livro {titulo}?
                 </Typography>
             </DialogContent>
             <DialogActions>
@@ -34,6 +33,7 @@ export default function ModalCancelarReserva({ open, handleClose, idReserva, tit
                     Voltar
                 </Button>
                 <Button
+                    onClick={handleSubmit}
                     type="submit"
                     className="btn-registrar"
 
