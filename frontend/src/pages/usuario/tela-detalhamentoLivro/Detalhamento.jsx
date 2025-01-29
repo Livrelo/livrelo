@@ -1,10 +1,12 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+
 import { useParams } from "react-router-dom"
 import Navbar from "../../../components/navbar/Navbar";
 import { createTheme, ThemeProvider } from '@mui/material/styles';  
-import Button from '@mui/material/Button';
+import {Button, Box} from '@mui/material';
 import "./style.css"
+import Footer from "../../../components/footer/Footer";
 
 
 function Detalhamento(){
@@ -33,28 +35,28 @@ function Detalhamento(){
         <>
             <Navbar/>
             <div className="Container_Detalhamento_Livro">
-                <div className="imgLivro_nomeLivro">
-                    <img className = "imgLivro" src={livro.imagem} alt="imgLivro" />
-                    <span className="nomeLivro">{livro.titulo}</span>
+                <div className="imgLivro_nomeLivro_Detalhamento">
+                    <img className = "imgDetalhamentoLivro" src={livro.imagem} alt="imgLivro" />
+                    <span className="nome_DetalhamentoLivro">{livro.titulo}</span>
                 </div>
-                <div className="quadro_info_livro">
-                    <span className="info_livro_titulo">{livro.titulo}</span>
-                    <div className="info_livro">
+                <div className="quadro_detalhamento_livro">
+                    <span className="detalhamento_livro_titulo">{livro.titulo}</span>
+                    <div className="detalhamento_livro">
                         <span className="atributo_livro">Autor(es): {livro.autor}</span>
                         <span className="atributo_livro">Editora: {livro.editora}</span>
                         <span className="atributo_livro">Ano: {livro.ano}</span>
                         <span className="atributo_livro">Status: {livro.status}</span>
                     </div>
-                    <div className="div_btn_reservar">
+                    <Box className="div_btn_reservar">
                         <ThemeProvider theme={theme}>
                             <Button className="btn_reservar" variant="contained" color="blues" size='large'>Solicitar Reserva</Button>
                         </ThemeProvider>
-                    </div>
+                    </Box>
 
                 </div>
 
             </div>
-        
+        <Footer/>
         </>
     )
 

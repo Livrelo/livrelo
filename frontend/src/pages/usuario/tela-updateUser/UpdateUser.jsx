@@ -1,66 +1,131 @@
 import Navbar from "../../../components/navbar/Navbar";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import "./style.css"
-import { TextField } from "@mui/material";
-import { Box } from "@mui/material"
-
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import Input from "../../../components/Input/Input";
+import { Button, Typography, Box } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import TextMaskCustom from "../../../components/Input/maskinput";
+import "./style.css";
+import Footer from "../../../components/footer/Footer";
 
 function UpdateUser() {
+  const theme = createTheme({
+    palette: {
+      blues: {
+        main: "#2a4fa0",
+        light: "#162E62",
+        dark: "#112757",
+        contrastText: "#ffffff",
+      },
+      red: {
+        main: "#fc40405e",
+        light: "#f06e6e80",
+        // dark: '#8f222294',
+        contrastText: "#ff0000",
+      },
+    },
+  });
 
-    const theme = createTheme({
-        palette: {
-            blues: {
-                main: '#2a4fa0',
-                light: '#162E62',
-                dark: '#112757',
-                contrastText: '#ffffff',
-            },
-            red: {
-                main: '#fc40405e',
-                light: '#f06e6e80',
-                // dark: '#8f222294',
-                contrastText: '#ff0000',
-            }
-        },
-    });
-    return (
-        <>
-            <Navbar />
-            <div className="Container_Update_User">
-                <div className="quadro_InputsText">
-                    <span className="quadro_titulo"> dados de (Usuario)</span>
-                    <form className="form-update">
-                        <ThemeProvider theme={theme}>
-                            <TextField className="input_update" id="outlined-basic" label="CPF" color='blues' variant="outlined" margin="normal" />
-                        </ThemeProvider>
-                        <ThemeProvider theme={theme}>
-                            <TextField className="input_update" id="outlined-basic" label="Nome" color='blues' variant="outlined" margin="normal" />
-                        </ThemeProvider>
-                        <ThemeProvider theme={theme}>
-                            <TextField className="input_update" id="outlined-basic" label="Email" color='blues' variant="outlined" margin="normal" />
-                        </ThemeProvider>
-                        <ThemeProvider theme={theme}>
-                            <TextField className="input_update" id="outlined-basic" label="Senha" color='blues' variant="outlined" margin="normal" />
-                        </ThemeProvider>
-                        <Box component="div" sx={{ '& > :not(style)': { m: 1, width: '25ch' } }} noValidate autoComplete="off"
-                            marginX={32.5}
-                            marginY={3}
-                        >
+  const initialValues = {
+    CPF: "",
+    nome: "",
+    email: "",
+    senha: "",
+  };
+
+  const validationSchema = Yup.object({
+    CPF: Yup.string()
+      .required("O CPF é obrigatório.")
+      .matches(/^.{14}$/, "O CPF deve ter 11 dígitos."),
+    nome: Yup.string().required("O nome é obrigatório"),
+    email: Yup.string()
+      .required("O email é obrigatório.")
+      .email("Coloque um email válido"),
+    senha: Yup.string().required("A senha é obrigatória."),
+  });
+  const handleSubmit = (values) => {
+    console.log(values);
+  };
+  return (
+    <>
+      <Navbar />
+      <div className="Container_Update_User">
+            <div className="quadro_InputsText">
+                <span className="quadro_titulo"> dados de (Usuario)</span>
+                <Box className="form-update">
+                    <Formik
+                    initialValues={{ ...initialValues }}
+                    validationSchema={validationSchema}
+                    onSubmit={(values) => {
+                        handleSubmit(values);
+                    }}
+                    >
+                    {({ isValid, dirty }) => (
+                        <Form className="inputs_form_update">
+                        <Input
+                            name="CPF"
+                            label="CPF"
+                            placeholder="Digite seu CPF"
+                            type="text"
+                            slotProps={{
+                            input: {
+                                inputComponent: TextMaskCustom,
+                            },
+                            }}
+                            size="large"
+                        />
+                        <Input
+                            name="nome"
+                            label="nome"
+                            placeholder="Digite seu nome"
+                            type="text"
+                            size="large"
+                        />
+                        <Input
+                            name="email"
+                            label="e-mail"
+                            placeholder="Digite seu e-mail"
+                            type="text"
+                            size="large"
+                        />
+                        <Input
+                            name="senha"
+                            label="senha"
+                            placeholder="Digite sua senha"
+                            type="text"
+                            size="large"
+                        />
+                        <Box component="div" className="btn_update-user_div">
                             <ThemeProvider theme={theme}>
-                                <Button variant="contained" color="blues" size='large'>Atualizar dados</Button>
+                            <Button
+                                className="btn_update-user"
+                                variant="contained"
+                                color="blues"
+                                size="large"
+                            >
+                                Atualizar dados
+                            </Button>
                             </ThemeProvider>
                             <ThemeProvider theme={theme}>
-                                <Button variant="contained" color="red" size='large'>Excluir perfil</Button>
+                            <Button
+                                className="btn_delete-user"
+                                variant="contained"
+                                color="red"
+                                size="large"
+                            >
+                                Excluir perfil
+                            </Button>
                             </ThemeProvider>
                         </Box>
-                    </form>
-
-                </div>
-
+                        </Form>
+                    )}
+                    </Formik>
+                </Box>
             </div>
-        </>
-    )
+        </div>
+        <Footer/>
+    </>
+  );
 }
 
 export default UpdateUser;

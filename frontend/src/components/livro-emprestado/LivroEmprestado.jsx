@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import "./styles.css";
 
-export default function LivroEmprestado({ titulo, dataFim, dataDevolucao, status }) {
+export default function LivroEmprestado({onClick,titulo, dataFim, dataDevolucao, status }) {
     const isFinalizado = !!dataDevolucao;
 
     //talvez mudar quando integrar com back
@@ -19,7 +19,7 @@ export default function LivroEmprestado({ titulo, dataFim, dataDevolucao, status
         : "no-prazo";
 
     return (
-        <Box className="livro-emprestado-container">
+        <Box onClick={onClick} className="livro-emprestado-container">
             <Typography className="livro-emprestado-titulo">{titulo}</Typography>
             <Typography className="livro-emprestado-data">
                 {isFinalizado ? `Devolvido em: ${dataDevolucao}` : `Devolver até: ${dataFim}`}
