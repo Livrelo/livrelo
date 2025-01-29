@@ -3,7 +3,7 @@ import Navbar from "../../../components/navbar/Navbar";
 import LivroEmprestado from "../../../components/livro-emprestado/LivroEmprestado";
 import "./styles.css";
 import Footer from "../../../components/footer/Footer";
-import ModalRenovacao from "../../../components/modal_renovacao/ModalRenovacao";
+import ModalRenovacao from "../../../components/modal/ModalRenovacao";
 
 export default function Emprestimos() {
 
