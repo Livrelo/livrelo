@@ -1,18 +1,18 @@
-.btn_ModalRenovacao-cancelar{
+body .btn_ModalRenovacao-cancelar{
     color: red;
     background-color: white;
     border: 1px solid red;
 }
-.btn_ModalRenovacao-cancelar:hover{
+body .btn_ModalRenovacao-cancelar:hover{
     color: white;
     background-color: red;
 }
-.btn_ModalRenovacao-registrar{
+body .btn_ModalRenovacao-registrar{
     color: #162E62;
     background-color: white;
     border: 1px solid #162E62;
 }
-.btn_ModalRenovacao-registrar:hover{
+body .btn_ModalRenovacao-registrar:hover{
     color: white;
     background-color: #162E62
 }
