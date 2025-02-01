@@ -16,6 +16,23 @@ import Detalhamento from './pages/usuario/tela-detalhamentoLivro/Detalhamento.js
 import UpdateUser from './pages/usuario/tela-updateUser/UpdateUser.jsx';
 import UpdateLivro from './pages/bibliotecario/tela-updatedetalhesLivro/UpdateLivro.jsx';
 import RegisterLivro from './pages/bibliotecario/tela-registro-livro/RegisterLivro.jsx';
+import { toast, ToastContainer } from "react-toastify";
+
+export const notify = (type, message) => {
+	try {
+    console.log("notificando")
+		if (type === "success") {
+			toast.success(message, {
+				autoClose: 1000,
+			});
+		} else if (type === "error") {
+			toast.error(message || "Ocorreu um erro!");
+		}
+	} catch (error) {}
+};
+
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -37,6 +54,7 @@ root.render(
         <Route path="/update_book/:id" element={<UpdateLivro/>}/>
         <Route path="/register_book" element={<RegisterLivro/>}/>
       </Routes>
+    <ToastContainer/>
     </BrowserRouter>
   </React.StrictMode>
 );
