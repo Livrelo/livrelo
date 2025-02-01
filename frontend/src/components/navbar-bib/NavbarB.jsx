@@ -114,10 +114,6 @@ export default function NavbarB() {
                     <Button onClick={() => handleNavigation('/reservas-b')} className="navbar-button">
                         Reservas
                     </Button>
-                    <Button onClick={() => handleNavigation('/pendencias-b')} className="navbar-button">
-                        Pendências
-                    </Button>
-                    
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -143,7 +139,7 @@ export default function NavbarB() {
                         <MenuItem onClick={() => handleNavigation('/acervo-b')}>Acervo completo</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/emprestimos-b')}>Empréstimos</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/reservas-b')}>Reservas</MenuItem>
-                        <MenuItem onClick={() => handleNavigation('/pendencias-b')}>Pendências</MenuItem>
+                       
                     </Menu>
                 </Box>
             </Toolbar>

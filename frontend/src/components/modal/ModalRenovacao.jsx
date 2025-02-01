@@ -5,71 +5,61 @@ import * as Yup from "yup";
 import Input from "../Input/Input";
 import "./styles.css";
 
-function ModalRenovacao({open, onClose, idEmprestimo, dataFim}){
+export default function ModalRenovacao({ open, handleClose, idEmprestimo, dataFim }) {
     const initialValues = {
+        newDataFim: "",
         idEmprestimo: idEmprestimo || "",
-        dataFim: dataFim || ""
-    }
+        dataFim: dataFim || "",
+    };
 
+    const validationSchema = Yup.object({
+        newDataFim: Yup.date().required("A data de renovação é obrigatória.")
+            .min(new Date(new Date().setHours(0, 0, 0, 0)), "A data de renovação não pode ser anterior à data de hoje."),
 
-const validationSchema = Yup.object({
-    idEmprestimo: Yup.number()
-        .required("O Id do empréstimo é obrigatório"),
-    dataFim: Yup.date()
-        // .max("máximo de 14 dias de renovação")
-        .required("A data de renovação é obrigatória")
-        .min(new Date(new Date().setHours(0, 0, 0, 0)), "A data de devolução não pode ser anterior à data de hoje."),
-})
+    });
 
-const handleSubmit = (values, { resetForm }) => {
-    console.log(values)
-    console.log(open);
-    console.log("oiiii");
-    resetForm(); 
-    // onClose();
-};
+    //na logica de att o emprestimo, inserir o idEmprestimo nessa funcao. o card ja esta pegando e o modal tb, entao funciona
+    const handleSubmit = (values, { resetForm }) => {
+        resetForm();
+        handleClose();
+        //logica de renovar (update emprestimo)
+    };
 
-    return(
-        <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-            <DialogTitle className="titulo"> Registrar Renovação</DialogTitle>
-            <Formik initialValues={initialValues} validationSchema={validationSchema}
-                onSubmit={(values) => {
-                    console.log(values)
-                    handleSubmit(values);
-                }}    
+    return (
+        <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+            <DialogTitle className="titulo">Renovar Empréstimo</DialogTitle>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
             >
-                {({isValid, dirty, setFieldValue})=>(
+                {({ isValid, dirty }) => (
                     <Form>
                         <DialogContent>
                             <Input
-                                name="dataFim"
-                                label="Data de fim"
+                                name="newDataFim"
+                                label="Nova data fim"
                                 type="date"
                                 InputLabelProps={{ shrink: true }}
                                 required
-                                onChange={(e) => {
-                                    let dataString = e.target.value;
-                                    let data = new Date(dataString);
-                                    console.log(data)
-                                    setFieldValue("dataFim",e.target.value)}}
                             />
+
                         </DialogContent>
                         <DialogActions>
-                            <Button variant="contained" onClick={onClose} className="btn-cancelar">
+                            <Button onClick={handleClose} className="btn-cancelar">
                                 Cancelar
                             </Button>
-                            <Button variant="contained" type="submit" className="btn-registrar" //onClick={handleSubmit}// disabled={!isValid || !dirty}
+                            <Button
+                                type="submit"
+                                disabled={!isValid || !dirty}
+                                className="btn-registrar"
                             >
-                                Registrar
+                                Renovar
                             </Button>
                         </DialogActions>
                     </Form>
                 )}
-
             </Formik>
         </Dialog>
-
-    )
+    );
 }
-
-export default ModalRenovacao;

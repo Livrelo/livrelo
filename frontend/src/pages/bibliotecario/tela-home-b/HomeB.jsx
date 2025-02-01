@@ -15,8 +15,8 @@ import "./styles.css";
 
 export default function HomeB() {
     const navigate = useNavigate();
-    const handleNavigation = (route) => {
-        navigate(route);
+    const handleNavigation = (route, filtrarAtrasados = false) => {
+        navigate(route, { state: { filtrarAtrasados } });
     };
 
     return (
@@ -27,7 +27,7 @@ export default function HomeB() {
                 <Box sx={{ padding: 3 }}>
                     <Grid container spacing={3}>
                         {/* 3 cards em cima */}
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={6}>
                             <DashboardCard
                                 icon={LibraryBooksIcon}
                                 title="Livros Cadastrados"
@@ -36,16 +36,7 @@ export default function HomeB() {
                                 onButtonClick={() => handleNavigation("/acervo-b")}
                             />
                         </Grid>
-                        <Grid item xs={12} md={4}>
-                            <DashboardCard
-                                icon={PeopleIcon}
-                                title="Usuários Cadastrados"
-                                value="45" //contagem de usuarios
-                                buttonLabel="Ver Usuários"
-                                onButtonClick={() => handleNavigation("/usuarios-b")}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={6}>
                             <DashboardCard
                                 icon={BookIcon}
                                 title="Livros Reservados"
@@ -70,7 +61,7 @@ export default function HomeB() {
                                 title="Livros Pendentes"
                                 value="5" //contagem de atrasados
                                 buttonLabel="Ver Pendentes"
-                                onButtonClick={() => handleNavigation("/pendencias-b")}
+                                onButtonClick={() => handleNavigation("/emprestimos-b", true)}
                             />
                         </Grid>
                     </Grid>
