@@ -23,12 +23,12 @@ class LivroService{
     static async create(livro){
 
         //todo: tratar os campos que não podem ser nulos
+        const livroCriado = await Livro.create({...livro, status: 'Disponivel'});
 
-        const livroCriado = await Livro.create(livro);
-        
         const LivroBuilder = new LivroResponseBuilder();
+        
         const respostaLivro = LivroBuilder.addData(livroCriado).dataValues().withoutTimestamps().build();
-        console.log(respostaLivro);
+
         return respostaLivro;
     }
     static async update(livro, id){
