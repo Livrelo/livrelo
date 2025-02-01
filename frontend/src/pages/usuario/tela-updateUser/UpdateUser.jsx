@@ -123,7 +123,7 @@ function UpdateUser() {
                 </Box>
             </div>
         </div>
-        <Footer/>
+      <Footer/>
     </>
   );
 }

@@ -5,8 +5,10 @@ body{
 }
 .Container_Update_User{
     width: 100%;
-    margin: 190px 3% 23% 1%;
+    margin: 190px 0% 23% 0%;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .quadro_InputsText{
