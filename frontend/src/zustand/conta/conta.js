@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import CreateAxios from "../../utils/api";
 
-const api = CreateAxios.getAxiosInstance();
+const api = await CreateAxios.getAxiosInstance();
 
 const useContaStore = create((set) => ({
     conta: null,

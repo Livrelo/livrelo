@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardActionArea';
-import './styles.css'; 
+import './styles.css';
 
 export default function LivroCard({ imagem }) {
     return (
@@ -11,7 +11,7 @@ export default function LivroCard({ imagem }) {
                 <CardMedia
                     component="img"
                     className="card-media"
-                    image={imagem}
+                    image={require(`./../../../../backend/uploads/${imagem}`)}
                 />
             </CardActionArea>
         </Card>

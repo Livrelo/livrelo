@@ -6,108 +6,140 @@ import * as Yup from "yup";
 import Input from "../../../components/Input/Input";
 import { Button, Typography, Box } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import useAuthStore from "../../../zustand/auth/auth.js";
+import useReservaStore from "../../../zustand/reserva/reserva.js";
+import useLivrosStore from "../../../zustand/livro/livro.js";
+import useEmprestimoStore from "../../../zustand/emprestimo/emprestimo.js";
 import img from "./bg.jpg";
 import "./styleSignin.css";
+import { notify } from "../../../index.js";
 
 function SignIn() {
-  const theme = createTheme({
-    palette: {
-      blues: {
-        main: "#2a4fa0",
-        light: "#162E62",
-        dark: "#112757",
-        contrastText: "#ffffff",
-      },
-      whites: {
-        main: "#162E62",
-        dark: "#fffffff",
-        light: "#ffffff",
-        contrastText: "#162E62",
-      },
-    },
-  });
-  const initialValues = {
-          email: "",
-          senha: "",
-      };
-  
-      const validationSchema = Yup.object({
-          email: Yup.string()
-              .required("O email é obrigatório.")
-              .email("Coloque um email válido"),
-          senha: Yup.string()
-              .required("A senha é obrigatória.")
-      });
-      const handleSubmit = (values) => {
-          console.log(values)
-      };
-  const navigate = useNavigate();
-  return (
-    <div className="Sign">
-      <Header />
-      <div className="Sign-Container">
-        <img src={img} alt="SignImg" className="SignImg"></img>
-        <div className="wrap-form-SignIn">
-          <Box className="login-form">
-            <Typography variant="h6" className="tittle-SignIn">Entrar</Typography>
-            <Formik
-              initialValues={{ ...initialValues }}
-              validationSchema={validationSchema}
-              onSubmit={(values) => {
-                handleSubmit(values);
-              }}
-            >
-              {({ isValid, dirty }) => (
-                <Form>
-                  <Input
-                    name="email"
-                    label="e-mail"
-                    placeholder="Digite seu e-mail"
-                    type="text"
-                  />
-                  <Input
-                    name="senha"
-                    label="senha"
-                    placeholder="Digite sua senha"
-                    type="text"
-                  />
-                  <Box
-                    component="div"
-                    className="btn-signIn-div"
-                  >
-                    <ThemeProvider theme={theme}>
-                      <Button className="signIn-botao"variant="contained" color="blues" size="large" disabled={!isValid || !dirty}>
-                        Entrar
-                      </Button>
-                    </ThemeProvider>
-                  </Box>
-                </Form>
-              )}
-            </Formik>
-          </Box>
 
-          <span className="label-ToSignUp">Ainda não possui conta?</span>
+	const theme = createTheme({
+		palette: {
+			blues: {
+				main: "#2a4fa0",
+				light: "#162E62",
+				dark: "#112757",
+				contrastText: "#ffffff",
+			},
+			whites: {
+				main: "#162E62",
+				dark: "#fffffff",
+				light: "#ffffff",
+				contrastText: "#162E62",
+			},
+		},
+	});
+	const initialValues = {
+		email: "",
+		senha: "",
+	};
 
-          <Box
-            component="div"
-            className="btn-signIn-div"
-          >
-            <ThemeProvider theme={theme}>
-              <Button
-                className="toSignUp-botao"
-                variant="outlined"
-                color="whites"
-                size="large"
-                onClick={() => navigate("/signup")}
-              >
-                Cadastre-se
-              </Button>
-            </ThemeProvider>
-          </Box>
-        </div>
-      </div>
-    </div>
-  );
+	const validationSchema = Yup.object({
+		email: Yup.string()
+			.required("O email é obrigatório.")
+			.email("Coloque um email válido"),
+		senha: Yup.string().required("A senha é obrigatória."),
+	});
+
+	const navigate = useNavigate();
+
+	const { login } = useAuthStore();
+	const { fetchEmprestimosByCPF } = useEmprestimoStore();
+	const { fetchLivros } = useLivrosStore();
+	const { fetchReservaById } = useReservaStore();
+	const handleSubmit = async (values) => {
+    try{
+      const response = await login({email: values.email, senha: values.senha});
+      if(response){
+		console.log(response)
+		// chama funcao de pegar livros
+		await fetchLivros()
+		// chama funcao de pegar emprestimo
+		await fetchEmprestimosByCPF(response.conta.cpf);
+		// chama funcao de pegar reservas
+		await fetchReservaById(response.conta.id);
+        navigate("/home");
+      }
+    }catch(error){
+      console.log(error.message);
+    }
+	};
+
+	return (
+		<div className="Sign">
+			<Header />
+			<div className="Sign-Container">
+				<img src={img} alt="SignImg" className="SignImg"></img>
+				<div className="wrap-form-SignIn">
+					<Box className="login-form">
+						<Typography variant="h6" className="tittle-SignIn">
+							Entrar
+						</Typography>
+						<Formik
+							initialValues={{ ...initialValues }}
+							validationSchema={validationSchema}
+							onSubmit={handleSubmit}
+						>
+							{({ isValid, dirty }) => (
+								<Form>
+									<Input
+										name="email"
+										label="e-mail"
+										placeholder="Digite seu e-mail"
+										type="text"
+									/>
+									<Input
+										name="senha"
+										label="senha"
+										placeholder="Digite sua senha"
+										type="password"
+									/>
+									<Box
+										component="div"
+										className="btn-signIn-div"
+									>
+										<ThemeProvider theme={theme}>
+											<Button
+												className="signIn-botao"
+												variant="contained"
+												color="blues"
+												size="large"
+                        type="submit"
+												disabled={!isValid || !dirty}
+											>
+												Entrar
+											</Button>
+										</ThemeProvider>
+									</Box>
+								</Form>
+							)}
+						</Formik>
+					</Box>
+
+					<span className="label-ToSignUp">
+						Ainda não possui conta?
+					</span>
+
+					<Box component="div" className="btn-signIn-div">
+						<ThemeProvider theme={theme}>
+							<Button
+								className="toSignUp-botao"
+								variant="outlined"
+								color="whites"
+								size="large"
+								onClick={() => navigate("/signup")}
+							>
+								Cadastre-se
+							</Button>
+						</ThemeProvider>
+					</Box>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default SignIn;

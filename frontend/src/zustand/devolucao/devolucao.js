@@ -1,7 +1,7 @@
 import CreateAxios from "../../utils/api";
 import { create } from "zustand";
 
-const api = CreateAxios.getAxiosInstance();
+const api = await CreateAxios.getAxiosInstance();
 
 const useDevolucaoStore = create((set) => ({
   devolucoes: [],

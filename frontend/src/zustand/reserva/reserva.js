@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import CreateAxios from '../../utils/api';
 
-const api = CreateAxios.getAxiosInstance();
+const api = await CreateAxios.getAxiosInstance();
 
 const useReservaStore = create((set) => ({
   reservas: [],

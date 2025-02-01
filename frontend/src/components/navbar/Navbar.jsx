@@ -111,6 +111,9 @@ function Navbar() {
                     <Button onClick={() => handleNavigation('/emprestimos')} className="navbar-button">
                         Meus empréstimos
                     </Button>
+                    <Button onClick={() => handleNavigation('/')} className="navbar-button">
+                        Sair
+                    </Button>
                     
                     <Search>
                         <SearchIconWrapper>
@@ -140,6 +143,7 @@ function Navbar() {
                         <MenuItem onClick={() => handleNavigation('/reservas')}>Minhas reservas</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/emprestimos')}>Meus empréstimos</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/perfil')}>Meu perfil</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/')}>Sair</MenuItem>
                     </Menu>
                 </Box>
             </Toolbar>

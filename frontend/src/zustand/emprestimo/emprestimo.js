@@ -1,9 +1,10 @@
 import CreateAxios from "../../utils/api";
 import { devtools } from "zustand/middleware";
+import { create } from "zustand";
 
-const api = CreateAxios.getAxiosInstance();
+const api = await CreateAxios.getAxiosInstance();
 
-const useEmprestimoStore = create(devtools((set) => ({
+const useEmprestimoStore = create(((set) => ({
     emprestimos: [],
     emprestimosAtrasados: [],
     emprestimoSelecionado: null,
