@@ -1,0 +1,82 @@
+
+body{
+    margin: 0;
+    width: 100vw;
+}
+.Container_Update_User{
+    width: 100%;
+    margin: 190px 3% 23% 1%;
+    display: flex;
+}
+
+.quadro_InputsText{
+    position: relative;
+    /* left: -5%; */
+    border:2.5px solid #162E62;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60vw;
+    height: 50%;
+    background-color:rgba(255, 255, 255, 1.0);
+    border-radius: 10px;
+    padding: 20px 55px 20px 55px;
+    box-shadow: 0 5px 10px 0px rgba(12, 27, 68, 0.3);
+}
+
+.quadro_titulo{
+    color:#162E62;
+    display: flex;
+    margin-left: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-weight: 100;
+    font-family: 'inter', Geneva, Verdana, sans-serif;
+}
+
+.form-update{
+    margin: 10px 20px ;
+    align-items: center;
+    justify-content: center;
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    color: #8f222294;
+}
+body .inputs_form_update{
+    width: 50vw;
+}
+.btn_update-user_div{
+    display: flex;
+    justify-content: center;
+    width: 105%;
+    margin-left: -2%;
+}
+body .btn_update-user,
+body .btn_delete-user{
+    margin-inline:3%;
+}
+
+@media(max-width:870px){
+    .quadro_titulo{
+        font-size: 35px;
+        padding: 5px;
+        margin-left: 0px;
+    }
+    body .inputs_form_update{
+        width: 55vw;
+    }
+}
+
+@media(max-width:600px){
+    .quadro_titulo{
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+    body .inputs_form_update{
+        width: 65vw;
+    }
+}

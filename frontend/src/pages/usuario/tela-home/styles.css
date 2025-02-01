@@ -1,0 +1,29 @@
+
+.home-container {
+    padding: 80px 80px;
+
+}
+
+.books-grid {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .home-container {
+        padding: 80px;
+        justify-content: center;
+    }
+
+    .books-grid {
+        gap: 8px;
+        justify-content: center;
+
+    }
+
+    .MuiGrid-item {
+        max-width: 90%;
+    }
+}

@@ -1,0 +1,82 @@
+body .navbar {
+    background-color: #ffffff;
+    border-bottom: 2px solid #162E62;
+    box-shadow: none;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+body .toolbar {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+body .navbar .navbar-logo {
+    height: 50px;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+body .navbar .navbar-livrelo-b {
+    height: 37px;
+    margin-right: auto;
+}
+
+body .navbar .navbar-buttons {
+    display: flex;
+    gap: 15px;
+    margin-right: 7px;
+}
+
+body .navbar .navbar-button {
+    color: #162E62;
+    position: relative;
+    padding: 5px 15px;
+    border: none;
+    background: none;
+    transition: color 0.3s ease;
+}
+
+body .navbar .navbar-button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1.8px;
+    background-color: #162E62;
+    transition: width 0.5s ease;
+}
+
+body .navbar .navbar-button:hover::before,
+body .navbar .navbar-button:focus::before {
+    width: 100%;
+}
+
+body .navbar .menu-icon-box {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    body .navbar .navbar-buttons {
+        display: none;
+    }
+
+    body .navbar .menu-icon-box {
+        display: block;
+    }
+}
+
+body .navbar .menu-icon {
+    color: #162E62;
+}
+
+@media (min-width: 600px) {
+    .search {
+        width: 250px;
+    }
+}

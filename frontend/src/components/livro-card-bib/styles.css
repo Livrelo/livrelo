@@ -1,0 +1,47 @@
+body .livro-card-bib {
+    max-width: 210px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    overflow: hidden; 
+}
+
+body .livro-card-bib:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+body .card-media-bib {
+    height: 280px;
+    object-fit: cover;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+body .livro-card-content-bib {
+    padding: 8px;
+    flex-grow: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body .livro-card-button {
+    text-transform: none;
+    background-color: #162E62;
+    color: white;
+    font-size: 0.9rem;
+    padding: 10px;
+    width: 100%; 
+    border: none; 
+    transition: background-color 0.3s ease;
+    text-align: center;
+    display: block;
+}
+
+body .livro-card-button:hover {
+    background-color: #115293;
+}

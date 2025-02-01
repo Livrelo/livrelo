@@ -1,0 +1,16 @@
+
+body .page-content-reservas {
+    margin-top: 50px; 
+    flex: 1;
+
+
+}
+
+body .titulo {
+    text-align: center; 
+    font-family: 'Inter', sans-serif; 
+    font-size: 1.8rem; 
+    color: #162E62; 
+    margin-bottom: 10px;
+
+}
