@@ -58,7 +58,10 @@ class SessionController {
 
             const account = await ContaService.getAccount(idConta);
 
-            
+            if(account.role === 'usuario'){
+                const response = await UsuarioService.findByIdConta(idConta);
+                conta.dataValues.cpf = response[0].dataValues.cpf;
+            }
 
             const token = jsonwebtoken.sign({ id: conta.idConta, email: conta.email, role: account.role, cpf: account.cpf }, JWT_SECRET, {
                 expiresIn: "1h", // Token expira em 1 hora
@@ -67,12 +70,15 @@ class SessionController {
             const tokenWithBearer = `Bearer ${token}`;
 
             const builder = new ContaResponseBuilder();
+            
             const responseConta = builder
                 .addContaData(conta)
                 .dataValues()
                 .withoutTimestamps()
                 .withoutPassword()
                 .build();
+
+                
 
             return res.status(200).send({
                 message: 'LogIn efetuado com sucesso!',

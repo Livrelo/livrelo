@@ -4,6 +4,8 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import "./styles.css";
+import { useNavigate } from "react-router-dom";
+import useReservaStore from "../../zustand/reserva/reserva";
 
 
 
@@ -12,10 +14,21 @@ export default function ModalCancelarReserva({ open, handleClose, idReserva, tit
         titulo: titulo || "",
         idReserva: idReserva || "",
     };
+    const navigate = useNavigate();
+    const { cancelReserva, fetchReservasByCPF } = useReservaStore();
 
 
-    const handleSubmit = () => {
+
+    const handleSubmit = async () => {
+    try{
+        await cancelReserva(idReserva);
+        await fetchReservasByCPF();
+        navigate("/home");
+    }catch(error){
+        console.log(error);
+    } finally{
         handleClose();
+    }
         //cancela reserva utilizando o id da reserva passado pelo cardddd
     };
 

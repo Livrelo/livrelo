@@ -55,7 +55,7 @@ function Signup() {
     try {
         // Para depuração: verifique os valores
      const response = await createUsuario({
-        CPF: values.cpf,
+        cpf: values.cpf,
         nome: values.nome,
         email: values.email,
         senha: values.senha,

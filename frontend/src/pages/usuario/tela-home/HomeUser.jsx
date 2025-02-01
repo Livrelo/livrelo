@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../../../components/navbar/Navbar';
 import Footer from '../../../components/footer/Footer';
 import LivroCard from '../../../components/livro-card/LivroCard';
@@ -10,7 +10,11 @@ import './styles.css';
 function HomeUser() {
     const {fetchLivros, livros} = useLivrosStore();
 
-    console.log(livros);
+    
+    useEffect(() => {
+        console.log("fetching livros")
+        fetchLivros();
+    }, [])
 
     
     return (
@@ -22,6 +26,7 @@ function HomeUser() {
                 {livros.map((livro) => (
                     <Grid item xs={12} sm={6} md={2} key={livro.id}>
                         <LivroCard 
+                            idlivro={livro.idLivro}
                             imagem={livro.livroImage} 
                         />
                     </Grid>

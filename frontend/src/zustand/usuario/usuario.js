@@ -4,7 +4,7 @@ import { notify } from "../..";
 
 const api = await CreateAxios.getAxiosInstance();
 
-const useUsuarioStore = create((set) => ({
+const useUsuarioStore = create((set, get) => ({
     usuarios: [],
     usuario: null,
     loading: false,
@@ -16,6 +16,7 @@ const useUsuarioStore = create((set) => ({
         try {
             const response = await api.get(`/usuario/${idConta}`);
             set({ usuario: response.data });
+            return response;
         } catch (error) {
             set({ error: error.response?.data?.message || error.message });
         } finally {

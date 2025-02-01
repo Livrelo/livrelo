@@ -28,21 +28,35 @@ class ReservaServices{
         const response = ReservaBuilder.addReservaData(reserva).dataValues().withoutTimestamps().build();
         return response;
     }
+    static async findByCPF(cpf){
+        const reservas = await Reserva.findAll({
+            where:{
+                cpfUsuario: cpf
+            }
+        })
+        return reservas
+    }
 
     static async create(reserva, cpf){
        
+        console.error("verificando se livro esta disponivel")
+        console.error(reserva);
+        console.log(reserva.idLivro);
         
         const livro = await Livro.findByPk(reserva.idLivro);
         if(livro.status !== 'Disponivel'){
             throw new Error('Livro não disponível para reserva');
         }
 
+
+        console.error("verificando emprestimos em atraso")
         const emprestimosAtrasados = await EmprestimoService.findEmprestimosEmAtrasoByCPF(cpf);
 
         if(emprestimosAtrasados.length > 0){
             throw new EmprestimoAtrasadoError();
         }
 
+        console.error("verificando reservas do usuario")
         const reservasUser = await Reserva.findAll({
             where:{
                 cpfUsuario: cpf,
@@ -56,7 +70,7 @@ class ReservaServices{
 
         let reservaExist = await Reserva.findAll({
             where:{
-                idLivro: reserva.idLivro ,
+                idLivro: Number(reserva.idLivro) ,
                 status : 'Ativa'
             }
         })
@@ -77,6 +91,8 @@ class ReservaServices{
         }
 
 
+        console.error("atualizando reserva e colocando no banco.")
+
         const timestamp = Date.parse(reserva.dataReserva);
         const dataReserva = new Date(timestamp);
         const prazoReserva = new Date(timestamp + (86400000 * this.diasReserva));
@@ -89,6 +105,8 @@ class ReservaServices{
         livro.status = "Reservado"
         await livro.save();
 
+
+        console.error(reserva);
         const reservaCriada = await Reserva.create(reserva);
         
         const ReservaBuilder = new ReservaResponseBuilder();

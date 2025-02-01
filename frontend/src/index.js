@@ -35,13 +35,13 @@ export const notify = (type, message) => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<HomeUser />} />
         <Route path="/reservas" element={<Reservas />} />
-        <Route path="/reservar" element={<ReservarLivro />} />
+        <Route path="/reservar/:id" element={<ReservarLivro />} />
         <Route path="/emprestimos" element={<Emprestimos />} />
         <Route path="/home-b" element={<HomeB />} />
         <Route path="/acervo-b" element={<AcervoB />} />
@@ -56,5 +56,5 @@ root.render(
       </Routes>
     <ToastContainer/>
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
