@@ -3,25 +3,52 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ModalDevolucao from "../modal/ModalDevolucao";
+import ModalRenovacao from "../modal/ModalRenovacao"; 
+import { useLocation } from "react-router-dom"; 
 import "./styles.css";
 
 export default function TabelaEmprestimos({ rows, onAddDevolucao }) {
-    const [openModal, setOpenModal] = useState(false);
+    const [openModalDevolucao, setOpenModalDevolucao] = useState(false);
+    const [openModalRenovacao, setOpenModalRenovacao] = useState(false);
     const [selectedEmprestimo, setSelectedEmprestimo] = useState(null);
 
-    const handleOpenModal = (idEmprestimo) => {
+    const location = useLocation();
+    const filtrarAtrasados = location.state?.filtrarAtrasados || false;
+
+    //filtro de pendencias
+    const [filterModel, setFilterModel] = useState({
+        items: filtrarAtrasados ? [{ field: "status", operator: "equals", value: "Atrasado" }] : [],
+    });
+
+    const handleOpenModalDevolucao = (idEmprestimo) => {
         setSelectedEmprestimo(idEmprestimo);
-        setOpenModal(true);
+        setOpenModalDevolucao(true);
     };
 
-    const handleCloseModal = () => {
-        setOpenModal(false);
+    const handleCloseModalDevolucao = () => {
+        setOpenModalDevolucao(false);
         setSelectedEmprestimo(null);
     };
 
-    const [filterModel, setFilterModel] = React.useState({
-        items: [],
-    });
+    const handleOpenModalRenovacao = (idEmprestimo) => {
+        setSelectedEmprestimo(idEmprestimo);
+        setOpenModalRenovacao(true);
+    };
+
+    const handleCloseModalRenovacao = () => {
+        setOpenModalRenovacao(false);
+        setSelectedEmprestimo(null);
+    };
+
+    // const renovarEmprestimo = (novaDataFim) => {
+    //     if (selectedEmprestimo) {
+    //         const emprestimo = rows.find((e) => e.id === selectedEmprestimo);
+    //         if (emprestimo) {
+    //             emprestimo.dataFim = novaDataFim;
+    //             alert(`Empréstimo ID ${selectedEmprestimo} renovado até: ${novaDataFim}`);
+    //         }
+    //     }
+    // };
 
     const columns = [
         { field: "id", headerName: "ID", width: 50 },
@@ -40,45 +67,32 @@ export default function TabelaEmprestimos({ rows, onAddDevolucao }) {
                 if (status === "Atrasado") color = "red";
                 if (status === "Concluído") color = "green";
 
-                return (
-                    <span style={{ color, fontWeight: "bold" }}>
-                        {status}
-                    </span>
-                );
+                return <span style={{ color, fontWeight: "bold" }}>{status}</span>;
             },
         },
         {
             field: "renovar",
             headerName: "Renovação",
             width: 100,
-            renderCell: (params) =>
-                params.value ? (
-                    params.value
-                ) : (
-                    <Tooltip title="Renovar empréstimo">
-                        <IconButton color="primary">
-                            <AddIcon />
-                        </IconButton>
-                    </Tooltip>
-                ),
+            renderCell: (params) => (
+                <Tooltip title="Renovar empréstimo">
+                    <IconButton color="primary" onClick={() => handleOpenModalRenovacao(params.row.id)}>
+                        <AddIcon />
+                    </IconButton>
+                </Tooltip>
+            ),
         },
         {
             field: "dataDevolucao",
             headerName: "Devolução",
             width: 100,
-            renderCell: (params) =>
-                params.value ? (
-                    params.value
-                ) : (
-                    <Tooltip title="Adicionar Devolução">
-                        <IconButton
-                            color="primary"
-                            onClick={() => handleOpenModal(params.row.id)} //passa o id do emprstimo
-                        >
-                            <AddIcon />
-                        </IconButton>
-                    </Tooltip>
-                ),
+            renderCell: (params) => (
+                <Tooltip title="Adicionar Devolução">
+                    <IconButton color="primary" onClick={() => handleOpenModalDevolucao(params.row.id)}>
+                        <AddIcon />
+                    </IconButton>
+                </Tooltip>
+            ),
         },
     ];
 
@@ -92,10 +106,13 @@ export default function TabelaEmprestimos({ rows, onAddDevolucao }) {
                 slots={{ toolbar: GridToolbar }}
                 disableColumnFilter={false}
             />
-            <ModalDevolucao
-                open={openModal}
-                handleClose={handleCloseModal}
-                idEmprestimo={selectedEmprestimo} //passa o id pelo emprestimo selecioado
+            <ModalDevolucao open={openModalDevolucao} handleClose={handleCloseModalDevolucao} idEmprestimo={selectedEmprestimo} />
+            <ModalRenovacao
+                open={openModalRenovacao}
+                handleClose={handleCloseModalRenovacao} 
+                idEmprestimo={selectedEmprestimo}
+                dataFim={rows.find((e) => e.id === selectedEmprestimo)?.dataFim || ""}
+                // renovarEmprestimo={renovarEmprestimo}
             />
         </div>
     );
