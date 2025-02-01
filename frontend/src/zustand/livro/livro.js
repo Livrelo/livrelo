@@ -1,7 +1,8 @@
 import CreateAxios from "../../utils/api";
-import { devtools } from "zustand/middleware";
+import { create } from "zustand";
+// import { devtools } from "zustand/middleware";
 
-const api = CreateAxios();
+const api = CreateAxios.getAxiosInstance();
 
 const useLivrosStore = create((set) => ({
     livros: [],
@@ -12,7 +13,7 @@ const useLivrosStore = create((set) => ({
     fetchLivros: async () => {
         set({ loading: true, error: null });
         try {
-            const response = await api.get('/api/livros');
+            const response = await api.get('/livro');
             set({ livros: response.data });
         } catch (error) {
             set({ error: error.message });
@@ -24,7 +25,7 @@ const useLivrosStore = create((set) => ({
     fetchLivroById: async (id) => {
         set({ loading: true, error: null });
         try {
-            const response = await api.get(`/api/livros/${id}`);
+            const response = await api.get(`/livro/${id}`);
             set({ livro: response.data });
         } catch (error) {
             set({ error: error.message });
@@ -33,10 +34,10 @@ const useLivrosStore = create((set) => ({
         }
     },
 
-    createLivro: async (novoLivro) => {
+    createLivro: async (livro) => {
         set({ loading: true, error: null });
         try {
-            const response = await api.post('/api/livros', novoLivro);
+            const response = await api.post('/livro', livro);
             set((state) => ({ livros: [...state.livros, response.data] }));
         } catch (error) {
             set({ error: error.message });
@@ -48,7 +49,7 @@ const useLivrosStore = create((set) => ({
     updateLivro: async (id, livroAtualizado) => {
         set({ loading: true, error: null });
         try {
-            const response = await api.put(`/api/livros/${id}`, livroAtualizado);
+            const response = await api.put(`/livro/${id}`, livroAtualizado);
             set((state) => ({
                 livros: state.livros.map((livro) => livro.idLivro === id ? response.data : livro)
             }));
@@ -62,7 +63,7 @@ const useLivrosStore = create((set) => ({
     deleteLivro: async (id) => {
         set({ loading: true, error: null });
         try {
-            await api.delete(`/api/livros/${id}`);
+            await api.delete(`/livro/${id}`);
             set((state) => ({
                 livros: state.livros.filter((livro) => livro.idLivro !== id)
             }));

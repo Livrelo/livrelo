@@ -1,7 +1,7 @@
 import CreateAxios from "../../utils/api";
 import { devtools } from "zustand/middleware";
 
-const api = CreateAxios();
+const api = CreateAxios.getAxiosInstance();
 
 const useEmprestimoStore = create(devtools((set) => ({
     emprestimos: [],
@@ -10,7 +10,7 @@ const useEmprestimoStore = create(devtools((set) => ({
     loading: false,
     error: null,
 
-    // Obter todos os empréstimos
+    
     fetchAllEmprestimos: async () => {
         set({ loading: true, error: null });
         try {
@@ -23,12 +23,12 @@ const useEmprestimoStore = create(devtools((set) => ({
         }
     },
 
-    // Obter empréstimos pelo CPF
+    
     fetchEmprestimosByCPF: async (cpf) => {
         set({ loading: true, error: null });
         try {
             if (!cpf) throw new Error("CPF não fornecido");
-            const response = await api.get(`/emprestimos/cpf/${cpf}`);
+            const response = await api.get(`/emprestimos/${cpf}`);
             set({ emprestimos: response.data });
         } catch (error) {
             set({ error: error.message });
@@ -37,7 +37,7 @@ const useEmprestimoStore = create(devtools((set) => ({
         }
     },
 
-    // Obter empréstimo pelo ID
+    
     fetchEmprestimoByID: async (idEmprestimo) => {
         set({ loading: true, error: null });
         try {
@@ -51,11 +51,11 @@ const useEmprestimoStore = create(devtools((set) => ({
         }
     },
 
-    // Obter empréstimos em atraso
+    
     fetchEmprestimosEmAtraso: async () => {
         set({ loading: true, error: null });
         try {
-            const response = await api.get('/emprestimos/atraso');
+            const response = await api.get('/emprestimosAtrasados');
             set({ emprestimosAtrasados: response.data });
         } catch (error) {
             set({ error: error.message });
@@ -65,11 +65,24 @@ const useEmprestimoStore = create(devtools((set) => ({
         }
     },
 
-    // Criar um novo empréstimo
+    fetchEmprestimosEmAtrasoByCPF: async (cpf) => {
+        set({ loading: true, error: null });
+        try {
+            const response = await api.get(`/emprestimosAtrasados;${cpf}`);
+            set({ emprestimosAtrasados: response.data });
+        } catch (error) {
+            set({ error: error.message });
+            
+        } finally {
+            set({ loading: false });
+        }
+    },
+
+    
     createEmprestimo: async (dataInicio, dataFim, cpf, idReserva, idLivro) => {
         set({ loading: true, error: null });
         try {
-            const response = await api.post('/emprestimos', {
+            const response = await api.post(`/emprestimos/${idLivro}`, {
                 dataInicio,
                 dataFim,
                 cpf,
@@ -86,7 +99,7 @@ const useEmprestimoStore = create(devtools((set) => ({
         }
     },
 
-    // Renovar empréstimo
+    
     updateEmprestimo: async (idEmprestimo, newDataFim) => {
         set({ loading: true, error: null });
         try {

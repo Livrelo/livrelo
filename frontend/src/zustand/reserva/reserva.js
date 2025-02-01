@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import CreateAxios from '../../utils/api';
 
-const api = CreateAxios();
+const api = CreateAxios.getAxiosInstance();
 
 const useReservaStore = create((set) => ({
   reservas: [],
@@ -12,7 +12,7 @@ const useReservaStore = create((set) => ({
   fetchReservas: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.get('/api/reservas');
+      const response = await api.get('/reserva');
       set({ reservas: response.data, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });
@@ -22,30 +22,30 @@ const useReservaStore = create((set) => ({
   fetchReservaById: async (id) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.get(`/api/reservas/${id}`);
+      const response = await api.get(`/reserva/${id}`);
       set({ reserva: response.data, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });
     }
   },
 
-  createReserva: async (reservaData) => {
+  createReserva: async (reserva, cpf) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.post('/api/reservas', reservaData);
+      const response = await api.post('/reserva', reserva, cpf);
       set((state) => ({ reservas: [...state.reservas, response.data], isLoading: false }));
     } catch (error) {
       set({ error: error.message, isLoading: false });
     }
   },
 
-  updateReserva: async (id, updatedData) => {
+  updateReserva: async (reserva, id) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.put(`/api/reservas/${id}`, updatedData);
+      const response = await api.put(`/reserva/${id}`, reserva);
       set((state) => ({
         reservas: state.reservas.map((reserva) =>
-          reserva.id === id ? response.data : reserva
+          reserva.idReserva === id ? response.data : reserva
         ),
         isLoading: false,
       }));
@@ -57,7 +57,7 @@ const useReservaStore = create((set) => ({
   deleteReserva: async (id) => {
     set({ isLoading: true, error: null });
     try {
-      await api.delete(`/api/reservas/${id}`);
+      await api.delete(`/reserva/${id}`);
       set((state) => ({
         reservas: state.reservas.filter((reserva) => reserva.id !== id),
         isLoading: false,
@@ -66,6 +66,20 @@ const useReservaStore = create((set) => ({
       set({ error: error.message, isLoading: false });
     }
   },
+
+  cancelReserva: async (id) => {
+    set({ isLoading: true, error: null });
+    try{
+      const response = await api.put(`/reserva/cancelamento/${id}`);
+      set((state)=>({
+        reserva: state.reservas.map((reserva) =>
+          reserva.idReserva === id ? response.data : reserva
+        ), isLoading:false
+      }));
+    } catch (error) {
+      set({ error: error.message, isLoading: false})
+    }
+  }
 }));
 
 export default useReservaStore;
