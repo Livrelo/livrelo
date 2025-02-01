@@ -28,7 +28,7 @@ class DatabaseSingleton {
             }
 
             // Inicializa e sincroniza os modelos
-            this.initModels();
+            await this.initModels();
         }
         return this.instance;
     }

@@ -1,37 +1,11 @@
 import { canTreatArrayAsAnd } from "sequelize/lib/utils";
 import ContaService from "../services/ContaService.js";
+import jsonwebtoken from "jsonwebtoken";
+import { crypt } from "../middlewares/Auth.js";
+
+
 
 class ContaController{
-
-    static async logIn(req, res){
-        try{
-            const email = req.body.email
-            const senha = req.body.senha
-            const data = {
-                email: email,
-                senha: senha,
-            }
-
-            const conta = await ContaService.logIn(data);
-
-            return res.status(200).send({
-                message: 'LogIn efetuado com sucesso!',
-                conta: conta,
-            });
-
-        }catch(error){
-            return res.status(400).send({
-                message: 'Ocorreu um erro encontrando essa conta em específico!',
-                error: error.message
-            });
-        }
-    }
-
-    static async logOut(req, res){
-        return res.status(200).send({
-            conta: null
-        })
-    }
 
     // ANALISAR APLICABILIDADE
 
@@ -70,6 +44,8 @@ class ContaController{
 
             const conta = req.body;
 
+            conta.senha = await crypt(conta.senha);
+
             const contaCriada = await ContaService.create({...conta});
             return res.status(201).send({
                 message: 'Conta criada com sucesso!',
@@ -87,9 +63,14 @@ class ContaController{
     static async update(req, res){
         try{
             const idConta = req.params.idConta;
-            //console.log(idConta);
-            const conta = req.body;
-            const contaAtualizada = await ContaService.update(conta, idConta);
+
+            const contaAtualizar = {...req.body};
+            
+            if(contaAtualizar.senha){
+                contaAtualizar.senha = await crypt(contaAtualizar.senha);
+            }
+
+            const contaAtualizada = await ContaService.update(contaAtualizar, idConta);
 
             return res.status(200).send({
                 message: 'Conta atualizada com sucesso!',
@@ -107,7 +88,6 @@ class ContaController{
     static async delete(req, res){
         try{
             const idConta = req.params.idConta;
-            //console.log(idConta);
             const contaDeletada = await ContaService.delete(idConta);
 
             return res.status(200).send({
