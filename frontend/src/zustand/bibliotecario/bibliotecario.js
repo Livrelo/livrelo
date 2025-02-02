@@ -2,6 +2,7 @@ import CreateAxios from "../../utils/api";
 import { create } from "zustand";
 
 const api = await CreateAxios.getAxiosInstance();
+const authState = useAuthStore.getState();
 
 const useBibliotecarioStore = create((set) => ({
     bibliotecarios:[],

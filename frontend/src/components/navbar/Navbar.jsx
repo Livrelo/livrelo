@@ -12,7 +12,8 @@ import logo from './logo.png';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../../zustand/auth/auth';
 import './styles.css';
 
 const Search = styled('div')(({ theme, focused }) => ({
@@ -64,6 +65,9 @@ function Navbar() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate(); 
+
+    
+
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -126,7 +130,7 @@ function Navbar() {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <Button onClick={() => handleNavigation('/perfil')} className="navbar-button">
+                    <Button onClick={() => handleNavigation(`/perfil/${useAuthStore.getState().conta.idConta}`)} className="navbar-button">
                         Meu perfil
                     </Button>
                 </Box>

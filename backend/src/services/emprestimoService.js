@@ -6,6 +6,7 @@ import { ReservaIndisponivel, ReservaNaoEncontrada } from "../errors/reservaErro
 import { LimiteEmprestimoError, EmprestimoAtrasadoError } from "../errors/emprestimosError.js";
 import Livro from "../models/Livro.js";
 import EmprestimoResponseBuilder from "../builders/EmprestimoResponseBuilder.js";
+import Devolucao from "../models/Devolucao.js";
 class EmprestimoService {
     //CONSULTAS DE EMPRESTIMOS ABAIXO -> GET 
     static diasEmprestimo = 14;
@@ -30,9 +31,19 @@ class EmprestimoService {
         const emprestimosCPF = await Emprestimo.findAll({
             where: { cpf: cpf },
         });
+        const emprestimos = [];
+
+        for(let emprestimo of emprestimosCPF){
+            const livro = await Livro.findByPk(emprestimo.idLivro);
+            emprestimo.dataValues.livro = livro;
+            const devolucao = await Devolucao.findByPk(emprestimo.idEmprestimo);
+            emprestimo.dataValues.dataDevolucao = devolucao.dataDevolucao ? devolucao.dataDevolucao : null;
+            emprestimos.push(emprestimo);
+        }
+        
         const builder = new EmprestimoResponseBuilder();
         const response = builder
-            .addEmprestimoData(emprestimosCPF)
+            .addEmprestimoData(emprestimos)
             .dataValues()
             .withoutTimestamps()
             .build();

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Box } from "@mui/material";
 import DashboardCard from "../../../components/dashboard-bib/DashboardCard";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,9 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import ErrorIcon from "@mui/icons-material/Error";
 import NavbarB from "../../../components/navbar-bib/NavbarB";
 import Footer from "../../../components/footer/Footer";
+import useEmprestimoStore from "../../../zustand/emprestimo/emprestimo";
+import useLivrosStore from "../../../zustand/livro/livro";
+import useReservaStore from "../../../zustand/reserva/reserva";
 import "./styles.css";
 
 //usando valores de teste q dps devem ser subtituidos pelas contagens etc
@@ -18,6 +21,21 @@ export default function HomeB() {
     const handleNavigation = (route, filtrarAtrasados = false) => {
         navigate(route, { state: { filtrarAtrasados } });
     };
+
+    const { livros } = useLivrosStore();
+    const { reservas } = useReservaStore();
+    const { emprestimos } = useEmprestimoStore();
+
+    //useStates
+    const [livrosCount, setLivrosCount] = useState();
+    const [reservasCount, setReservasCount] = useState();
+    const [emprestimosCount, setEmprestimosCount] = useState();
+    const [pendentesCount, setPendentesCount] = useState();
+
+    useEffect(() => {
+        //calcular livroscount / set livrosCount
+        //reservas count
+    }, [livros, reservas, emprestimos]);
 
     return (
         <div>

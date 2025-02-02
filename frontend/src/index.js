@@ -35,7 +35,7 @@ export const notify = (type, message) => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -50,11 +50,11 @@ root.render(
         <Route path='/signin' element={<SignIn/>}/>
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/detalhamento/:id' element={<Detalhamento/>}/>
-        <Route path='/update_user/:id' element={<UpdateUser/>}/>
+        <Route path='/perfil/:id' element={<UpdateUser/>}/>
         <Route path="/update_book/:id" element={<UpdateLivro/>}/>
         <Route path="/register_book" element={<RegisterLivro/>}/>
       </Routes>
-    <ToastContainer/>
+      <ToastContainer/>
     </BrowserRouter>
-  // </React.StrictMode>
+  </React.StrictMode>
 );

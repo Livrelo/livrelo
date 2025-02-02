@@ -139,7 +139,7 @@ export default function NavbarB() {
                         <MenuItem onClick={() => handleNavigation('/acervo-b')}>Acervo completo</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/emprestimos-b')}>Empréstimos</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/reservas-b')}>Reservas</MenuItem>
-                       
+                        <MenuItem onClick={() => handleNavigation('/')}>Sair</MenuItem>
                     </Menu>
                 </Box>
             </Toolbar>

@@ -62,6 +62,7 @@ class SessionController {
                 const response = await UsuarioService.findByIdConta(idConta);
                 conta.dataValues.cpf = response[0].dataValues.cpf;
             }
+            conta.dataValues.role = account.role;
 
             const token = jsonwebtoken.sign({ id: conta.idConta, email: conta.email, role: account.role, cpf: account.cpf }, JWT_SECRET, {
                 expiresIn: "1h", // Token expira em 1 hora

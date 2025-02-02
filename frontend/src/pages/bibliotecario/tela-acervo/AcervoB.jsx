@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "../../../components/footer/Footer";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
@@ -7,47 +7,16 @@ import Tooltip from "@mui/material/Tooltip";
 import "./styles.css";
 import NavbarB from "../../../components/navbar-bib/NavbarB";
 import LivroCardB from "../../../components/livro-card-bib/LivroCardB";
-
-const livros = [
-    {
-        id: 1,
-        imagem: "https://m.media-amazon.com/images/I/71MuD6Hn8OL._AC_UF1000,1000_QL80_.jpg",
-    },
-    {
-        id: 2,
-        imagem: "https://images.tcdn.com.br/img/img_prod/971248/diario_de_um_banana_v_13_batalha_neval_283_1_b0efb5b63bff02f656067ce056d49e88.jpg",
-    },
-    {
-        id: 3,
-        imagem: "https://m.media-amazon.com/images/I/41fRkzhEHkL._SY445_SX342_.jpg",
-    },
-    {
-        id: 4,
-        imagem: "https://m.media-amazon.com/images/I/41897yAI4LL._SY445_SX342_.jpg",
-    },
-    {
-        id: 5,
-        imagem: "https://m.media-amazon.com/images/I/41kT95iZ81L._SY445_SX342_.jpg",
-    },
-    {
-        id: 6,
-        imagem: "https://m.media-amazon.com/images/I/51SnGLrrJcL._SY445_SX342_.jpg",
-    },
-    {
-        id: 7,
-        imagem: "https://m.media-amazon.com/images/I/41gBzGDn3XL._SY445_SX342_.jpg",
-    },
-    {
-        id: 8,
-        imagem: "https://m.media-amazon.com/images/I/41qHtQr4lkL._SY445_SX342_.jpg",
-    },
-];
+import useLivrosStore from "../../../zustand/livro/livro";
+import { useNavigate } from "react-router-dom";
 
 export default function AcervoB() {
-    const handleEdit = (id) => {
-        //logica de editar o livro (detalhes atualizar apagar etc)
-    };
 
+    const { livros } = useLivrosStore();
+    const navigate = useNavigate();
+    useEffect(() => {
+        console.log(livros);
+    }, []);
     const handleAddBook = () => {
         //logica de adicionar novo livro
     };
@@ -70,10 +39,10 @@ export default function AcervoB() {
                 </div>
                 <Grid container spacing={2} className="books-grid">
                     {livros.map((livro) => (
-                        <Grid item xs={12} sm={6} md={3} lg={2} key={livro.id}>
+                        <Grid item xs={12} sm={6} md={3} lg={2} key={livro.idLivro}>
                             <LivroCardB
-                                imagem={livro.imagem}
-                                onEditClick={() => handleEdit(livro.id)}
+                                imagem={livro.livroImage}
+                                onEditClick={() => navigate(`/update_book/${livro.idLivro}`)}
                             />
                         </Grid>
                     ))}

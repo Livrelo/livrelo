@@ -46,26 +46,41 @@ function SignIn() {
 
 	const navigate = useNavigate();
 
-	const { login } = useAuthStore();
-	const { fetchEmprestimosByCPF } = useEmprestimoStore();
-	const { fetchLivros } = useLivrosStore();
-	const { fetchReservaById } = useReservaStore();
+	const { login, conta } = useAuthStore();
+	const { fetchEmprestimosByCPF, fetchAllEmprestimos } = useEmprestimoStore();
+	const { fetchLivros, livros } = useLivrosStore();
+	const { fetchReservasByCPF, fetchReservas} = useReservaStore();
 	const handleSubmit = async (values) => {
-    try{
-      const response = await login({email: values.email, senha: values.senha});
-      if(response){
-		console.log(response)
-		// chama funcao de pegar livros
-		await fetchLivros()
-		// chama funcao de pegar emprestimo
-		await fetchEmprestimosByCPF(response.conta.cpf);
-		// chama funcao de pegar reservas
-		await fetchReservaById(response.conta.id);
-        navigate("/home");
-      }
-    }catch(error){
-      console.log(error.message);
-    }
+		try{
+		const response = await login({email: values.email, senha: values.senha});
+		if(response){
+			// chama funcao de pegar livros
+			console.log(response.conta);
+			console.log(response);
+
+			if(response.conta.role === 'bibliotecario'){
+				await fetchLivros();
+				await fetchAllEmprestimos();
+				//fetch all emprestimos atrasados
+				await fetchReservas();
+				console.log(livros);
+				//fetch no que precisa bibliotecario
+				navigate("/home-b");
+
+			}else{
+				//funcoes de bibliotecario
+				await fetchLivros();
+				// chama funcao de pegar emprestimo
+				await fetchEmprestimosByCPF(response.conta.cpf);
+				// chama funcao de pegar reservas
+				await fetchReservasByCPF(response.conta.cpf);
+				navigate("/home");
+				
+			}
+		}
+		}catch(error){
+		console.log(error.message);
+		}
 	};
 
 	return (

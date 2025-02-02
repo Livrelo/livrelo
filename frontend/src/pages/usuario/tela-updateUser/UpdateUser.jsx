@@ -1,5 +1,7 @@
 import Navbar from "../../../components/navbar/Navbar";
+import { useEffect } from "react"
 import { Formik, Form } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import Input from "../../../components/Input/Input";
 import { Button, Typography, Box } from "@mui/material";
@@ -7,8 +9,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextMaskCustom from "../../../components/Input/maskinput";
 import "./style.css";
 import Footer from "../../../components/footer/Footer";
+import { useParams } from "react-router-dom";
+import useAuthStore from "../../../zustand/auth/auth";
+import useContaStore from "../../../zustand/conta/conta.js";
+
 
 function UpdateUser() {
+  // const { id } = useParams();
+  const { conta } = useAuthStore();
   const theme = createTheme({
     palette: {
       blues: {
@@ -25,14 +33,19 @@ function UpdateUser() {
       },
     },
   });
+  
+  // useEffect(()=>{
 
+  // })
+  // const navigate = useNavigate();
   const initialValues = {
-    CPF: "",
-    nome: "",
-    email: "",
+    CPF: conta.cpf,
+    nome: conta.nome,
+    email: conta.email,
     senha: "",
   };
 
+  // const {deleteConta} = useContaStore();
   const validationSchema = Yup.object({
     CPF: Yup.string()
       .required("O CPF é obrigatório.")
@@ -43,22 +56,33 @@ function UpdateUser() {
       .email("Coloque um email válido"),
     senha: Yup.string().required("A senha é obrigatória."),
   });
-  const handleSubmit = (values) => {
-    console.log(values);
-  };
+  // const handleDeleteUser = async (e) => {
+  //   e.preventDefault();
+  //   try{
+  //      await deleteConta(Number(conta.idConta));
+  //      navigate("/")
+  //   }catch(error){
+  //       console.error(error.message);
+  //   }
+    
+  // };
+
+  const handleUpdate = async (values) =>{
+
+  }
   return (
     <>
       <Navbar />
       <div className="Container_Update_User">
             <div className="quadro_InputsText">
-                <span className="quadro_titulo"> dados de (Usuario)</span>
+                <span className="quadro_titulo"> Dados de {conta.nome}</span>
                 <Box className="form-update">
                     <Formik
                     initialValues={{ ...initialValues }}
                     validationSchema={validationSchema}
-                    onSubmit={(values) => {
-                        handleSubmit(values);
-                    }}
+                    // onSubmit={(values) => {
+                    //     handleSubmit(values);
+                    // }}
                     >
                     {({ isValid, dirty }) => (
                         <Form className="inputs_form_update">
@@ -107,14 +131,15 @@ function UpdateUser() {
                             </Button>
                             </ThemeProvider>
                             <ThemeProvider theme={theme}>
-                            <Button
+                            {/* <Button
                                 className="btn_delete-user"
                                 variant="contained"
                                 color="red"
                                 size="large"
+                                onClick={handleDeleteUser}
                             >
                                 Excluir perfil
-                            </Button>
+                            </Button> */}
                             </ThemeProvider>
                         </Box>
                         </Form>

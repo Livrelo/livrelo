@@ -1,9 +1,14 @@
 import { create } from 'zustand';
 import CreateAxios from '../../utils/api';
-import useAuthStore from '../auth/auth';
+import { API_HEADER } from '../../utils/config';
+
+import useAuthStore from '../auth/auth.js';
 import { notify } from '../..';
 
 const api = await CreateAxios.getAxiosInstance();
+const authState = useAuthStore.getState();
+console.log("O que vem aqui"+API_HEADER)
+// const headers = API_HEADER(userState.token)
 
 const useReservaStore = create((set) => ({
   reservas: [],
@@ -14,7 +19,13 @@ const useReservaStore = create((set) => ({
   fetchReservas: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.get('/reserva/');
+      const authState = useAuthStore.getState();
+      
+      const response = await api.get('/reserva/', {
+        headers: {
+          ["x-access-token"]:`${authState.token}`
+        }
+      });
       set({ reservas: response.data, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });
@@ -24,7 +35,11 @@ const useReservaStore = create((set) => ({
   fetchReservaById: async (id) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.get(`/reserva/${id}`);
+      const response = await api.get(`/reserva/${id}`, {
+        headers: {
+            ["x-access-token"]:`${authState.token}`
+        }
+    });
       set({ reserva: response.data, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });
@@ -36,10 +51,10 @@ const useReservaStore = create((set) => ({
       const userState = useAuthStore.getState();
       const response = await api.get(`/reserva/cpf/${userState.conta.cpf}`, {
         headers: {
-          ["x-access-token"]:`${userState.token}`
+        ["x-access-token"]:`${userState.token}`
         }
       });
-      set({ reservas: response.data, isLoading: false });
+      set({ reservas: [...response.data], isLoading: false });
     }catch(error){
       set({ error: error.message, isLoading: false });
     }
@@ -48,7 +63,7 @@ const useReservaStore = create((set) => ({
   createReserva: async (reserva) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.post('/reserva', {...reserva, cpfUsuario: reserva.cpf}, {
+      const response = await api.post('/reserva', {...reserva, cpfUsuario: reserva.cpf},{
         headers: {
           ["x-access-token"]:`${useAuthStore.getState().token}`
         }
@@ -66,7 +81,11 @@ const useReservaStore = create((set) => ({
   updateReserva: async (reserva, id) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.put(`/reserva/${id}`, reserva);
+      const response = await api.put(`/reserva/${id}`, reserva, {
+        headers: {
+            ["x-access-token"]:`${authState.token}`
+        }
+    } );
       set((state) => ({
         reservas: state.reservas.map((reserva) =>
           reserva.idReserva === id ? response.data : reserva
@@ -81,7 +100,12 @@ const useReservaStore = create((set) => ({
   deleteReserva: async (id) => {
     set({ isLoading: true, error: null });
     try {
-      await api.delete(`/reserva/${id}`);
+      await api.delete(`/reserva/${id}`,{
+          headers: {
+              ["x-access-token"]:`${authState.token}`
+          }
+      }
+      );
       set((state) => ({
         reservas: state.reservas.filter((reserva) => reserva.id !== id),
         isLoading: false,

@@ -8,7 +8,7 @@ export default function LivroCardB({ imagem, onEditClick }) {
             <CardMedia
                 component="img"
                 className="card-media-bib"
-                image={imagem}
+                image={require(`./../../../../backend/uploads/${imagem}`)}
                 alt="Capa do Livro"
             />
             <CardContent className="livro-card-content-bib">
