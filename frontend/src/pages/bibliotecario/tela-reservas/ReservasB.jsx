@@ -11,11 +11,27 @@ import useReservaStore from "../../../zustand/reserva/reserva";
 
 export default function ReservasB() {
 
-    const { reservas } = useReservaStore();
+    const { reservas, fetchReservas } = useReservaStore();
+
+    const [reservasRows, setReservaRows] = useState();
+
 
     useEffect(() => {
-        console.log(reservas);  
+        fetchReservas();
     }, [])
+
+    useEffect(() => {
+        console.log(reservas);
+        const reservasArray = []
+        for(const reserva of reservas){
+            const reservaObj = {
+                ...reserva,
+                id: reserva.idReserva
+            }
+            reservasArray.push(reservaObj);
+        }
+        setReservaRows(reservasArray);
+    }, [reservas])
     // const reservas = [
     //     {
     //         id: 1,
@@ -91,7 +107,7 @@ export default function ReservasB() {
                         </IconButton>
                     </Tooltip>
                 </div>
-                <TabelaReservas rows={reservas} />
+                <TabelaReservas rows={reservasRows} />
             </div>
             <Footer />
             <ModalReserva open={openModal} handleClose={handleCloseModal} />

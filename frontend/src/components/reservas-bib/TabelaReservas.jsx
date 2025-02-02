@@ -4,31 +4,70 @@ import { IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ModalEmprestimo from "../modal/ModalEmprestimo";
 import "./styles.css";
+import formatarData from "../../utils/formatDate";
 
-export default function TabelaReservas({ rows }) {
+export default function TabelaReservas({rows}) {
     const [filterModel, setFilterModel] = React.useState({
         items: [],
     });
-    const [openModal, setOpenModal] = useState(false);
-        const [selectedReserva, setSelectedReserva] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedReserva, setSelectedReserva] = useState(null);
 
-    const handleOpenModal = (idReserva, idLivro) => {
-        setSelectedReserva(idReserva, idLivro);
-        setOpenModal(true);
+    const handleOpenModal = (row) => {
+        console.log(row);
+        setSelectedReserva(row);
+        setIsModalOpen(true);
     };
 
     const handleCloseModal = () => {
-        setOpenModal(false);
+        setIsModalOpen(false);
         setSelectedReserva(null);
     };
 
     const columns = [
         { field: "id", headerName: "ID", width: 100 },
-        { field: "usuario", headerName: "Usuário", width: 260 },
+        { 
+            field: "usuario",
+            headerName: "Usuário", 
+            width: 260,
+            renderCell: (params) => {
+                return (
+                    <span>{params.row.usuario.nome}</span>
+                )
+            }
+        },
         { field: "idLivro", headerName: "ID Livro", width: 70 },
-        { field: "tituloLivro", headerName: "Livro", width: 250 },
-        { field: "dataRetirada", headerName: "Data para retirada", width: 200 },
-        { field: "prazo", headerName: "Prazo para retirada", width: 200 },
+        { 
+            field: "tituloLivro", 
+            headerName: "Livro", 
+            width: 250,
+            renderCell: (params) => {
+                console.log(params)
+                return (
+                    <span>{params.row.livro.nome}</span>
+                )
+            }
+        },
+        { 
+            field: "dataReserva", 
+            headerName: "Data reservada", 
+            width: 200,
+            renderCell: (params) => {
+                return (
+                    <span>{formatarData(new Date(params.value))}</span>
+                )
+            }
+        },
+        { 
+            field: "prazoReserva", 
+            headerName: "Prazo para retirada", 
+            width: 200,
+            renderCell: (params) => {
+                return (
+                    <span>{formatarData(new Date(params.value))}</span>
+                )
+            }
+        },
         {
             field: "status",
             headerName: "Status",
@@ -36,8 +75,8 @@ export default function TabelaReservas({ rows }) {
             renderCell: (params) => {
                 const status = params.value;
                 let color = "gray";
-                if (status === "Encerrada por prazo") color = "red";
-                if (status === "Concluída") color = "green";
+                if (status === "Cancelada") color = "red";
+                if (status === "Finalizada") color = "green";
 
                 return (
                     <span style={{ color, fontWeight: "bold" }}>
@@ -50,16 +89,22 @@ export default function TabelaReservas({ rows }) {
             field: "retirada",
             headerName: "Registrar empréstimo",
             width: 200,
-            renderCell: (params) => (
-                <Tooltip title="Registrar empréstimo">
-                    <IconButton
-                        color="primary"
-                        onClick={() => handleOpenModal(params.row.id, params.row.idLivro)}
-                    >
-                        <AddIcon />
-                    </IconButton>
-                </Tooltip>
-            ),
+            renderCell: (params) => {
+                console.log("params row aqui")
+                console.log(params.row)
+                return (
+                    <Tooltip title="Registrar empréstimo">
+                        {!(params.row.status === "Finalizada" || params.row.status === "Cancelada") ? (
+                            <IconButton
+                                color="primary"
+                                disabled={params.row.status === "Finalizada" || params.row.status === "Cancelada"}
+                                onClick={() => handleOpenModal(params.row)}
+                            >
+                                <AddIcon />
+                            </IconButton>
+                        ) : <></>}
+                    </Tooltip>
+                )},
         },
     ];
 
@@ -73,12 +118,14 @@ export default function TabelaReservas({ rows }) {
                 slots={{ toolbar: GridToolbar }}
                 disableColumnFilter={false}
             />
-            <ModalEmprestimo
-                open={openModal}
-                handleClose={handleCloseModal}
-                idReserva={selectedReserva} //passa o id da reserva
-                idLivro = {selectedReserva} //ja passa o id do livro
-            />
+            {selectedReserva && (
+                <ModalEmprestimo
+                    open={isModalOpen}
+                    handleClose={handleCloseModal}
+                    reserva={selectedReserva}
+                />
+
+            )}
         </div>
     );
 }
