@@ -5,22 +5,22 @@ import useAuthStore from "../auth/auth";
 
 const api = await CreateAxios.getAxiosInstance();
 
-const useEmprestimoStore = create(((set,get) => ({
+const useEmprestimoStore = create(((set, get) => ({
     emprestimos: [],
     emprestimosAtrasados: [],
     emprestimoSelecionado: null,
     loading: false,
     error: null,
 
-    
+
     fetchAllEmprestimos: async () => {
         set({ loading: true, error: null });
-        const  { token } = useAuthStore.getState();
-        
+        const { token } = useAuthStore.getState();
+
         try {
             const response = await api.get('/emprestimos', {
                 headers: {
-                    ["x-access-token"]:`${token}`
+                    ["x-access-token"]: `${token}`
                 }
             });
             set({ emprestimos: response.data });
@@ -31,7 +31,7 @@ const useEmprestimoStore = create(((set,get) => ({
         }
     },
 
-    
+
     fetchEmprestimosByCPF: async (cpf) => {
         set({ loading: true, error: null });
         try {
@@ -40,7 +40,7 @@ const useEmprestimoStore = create(((set,get) => ({
             const cpf = authState.conta.cpf;
             const response = await api.get(`/emprestimos/${cpf}`, {
                 headers: {
-                    ["x-access-token"]:`${authState.token}`
+                    ["x-access-token"]: `${authState.token}`
                 }
             });
             console.log(response.data);
@@ -57,7 +57,7 @@ const useEmprestimoStore = create(((set,get) => ({
         }
     },
 
-    
+
     fetchEmprestimoByID: async (idEmprestimo) => {
         set({ loading: true, error: null });
         try {
@@ -65,13 +65,13 @@ const useEmprestimoStore = create(((set,get) => ({
             set({ emprestimoSelecionado: response.data });
         } catch (error) {
             set({ error: error.message });
-            
+
         } finally {
             set({ loading: false });
         }
     },
 
-    
+
     fetchEmprestimosEmAtraso: async () => {
         set({ loading: true, error: null });
         try {
@@ -79,7 +79,7 @@ const useEmprestimoStore = create(((set,get) => ({
             set({ emprestimosAtrasados: response.data });
         } catch (error) {
             set({ error: error.message });
-            
+
         } finally {
             set({ loading: false });
         }
@@ -92,13 +92,13 @@ const useEmprestimoStore = create(((set,get) => ({
             set({ emprestimosAtrasados: response.data });
         } catch (error) {
             set({ error: error.message });
-            
+
         } finally {
             set({ loading: false });
         }
     },
 
-    
+
     createEmprestimo: async (dataInicio, dataFim, cpf, idReserva, idLivro) => {
         set({ loading: true, error: null });
         try {
@@ -110,16 +110,16 @@ const useEmprestimoStore = create(((set,get) => ({
                 idLivro
             });
             set((state) => ({ emprestimos: [...state.emprestimos, response.data] }));
-           
+
         } catch (error) {
             set({ error: error.message });
-            
+
         } finally {
             set({ loading: false });
         }
     },
 
-    
+
     updateEmprestimo: async (idEmprestimo, newDataFim) => {
         set({ loading: true, error: null });
         try {
@@ -129,7 +129,7 @@ const useEmprestimoStore = create(((set,get) => ({
                     emp.idEmprestimo === idEmprestimo ? response.data : emp
                 )
             }));
-        
+
         } catch (error) {
             set({ error: error.message });
 

@@ -3,7 +3,6 @@ import { Grid, Box } from "@mui/material";
 import DashboardCard from "../../../components/dashboard-bib/DashboardCard";
 import { useNavigate } from "react-router-dom";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
-import PeopleIcon from "@mui/icons-material/People";
 import BookIcon from "@mui/icons-material/Book";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import ErrorIcon from "@mui/icons-material/Error";
@@ -14,8 +13,6 @@ import useLivrosStore from "../../../zustand/livro/livro";
 import useReservaStore from "../../../zustand/reserva/reserva";
 import "./styles.css";
 
-//usando valores de teste q dps devem ser subtituidos pelas contagens etc
-
 export default function HomeB() {
     const navigate = useNavigate();
     const handleNavigation = (route, filtrarAtrasados = false) => {
@@ -24,18 +21,28 @@ export default function HomeB() {
 
     const { livros } = useLivrosStore();
     const { reservas } = useReservaStore();
-    const { emprestimos } = useEmprestimoStore();
+    const { emprestimos, emprestimosAtrasados, fetchEmprestimosEmAtraso } = useEmprestimoStore();
 
-    //useStates
-    const [livrosCount, setLivrosCount] = useState();
-    const [reservasCount, setReservasCount] = useState();
-    const [emprestimosCount, setEmprestimosCount] = useState();
-    const [pendentesCount, setPendentesCount] = useState();
+    const [livrosCount, setLivrosCount] = useState(0);
+    const [reservasCount, setReservasCount] = useState(0);
+    const [emprestimosCount, setEmprestimosCount] = useState(0);
+    const [pendentesCount, setPendentesCount] = useState(0);
+
+    //att contagens
+    useEffect(() => {
+        setLivrosCount(livros.length);
+        setReservasCount(reservas.length);
+        setEmprestimosCount(emprestimos.length);
+        console.log({livros});
+    }, [livros, reservas, emprestimos]);
 
     useEffect(() => {
-        //calcular livroscount / set livrosCount
-        //reservas count
-    }, [livros, reservas, emprestimos]);
+        fetchEmprestimosEmAtraso();
+    }, []);
+
+    useEffect(() => {
+        setPendentesCount(emprestimosAtrasados.length);
+    }, [emprestimosAtrasados]);
 
     return (
         <div>
@@ -44,12 +51,11 @@ export default function HomeB() {
                 <h2 className="titulo">Portal do bibliotecário</h2>
                 <Box sx={{ padding: 3 }}>
                     <Grid container spacing={3}>
-                        {/* 3 cards em cima */}
                         <Grid item xs={12} md={6}>
                             <DashboardCard
                                 icon={LibraryBooksIcon}
                                 title="Livros Cadastrados"
-                                value="150" //contagem de livros
+                                value={livrosCount}
                                 buttonLabel="Controle do Acervo"
                                 onButtonClick={() => handleNavigation("/acervo-b")}
                             />
@@ -58,17 +64,16 @@ export default function HomeB() {
                             <DashboardCard
                                 icon={BookIcon}
                                 title="Livros Reservados"
-                                value="20" //contagem de reservas
+                                value={reservasCount}
                                 buttonLabel="Ver Reservas"
                                 onButtonClick={() => handleNavigation("/reservas-b")}
                             />
                         </Grid>
-                        {/* 2 cards maiores dps */}
                         <Grid item xs={12} md={6}>
                             <DashboardCard
                                 icon={AssignmentIcon}
                                 title="Livros Emprestados"
-                                value="30" //contagem de emprestimos
+                                value={emprestimosCount}
                                 buttonLabel="Ver Empréstimos"
                                 onButtonClick={() => handleNavigation("/emprestimos-b")}
                             />
@@ -77,7 +82,7 @@ export default function HomeB() {
                             <DashboardCard
                                 icon={ErrorIcon}
                                 title="Livros Pendentes"
-                                value="5" //contagem de atrasados
+                                value={pendentesCount}
                                 buttonLabel="Ver Pendentes"
                                 onButtonClick={() => handleNavigation("/emprestimos-b", true)}
                             />
