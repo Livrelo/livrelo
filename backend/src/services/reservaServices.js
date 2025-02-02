@@ -6,6 +6,8 @@ import { ReservaJaAssociada, ReservaNaoEncontrada, ReservaIndisponivel, ReservaF
 import EmprestimoService from "./emprestimoService.js";
 import { EmprestimoAtrasadoError } from "../errors/emprestimosError.js";
 import ReservaResponseBuilder from "../builders/ReservaResponseBuilder.js";
+import Conta from "../models/Conta.js";
+import Usuario from "../models/Usuario.js";
 
 class ReservaServices{
     static diasReserva = 2;
@@ -13,8 +15,21 @@ class ReservaServices{
     static async findAll(){
         const reservas = await Reserva.findAll();
 
+        const reservasArrayWithLivros = [];
+        for(const reserva of reservas){
+            const livro = await Livro.findByPk(reserva.dataValues.idLivro);
+            reserva.dataValues.livro = livro;
+            const usuario = await Usuario.findByPk(reserva.dataValues.cpfUsuario);
+            const conta = await Conta.findByPk(usuario.dataValues.idConta);
+            reserva.dataValues.usuario = {...conta.dataValues, cpf: usuario.dataValues.cpf }
+            reservasArrayWithLivros.push({
+                ...reserva
+            });
+
+        }
+
         const ReservaBuilder = new ReservaResponseBuilder();
-        const response = ReservaBuilder.addReservaData(reservas).dataValues().withoutTimestamps().build();
+        const response = ReservaBuilder.addReservaData(reservasArrayWithLivros).dataValues().withoutTimestamps().build();
         return response;
     }
 

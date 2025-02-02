@@ -47,7 +47,8 @@ export default function EmprestimosB() {
                 <TabelaEmprestimos rows={emprestimos} />
             </div>
             <Footer />
-            <ModalEmprestimo open={openModal} handleClose={handleCloseModal} />
+            {}
+            {/* <ModalEmprestimo open={openModal} handleClose={handleCloseModal} /> */}
         </div>
     );
 }

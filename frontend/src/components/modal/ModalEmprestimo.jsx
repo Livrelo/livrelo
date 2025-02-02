@@ -5,6 +5,9 @@ import * as Yup from "yup";
 import Input from "../Input/Input";
 import TextMaskCustom from "../Input/maskinput";
 import "./styles.css";
+import useEmprestimoStore from "../../zustand/emprestimo/emprestimo";
+import useReservaStore from "../../zustand/reserva/reserva";
+import useLivrosStore from "../../zustand/livro/livro";
 
 //data fim 14 dias apos o inicio do emprestimo
 const calculateDataFim = (dataInicio) => {
@@ -12,14 +15,20 @@ const calculateDataFim = (dataInicio) => {
     data.setDate(data.getDate() + 14);
     return data.toISOString().split("T")[0]; 
 };
+const calculateDataInicio = (dataInicio) => {
+    const data = new Date(dataInicio);
+    data.setDate(data.getDate());
+    return data.toISOString().split("T")[0]; 
+};
 
-export default function ModalEmprestimo({ open, handleClose, idReserva, idLivro }) {
+export default function ModalEmprestimo({ open, handleClose, reserva }) {
+
     const initialValues = {
-        idLivro: idLivro ||"",
-        dataInicio: "",
-        dataFim: "",
+        idLivro: reserva.idLivro || "",
+        dataInicio: calculateDataInicio(Date.now()),
+        dataFim: calculateDataFim(Date.now()),
         cpf: "",
-        idReserva: idReserva || "",
+        idReserva: reserva.idReserva || "",
     };
 
     const validationSchema = Yup.object({
@@ -38,13 +47,32 @@ export default function ModalEmprestimo({ open, handleClose, idReserva, idLivro 
         idReserva: Yup.number(),
     });
 
-    const handleSubmit = (values, { resetForm }) => {
+    const { createEmprestimo, fetchAllEmprestimos } = useEmprestimoStore();
+    const { fetchReservas } = useReservaStore();
+    const { fetchLivros } = useLivrosStore();
+
+    const handleSubmit = async (values, { resetForm }) => {
+        console.log(values);
+
+        //registrar emprestimo
+        await createEmprestimo(values);
+
+        //fetch emprestimos
+        //fetch reservas
+        //fetch livros
+        await fetchAllEmprestimos();
+        await fetchReservas();
+        await fetchLivros();
+
+
+
         resetForm(); 
         handleClose();
         //registra emprestimo
     };
 
     return (
+        
         <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
             <DialogTitle className="titulo">Registrar Empréstimo</DialogTitle>
             <Formik
@@ -67,6 +95,7 @@ export default function ModalEmprestimo({ open, handleClose, idReserva, idLivro 
                                 label="Data de Início"
                                 type="date"
                                 InputLabelProps={{ shrink: true }}
+                                value={values.dataInicio}
                                 required
                                 onChange={(e) => {
                                     const dataInicio = e.target.value;
@@ -92,6 +121,7 @@ export default function ModalEmprestimo({ open, handleClose, idReserva, idLivro 
                                 InputProps={{
                                     inputComponent: TextMaskCustom,
                                 }}
+                                value={reserva.cpfUsuario}
                                 required
                             />
                             <Input

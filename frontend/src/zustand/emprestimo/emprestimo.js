@@ -2,6 +2,7 @@ import CreateAxios from "../../utils/api";
 import { devtools } from "zustand/middleware";
 import { create } from "zustand";
 import useAuthStore from "../auth/auth";
+import { notify } from "../..";
 
 const api = await CreateAxios.getAxiosInstance();
 
@@ -99,17 +100,49 @@ const useEmprestimoStore = create(((set,get) => ({
     },
 
     
-    createEmprestimo: async (dataInicio, dataFim, cpf, idReserva, idLivro) => {
+    createEmprestimo: async (preEmprestimo) => {
         set({ loading: true, error: null });
         try {
-            const response = await api.post(`/emprestimos/${idLivro}`, {
-                dataInicio,
-                dataFim,
-                cpf,
-                idReserva,
-                idLivro
+            const { token } = useAuthStore.getState();
+            const isThereReserva = preEmprestimo?.idReserva ? true : false;
+
+            if(isThereReserva){
+                await api.post(`/emprestimo/${preEmprestimo.idLivro}?idReserva=${preEmprestimo.idReserva}`, preEmprestimo, {
+                    headers: {
+                        ["x-access-token"]:`${token}`
+                    }
+                });
+            } else {
+                await api.post(`/emprestimos/${preEmprestimo.idLivro}`, preEmprestimo, {
+                    headers: {
+                        ["x-access-token"]:`${token}`
+                    }
+                });
+            }
+            
+            await get().fetchAllEmprestimos();
+            notify("success","Emprestimo criado com sucesso");
+            // set((state) => ({ emprestimos: [...state.emprestimos, response.data] }));
+           
+        } catch (error) {
+            set({ error: error.message });
+            
+        } finally {
+            set({ loading: false });
+        }
+    },
+
+    createEmprestimoSemReserva: async (preEmprestimo) => {
+        set({ loading: true, error: null });
+        try {
+            const { token } = useAuthStore.getState();
+            const response = await api.post(`/emprestimos/${preEmprestimo.idLivro}`, preEmprestimo, {
+                headers: {
+                    ["x-access-token"]:`${token}`
+                }
             });
-            set((state) => ({ emprestimos: [...state.emprestimos, response.data] }));
+            await get().fetchAllEmprestimos();
+            // set((state) => ({ emprestimos: [...state.emprestimos, response.data] }));
            
         } catch (error) {
             set({ error: error.message });
