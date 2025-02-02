@@ -19,28 +19,47 @@ export default function HomeB() {
         navigate(route, { state: { filtrarAtrasados } });
     };
 
-    const { livros } = useLivrosStore();
-    const { reservas } = useReservaStore();
-    const { emprestimos, emprestimosAtrasados, fetchEmprestimosEmAtraso } = useEmprestimoStore();
+    const { livros, fetchLivros } = useLivrosStore();
+    const { reservas, fetchReservas } = useReservaStore();
+    const { emprestimos, emprestimosAtrasados, fetchEmprestimosEmAtraso, fetchAllEmprestimos } = useEmprestimoStore();
 
-    const [livrosCount, setLivrosCount] = useState(0);
-    const [reservasCount, setReservasCount] = useState(0);
-    const [emprestimosCount, setEmprestimosCount] = useState(0);
-    const [pendentesCount, setPendentesCount] = useState(0);
+    const [livrosCount, setLivrosCount] = useState();
+    const [reservasCount, setReservasCount] = useState();
+    const [emprestimosCount, setEmprestimosCount] = useState();
+    const [pendentesCount, setPendentesCount] = useState();
 
     //att contagens
+    // useEffect(() => {
+        
+    //     console.log({livros});
+    // }, [livros, reservas, emprestimos]);
+
     useEffect(() => {
+        fetchLivros();
         setLivrosCount(livros.length);
+        // if(reservas.lenght == undefined){
+        //     setReservasCount(1);
+        // }
+        // if(emprestimos.lenght ==undefined){
+        //     setEmprestimosCount(1);
+        // }
+    }, []);
+
+    //reservas 
+    useEffect(() => {
+        fetchReservas();
         setReservasCount(reservas.length);
+        console.log("reservas: "+reservas.length)
+    }, [])
+    //emprestimos
+    useEffect(() => {
+        fetchAllEmprestimos();
         setEmprestimosCount(emprestimos.length);
-        console.log({livros});
-    }, [livros, reservas, emprestimos]);
+        console.log("empretimos: "+emprestimos)
+    }, [])
 
     useEffect(() => {
         fetchEmprestimosEmAtraso();
-    }, []);
-
-    useEffect(() => {
         setPendentesCount(emprestimosAtrasados.length);
     }, [emprestimosAtrasados]);
 
@@ -73,7 +92,7 @@ export default function HomeB() {
                             <DashboardCard
                                 icon={AssignmentIcon}
                                 title="Livros Emprestados"
-                                value={emprestimosCount}
+                                value={emprestimosCount || 0}
                                 buttonLabel="Ver Empréstimos"
                                 onButtonClick={() => handleNavigation("/emprestimos-b")}
                             />

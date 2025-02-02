@@ -69,11 +69,11 @@ export default function NavbarB() {
     const {logout} = useLogOutStore();
 
     const handleLogOut = async () => {
-        const result = await logout();
+        // const result = await logout();
 
-        if(result){
-            navigate("/");
-        }
+        // if(result){
+        //     navigate("/");
+        // }
     }
 
     const handleMenuOpen = (event) => {

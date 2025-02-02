@@ -26,7 +26,8 @@ const useReservaStore = create((set) => ({
           ["x-access-token"]:`${authState.token}`
         }
       });
-      set({ reservas: response.data, isLoading: false });
+      set({ reservas: [...response.data], isLoading: false });
+      console.log("reservas zustand:"+response);
     } catch (error) {
       set({ error: error.message, isLoading: false });
     }

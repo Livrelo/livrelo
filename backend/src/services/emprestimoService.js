@@ -33,14 +33,14 @@ class EmprestimoService {
         });
         const emprestimos = [];
 
-        for(let emprestimo of emprestimosCPF){
+        for (let emprestimo of emprestimosCPF) {
             const livro = await Livro.findByPk(emprestimo.idLivro);
             emprestimo.dataValues.livro = livro;
             const devolucao = await Devolucao.findByPk(emprestimo.idEmprestimo);
             emprestimo.dataValues.dataDevolucao = devolucao.dataDevolucao ? devolucao.dataDevolucao : null;
             emprestimos.push(emprestimo);
         }
-        
+
         const builder = new EmprestimoResponseBuilder();
         const response = builder
             .addEmprestimoData(emprestimos)
@@ -75,20 +75,26 @@ class EmprestimoService {
                 dataFim: {
                     [Op.lt]: dataAtual,
                 },
+                status: {
+                    [Op.ne]: "Atrasado",
+                }
             },
         });
-    
+
         //filtrar emprestimos sem data de devolucao
         //da pra fazer com left join, mas é melhor reutilizar a funçao ja existente de devolucaoService para verificar por ID
         const emprestimosEmAtraso = [];
         for (const emprestimo of emprestimosFinalizados) {
             const devolucao = await devolucaoService.findByID(emprestimo.idEmprestimo);
-            
+
             if (!devolucao) {
+                emprestimo.status = "Atrasado";
+                await emprestimo.save();
                 emprestimosEmAtraso.push(emprestimo);
+
             }
         }
-    
+
         const builder = new EmprestimoResponseBuilder();
         const response = builder
             .addEmprestimoData(emprestimosEmAtraso)
@@ -97,13 +103,14 @@ class EmprestimoService {
             .build();
         return response;
     }
-    static async findEmprestimosEmAtrasoByCPF(cpf){
+    static async findEmprestimosEmAtrasoByCPF(cpf) {
         const dataAtual = new Date();
 
         const emprestimosEmAtraso = await Emprestimo.findAll({
-            where:{
+            where: {
                 cpf: cpf,
-                dataFim:{ [Op.lte]:dataAtual},
+                dataFim: { [Op.lte]: dataAtual },
+                status: { [Op.ne]: "Atrasado" },
             }
         })
 
@@ -122,12 +129,12 @@ class EmprestimoService {
 
         const emprestimosEmAtraso = await this.findEmprestimosEmAtrasoByCPF(cpf);
 
-        if(emprestimosEmAtraso.length > 0){
+        if (emprestimosEmAtraso.length > 0) {
             throw new EmprestimoAtrasadoError();
         }
 
         const emprestimos = await Emprestimo.findAll({
-            where:{
+            where: {
                 cpf: cpf,
                 status: 'Ativo'
             }
@@ -135,7 +142,7 @@ class EmprestimoService {
 
 
 
-        if(emprestimos.length >= 5){
+        if (emprestimos.length >= 5) {
             throw new LimiteEmprestimoError();
         }
 
@@ -143,15 +150,15 @@ class EmprestimoService {
         //atualizar status reserva reserva
         const reserva = await Reserva.findByPk(idReserva);
 
-        if(!reserva && idReserva){
+        if (!reserva && idReserva) {
             throw new ReservaNaoEncontrada();
-        } 
+        }
 
-        if(reserva.status !== "Ativa"){
+        if (reserva.status !== "Ativa") {
             throw new ReservaIndisponivel();
         }
-        
-        if(reserva){
+
+        if (reserva) {
             reserva.status = 'Finalizada';
             await reserva.save();
         }

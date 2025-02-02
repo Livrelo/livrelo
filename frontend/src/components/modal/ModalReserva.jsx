@@ -23,7 +23,7 @@ export default function ModalReserva({ open, handleClose , idLivro, cpf}) {
     const { createReserva } = useReservaStore();
 
     const initialValues = {
-        idLivro: idLivro,
+        idLivro: idLivro || "",
         dataReserva: "",
         dataFim: "",
         prazo: "",
@@ -68,12 +68,13 @@ export default function ModalReserva({ open, handleClose , idLivro, cpf}) {
                 {({ isValid, dirty, setFieldValue, values }) => (
                     <Form>
                         <DialogContent>
-                            {/* <Input
+                        <Input
                                 name="idLivro"
                                 label="ID do Livro"
                                 placeholder="Digite o ID do Livro"
                                 required
-                            /> */}
+                                disabled={!!initialValues.idLivro}
+                            />
                             <Input
                                 name="dataReserva"
                                 label="Data de reserva (retirada)"

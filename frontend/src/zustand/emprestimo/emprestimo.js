@@ -19,12 +19,15 @@ const useEmprestimoStore = create(((set, get) => ({
         const { token } = useAuthStore.getState();
 
         try {
+        
             const response = await api.get('/emprestimos', {
                 headers: {
                     ["x-access-token"]: `${token}`
                 }
+            
             });
-            set({ emprestimos: response.data });
+            console.log(response.data);
+            set({ emprestimos: [...response.data] });
         } catch (error) {
             set({ error: error.message });
         } finally {
