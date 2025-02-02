@@ -14,6 +14,7 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from 'react-router-dom'; 
 import './styles.css';
+import useLogOutStore from '../../zustand/auth/logout';
 
 const Search = styled('div')(({ theme, focused }) => ({
     position: 'relative',
@@ -65,6 +66,16 @@ export default function NavbarB() {
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate(); 
 
+    const {logout} = useLogOutStore();
+
+    const handleLogOut = async () => {
+        const result = await logout();
+
+        if(result){
+            navigate("/");
+        }
+    }
+
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -114,6 +125,9 @@ export default function NavbarB() {
                     <Button onClick={() => handleNavigation('/reservas-b')} className="navbar-button">
                         Reservas
                     </Button>
+                    <Button onClick={handleLogOut} className="navbar-button">
+                        Sair
+                    </Button>
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -139,7 +153,7 @@ export default function NavbarB() {
                         <MenuItem onClick={() => handleNavigation('/acervo-b')}>Acervo completo</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/emprestimos-b')}>Empréstimos</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/reservas-b')}>Reservas</MenuItem>
-                        <MenuItem onClick={() => handleNavigation('/')}>Sair</MenuItem>
+                        <MenuItem onClick={handleLogOut}>Sair</MenuItem>
                     </Menu>
                 </Box>
             </Toolbar>

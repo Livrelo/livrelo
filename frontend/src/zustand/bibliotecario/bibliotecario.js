@@ -1,5 +1,7 @@
 import CreateAxios from "../../utils/api";
 import { create } from "zustand";
+import useAuthStore from "../auth/auth.js";
+
 
 const api = await CreateAxios.getAxiosInstance();
 const authState = useAuthStore.getState();
