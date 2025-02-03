@@ -25,6 +25,7 @@ export default function ModalDevolucao({ open, handleClose, idEmprestimo }) {
 
     const handleSubmit = async(values, { resetForm }) => {
         try{
+            console.log(values);
             await createDevolucao(values.idEmprestimo, values.dataDevolucao)
             navigate("/home-b")
         }catch(erro){

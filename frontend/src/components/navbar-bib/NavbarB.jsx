@@ -125,20 +125,10 @@ export default function NavbarB() {
                     <Button onClick={() => handleNavigation('/reservas-b')} className="navbar-button">
                         Reservas
                     </Button>
-                    <Button onClick={handleLogOut} className="navbar-button">
+                    <Button color={"error"} onClick={handleLogOut}>
                         Sair
                     </Button>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                            placeholder="Buscar livro..."
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+                   
                 </Box>
                 <Box className="menu-icon-box">
                     <IconButton onClick={handleMenuOpen}>

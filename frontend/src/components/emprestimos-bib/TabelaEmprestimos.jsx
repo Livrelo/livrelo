@@ -110,24 +110,35 @@ export default function TabelaEmprestimos({ rows, onAddDevolucao }) {
             headerName: "Renovação",
             width: 100,
             renderCell: (params) => (
-                <Tooltip title="Renovar empréstimo">
-                    <IconButton color="primary" onClick={() => handleOpenModalRenovacao(params.row.id)}>
-                        <AddIcon />
-                    </IconButton>
-                </Tooltip>
+                <>
+                    {(params.row.dataDevolucao === null) && (
+                        <Tooltip title="Renovar empréstimo">
+                            <IconButton color="primary" onClick={() => handleOpenModalRenovacao(params.row.id)}>
+                                <AddIcon />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+                </>
             ),
         },
         {
             field: "dataDevolucao",
             headerName: "Devolução",
             width: 100,
-            renderCell: (params) => (
-                <Tooltip title="Adicionar Devolução">
-                    <IconButton color="primary" onClick={() => handleOpenModalDevolucao(params.row.id)}>
-                        <AddIcon />
-                    </IconButton>
-                </Tooltip>
-            ),
+            renderCell: (params) => {
+                return(
+                    <>
+                        {(params.row.dataDevolucao === null) && (
+                            <Tooltip title="Adicionar Devolução">
+                                <IconButton color="primary" onClick={() => handleOpenModalDevolucao(params.row.id)}>
+                                    <AddIcon />
+                                </IconButton>
+                            </Tooltip>
+
+                        )}
+                    </>
+                )
+            }
         },
     ];
 

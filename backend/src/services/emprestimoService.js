@@ -32,6 +32,14 @@ class EmprestimoService {
                 ...conta.dataValues,
                 cpf: usuario[0].dataValues.cpf
             }
+
+            const devolucao = await Devolucao.findByPk(emprestimo.dataValues.idEmprestimo)
+            if(devolucao){
+                emprestimo.dataValues.dataDevolucao = devolucao.dataValues.dataDevolucao;
+            } else {
+                emprestimo.dataValues.dataDevolucao = null;
+            }
+
             emprestimosArray.push(emprestimo);
         }
         const builder = new EmprestimoResponseBuilder();

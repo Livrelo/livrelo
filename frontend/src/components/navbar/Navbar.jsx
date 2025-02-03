@@ -115,11 +115,14 @@ function Navbar() {
                     <Button onClick={() => handleNavigation('/emprestimos')} className="navbar-button">
                         Meus empréstimos
                     </Button>
-                    <Button onClick={() => handleNavigation('/')} className="navbar-button">
+                    <Button onClick={() => handleNavigation(`/perfil/${useAuthStore.getState().conta.idConta}`)} className="navbar-button">
+                        Meu perfil
+                    </Button>
+                    <Button color={"error"} onClick={() => handleNavigation('/')} >
                         Sair
                     </Button>
                     
-                    <Search>
+                    {/* <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
@@ -129,10 +132,8 @@ function Navbar() {
                             placeholder="Buscar livro..."
                             inputProps={{ 'aria-label': 'search' }}
                         />
-                    </Search>
-                    <Button onClick={() => handleNavigation(`/perfil/${useAuthStore.getState().conta.idConta}`)} className="navbar-button">
-                        Meu perfil
-                    </Button>
+                    </Search> */}
+                    
                 </Box>
                 <Box className="menu-icon-box">
                     <IconButton onClick={handleMenuOpen}>

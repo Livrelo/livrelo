@@ -21,13 +21,17 @@ const useReservaStore = create((set, get) => ({
     try {
       const { token } = useAuthStore.getState();
       const response = await api.get('/reserva/', API_HEADER(token));
-      const responseArray = [];
+      let responseArray = [];
+
+      console.log(response);
+      console.log(response.data);
 
       if(response.data.length === undefined){
         responseArray.push(response.data)
-      } else{
+      } else {
         responseArray = response.data;
       }
+      console.log(responseArray);
 
       set({ reservas: responseArray, isLoading: false });
       console.log("reservas zustand:"+ JSON.stringify(response.data));

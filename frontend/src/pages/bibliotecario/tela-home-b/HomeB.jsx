@@ -60,7 +60,8 @@ export default function HomeB() {
 
     useEffect(() => {
         const emprestimosArray = Array.isArray(emprestimos) ? emprestimos : [emprestimos]; // Se for objeto, transforma em array
-        setEmprestimosCount(emprestimosArray.length);
+        const livrosEmprestados = emprestimosArray.filter((emprestimo) => emprestimo.status === "Ativo");
+        setEmprestimosCount(livrosEmprestados.length);
         console.log("Empréstimos corrigidos:", emprestimosArray);
     }, [emprestimos]);
 

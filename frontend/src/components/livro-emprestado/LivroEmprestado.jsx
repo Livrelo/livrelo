@@ -23,17 +23,11 @@ export default function LivroEmprestado({ idEmprestimo, titulo, dataFim, dataDev
             ? "atrasado"
             : "no-prazo";
 
-    //so abre o modal se esta no prazo
-    const handleClick = (idEmprestimo) => {
-        if (!isFinalizado) {
-            setOpenModal(true);
-            console.log("id emprestimo: " + idEmprestimo)
-        }
-    };
+
 
     return (
         <>
-            <Box onClick={() => handleClick(idEmprestimo)} className="livro-emprestado-container">
+            <Box  className="livro-emprestado-container">
                 <Typography className="livro-emprestado-titulo">{titulo}</Typography>
                 <Typography className="livro-emprestado-data">
                     {isFinalizado ? `Devolvido em: ${formatarData(new Date(dataDevolucao))}` : `Devolver até: ${formatarData(new Date(dataFim))}`}
@@ -43,12 +37,12 @@ export default function LivroEmprestado({ idEmprestimo, titulo, dataFim, dataDev
                 </Box>
             </Box>
 
-            <ModalRenovacao
+            {/* <ModalRenovacao
                 open={openModal}
                 handleClose={() => setOpenModal(false)}
                 idEmprestimo={idEmprestimo}
                 dataFim={dataFim}
-            />
+            /> */}
         </>
     );
 }

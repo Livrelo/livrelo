@@ -24,7 +24,7 @@ const useEmprestimoStore = create(((set, get) => ({
             const { token } = useAuthStore.getState();
             const response = await api.get('/emprestimos', API_HEADER(token));
 
-            const responseArray = [];
+            let responseArray = [];
 
             if(response.data.length === undefined){
                 responseArray.push(response.data);

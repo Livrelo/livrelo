@@ -49,15 +49,7 @@ export default function ReservasB() {
             <div className="page-content-reservas">
                 <div className="emprestimos-header">
                     <h2 className="titulo">Reservas</h2>
-                    <Tooltip title="Adicionar Reservas" arrow>
-                        <IconButton
-                            color="primary"
-                            onClick={handleOpenModal}
-                            className="add-emprestimo-button"
-                        >
-                            <AddIcon sx={{ fontSize: 30 }} />
-                        </IconButton>
-                    </Tooltip>
+                    
                 </div>
                 <TabelaReservas rows={reservasRows} />
             </div>

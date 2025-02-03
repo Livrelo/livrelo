@@ -1,5 +1,8 @@
 import CreateAxios from "../../utils/api";
 import { create } from "zustand";
+import { API_HEADER } from "../../utils/config";
+import useAuthStore from "../auth/auth";
+import useEmprestimoStore from "../emprestimo/emprestimo";
 
 const api = await CreateAxios.getAxiosInstance();
 
@@ -39,7 +42,11 @@ const useDevolucaoStore = create((set) => ({
   createDevolucao: async (idEmprestimo, devolucao) => {
     set({ loading: true, error: null });
     try {
-      const response = await api.post(`/devolucao/${idEmprestimo}`, devolucao);
+      console.log("idEmprestimo: ", idEmprestimo);
+      console.log("devolucao: ", devolucao)
+      const {token} = useAuthStore.getState();
+      const response = await api.post(`/devolucao/${idEmprestimo}`, {dataDevolucao: devolucao}, API_HEADER(token));
+      await useEmprestimoStore.getState().fetchAllEmprestimos();
       set((state) => ({ devolucoes: [...state.devolucoes, response.data] }));
     } catch (error) {
       set({ error: error.response?.data?.message || error.message });
