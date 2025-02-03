@@ -48,7 +48,7 @@ export default function ModalReserva({ open, handleClose , idLivro, cpf}) {
     const handleSubmit = async (values, { resetForm }) => {
         try{
             await createReserva(values);
-            navigate("/home");
+            navigate("/home-b");
         }catch(error){
             console.log(error);
         }
