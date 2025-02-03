@@ -110,14 +110,16 @@ export default function TabelaReservas({rows}) {
 
     return (
         <div className="tabela-reservas">
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                filterModel={filterModel}
-                onFilterModelChange={(newFilterModel) => setFilterModel(newFilterModel)}
-                slots={{ toolbar: GridToolbar }}
-                disableColumnFilter={false}
-            />
+            {(rows && rows.length > 0) && (
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    filterModel={filterModel}
+                    onFilterModelChange={(newFilterModel) => setFilterModel(newFilterModel)}
+                    slots={{ toolbar: GridToolbar }}
+                    disableColumnFilter={false}
+                />
+            )}
             {selectedReserva && (
                 <ModalEmprestimo
                     open={isModalOpen}

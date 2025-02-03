@@ -23,8 +23,16 @@ const useEmprestimoStore = create(((set, get) => ({
         try {
             const { token } = useAuthStore.getState();
             const response = await api.get('/emprestimos', API_HEADER(token));
-            console.log(response.data);
-            set({ emprestimos: [...response.data] });
+
+            const responseArray = [];
+
+            if(response.data.length === undefined){
+                responseArray.push(response.data);
+            }else {
+                responseArray = response.data;
+            }
+
+            set({ emprestimos: responseArray });
         } catch (error) {
             set({ error: error.message });
         } finally {
