@@ -13,6 +13,7 @@ import useEmprestimoStore from "../../../zustand/emprestimo/emprestimo.js";
 import img from "./bg.jpg";
 import "./styleSignin.css";
 import { notify } from "../../../index.js";
+import useCategoriaStore from "../../../zustand/categoria/categoria.js";
 
 function SignIn() {
 
@@ -50,6 +51,8 @@ function SignIn() {
 	const { fetchEmprestimosByCPF, fetchAllEmprestimos } = useEmprestimoStore();
 	const { fetchLivros, livros } = useLivrosStore();
 	const { fetchReservasByCPF, fetchReservas} = useReservaStore();
+	const { fetchCategorias } = useCategoriaStore();
+
 	const handleSubmit = async (values) => {
 		try{
 		const response = await login({email: values.email, senha: values.senha});
@@ -61,9 +64,9 @@ function SignIn() {
 			if(response.conta.role === 'bibliotecario'){
 				await fetchLivros();
 				await fetchAllEmprestimos();
+				await fetchCategorias();
 				//fetch all emprestimos atrasados
 				await fetchReservas();
-				console.log(livros);
 				//fetch no que precisa bibliotecario
 				navigate("/home-b");
 
