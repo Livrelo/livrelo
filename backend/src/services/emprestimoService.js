@@ -37,7 +37,11 @@ class EmprestimoService {
             const livro = await Livro.findByPk(emprestimo.idLivro);
             emprestimo.dataValues.livro = livro;
             const devolucao = await Devolucao.findByPk(emprestimo.idEmprestimo);
-            emprestimo.dataValues.dataDevolucao = devolucao.dataDevolucao ? devolucao.dataDevolucao : null;
+            console.log(devolucao);
+            if(devolucao){
+                console.log(devolucao.dataValues)
+                emprestimo.dataValues.dataDevolucao = devolucao?.dataValues.dataDevolucao ? devolucao.dataValues.dataDevolucao : null;
+            }
             emprestimos.push(emprestimo);
         }
 

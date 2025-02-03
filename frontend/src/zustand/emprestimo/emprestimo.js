@@ -41,11 +41,11 @@ const useEmprestimoStore = create(((set, get) => ({
             const cpf = authState.conta.cpf;
             const { token } = useAuthStore.getState();
             const response = await api.get(`/emprestimos/${cpf}`, API_HEADER(token));
-            console.log(response.data);
+            // console.log(response.data);
             //array push data
-            let array = []
-            array.push(response.data)
-            set({ emprestimos: array });
+            // let array = []
+            // array.push(response.data)
+            set({ emprestimos: response.data });
             console.log(get().emprestimos)
 
         } catch (error) {

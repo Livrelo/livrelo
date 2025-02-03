@@ -2,6 +2,7 @@ import { canTreatArrayAsAnd } from "sequelize/lib/utils";
 import ContaService from "../services/ContaService.js";
 import jsonwebtoken from "jsonwebtoken";
 import { crypt } from "../middlewares/Auth.js";
+import UsuarioService from "../services/UsuarioService.js";
 
 
 
@@ -71,6 +72,13 @@ class ContaController{
             }
 
             const contaAtualizada = await ContaService.update(contaAtualizar, idConta);
+
+            const usuario = await UsuarioService.findByIdConta(idConta);
+
+            if(usuario){
+                contaAtualizada.cpf = usuario[0].dataValues.cpf;
+                contaAtualizada.role = "usuario"
+            }
 
             return res.status(200).send({
                 message: 'Conta atualizada com sucesso!',
