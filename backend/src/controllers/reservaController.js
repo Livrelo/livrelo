@@ -33,7 +33,7 @@ class ReservaController{
                 const livro = await LivroService.findById(reserva.idLivro);
                 reservasResponse.push({
                     ...reserva,
-                    ...livro
+                    livro
                 })
             }
 

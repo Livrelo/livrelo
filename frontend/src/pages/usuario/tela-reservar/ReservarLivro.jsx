@@ -26,7 +26,7 @@ export default function ReservarLivroYup() {
     const { conta } = useAuthStore();
     // const { usuario, fetchUsuarioByIdConta } = useUsuarioStore();
     const { livros } = useLivrosStore();
-    const { createReserva } = useReservaStore();
+    const { createReserva, fetchReservasByCPF } = useReservaStore();
 
     //livro pra testarrrrrrrrrr dps colocar logica pra puxar do back
     // const livro = {
@@ -76,6 +76,7 @@ export default function ReservarLivroYup() {
         console.log("submitou")
         try{
             await createReserva(values);
+            await fetchReservasByCPF();
             navigate("/home");
         }catch(error){
             console.log(error);

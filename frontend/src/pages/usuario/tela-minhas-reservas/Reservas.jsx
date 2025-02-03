@@ -22,12 +22,12 @@ export default function Reservas() {
                 <Box sx={{ padding: '20px' }}>
                     <h2 className="titulo">Livros Reservados</h2>
                     <div className="reservas-list">
-                        {reservas.filter((reserva) => reserva.dataValues.status === "Ativa").map((reserva) => (
+                        {reservas.filter((reserva) => reserva.status === "Ativa").map((reserva) => (
                             <LivroReservado
-                                key={reserva.dataValues.idReserva}
-                                idReserva={reserva.dataValues.idReserva}
-                                titulo={reserva.nome}
-                                dataRetirada={reserva.dataValues.dataReserva}
+                                key={reserva.idReserva}
+                                idReserva={reserva.idReserva}
+                                titulo={reserva.livro.nome}
+                                dataRetirada={reserva.dataReserva}
                             />
                         ))}
                     </div>
