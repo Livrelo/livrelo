@@ -7,6 +7,9 @@ import { LimiteEmprestimoError, EmprestimoAtrasadoError } from "../errors/empres
 import Livro from "../models/Livro.js";
 import EmprestimoResponseBuilder from "../builders/EmprestimoResponseBuilder.js";
 import Devolucao from "../models/Devolucao.js";
+import Usuario from "../models/Usuario.js";
+import Conta from "../models/Conta.js";
+import UsuarioService from "./UsuarioService.js";
 class EmprestimoService {
     //CONSULTAS DE EMPRESTIMOS ABAIXO -> GET 
     static diasEmprestimo = 14;
@@ -14,9 +17,26 @@ class EmprestimoService {
     static async findAll() {
         const emprestimos = await Emprestimo.findAll();
 
+        const emprestimosArray = [];
+        for(const emprestimo of emprestimos){
+            const livro = await Livro.findByPk(emprestimo.idLivro);
+            emprestimo.dataValues.livro = livro.dataValues;
+            const usuario = await Usuario.findAll({
+                where:{
+                    cpf: emprestimo.dataValues.cpf
+                }
+            })
+            const conta = await Conta.findByPk(Number(usuario[0].dataValues.idConta));
+
+            emprestimo.dataValues.usuario = {
+                ...conta.dataValues,
+                cpf: usuario[0].dataValues.cpf
+            }
+            emprestimosArray.push(emprestimo);
+        }
         const builder = new EmprestimoResponseBuilder();
         const response = builder
-            .addEmprestimoData(emprestimos)
+            .addEmprestimoData(emprestimosArray)
             .dataValues()
             .withoutTimestamps()
             .build();

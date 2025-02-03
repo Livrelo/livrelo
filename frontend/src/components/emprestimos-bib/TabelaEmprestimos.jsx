@@ -6,6 +6,7 @@ import ModalDevolucao from "../modal/ModalDevolucao";
 import ModalRenovacao from "../modal/ModalRenovacao"; 
 import { useLocation } from "react-router-dom"; 
 import "./styles.css";
+import formatarData from "../../utils/formatDate";
 
 export default function TabelaEmprestimos({ rows, onAddDevolucao }) {
     const [openModalDevolucao, setOpenModalDevolucao] = useState(false);
@@ -52,11 +53,45 @@ export default function TabelaEmprestimos({ rows, onAddDevolucao }) {
 
     const columns = [
         { field: "id", headerName: "ID", width: 50 },
-        { field: "usuario", headerName: "Usuário", width: 150 },
+        { 
+            field: "usuario", 
+            headerName: "Usuário", 
+            width: 150,
+            renderCell: (params) => {
+                return (
+                    <span>{params.row.usuario.nome}</span>
+                )
+            }
+        },
         { field: "idLivro", headerName: "ID Livro", width: 70 },
-        { field: "tituloLivro", headerName: "Livro", width: 250 },
-        { field: "dataEmprestimo", headerName: "Data de Empréstimo", width: 200 },
-        { field: "dataFim", headerName: "Fim do Empréstimo", width: 200 },
+        { 
+            headerName: "Livro", 
+            width: 250,
+            renderCell: (params) => {
+                return (
+                    <span></span>
+                )
+            }
+        },
+        { 
+            headerName: "Data de Empréstimo", 
+            width: 200,
+            renderCell: (params) => {
+                console.log(params.row)
+                return (
+                    <span>{formatarData(new Date(params.row.dataInicio))}</span>
+                )
+            }
+        },
+        {
+            headerName: "Fim do Empréstimo", 
+            width: 200,
+            renderCell: (params) => {
+                return (
+                    <span>{formatarData(new Date(params.row.dataFim))}</span>
+                )
+            }
+        },
         {
             field: "status",
             headerName: "Status",
@@ -106,7 +141,7 @@ export default function TabelaEmprestimos({ rows, onAddDevolucao }) {
                 slots={{ toolbar: GridToolbar }}
                 disableColumnFilter={false}
             />
-            {/* <ModalDevolucao open={openModalDevolucao} handleClose={handleCloseModalDevolucao} idEmprestimo={selectedEmprestimo} /> */}
+            <ModalDevolucao open={openModalDevolucao} handleClose={handleCloseModalDevolucao} idEmprestimo={selectedEmprestimo} />
             {selectedEmprestimo && (
                 <ModalRenovacao
                 open={openModalRenovacao}
