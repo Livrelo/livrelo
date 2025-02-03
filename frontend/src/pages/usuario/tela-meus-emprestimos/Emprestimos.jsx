@@ -15,6 +15,9 @@ export default function Emprestimos() {
         fetchEmprestimosByCPF();
         console.log(emprestimos)
     }, [])
+    useEffect(() => {
+        console.log(emprestimos);
+    }, [emprestimos])
 
     //emprestimos so pra testar dps puxar do backend 
     // const emprestimos = [

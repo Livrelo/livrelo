@@ -23,7 +23,8 @@ const useContaStore = create(
         try {
             const { token } = useAuthStore.getState();
             const response = await api.put(`/conta/${idConta}`, contaAtualizada, API_HEADER(token));
-            set({ conta: response.data });
+            useAuthStore.setState({ conta: response.data.conta});
+            notify("success", "Usuario atualizado com sucesso")
         } catch (error) {
             set({ error: error.response?.data?.message || error.message });
         } finally {

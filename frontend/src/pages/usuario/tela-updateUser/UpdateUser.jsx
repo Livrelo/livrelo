@@ -1,5 +1,5 @@
 import Navbar from "../../../components/navbar/Navbar";
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Formik, Form } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
@@ -12,10 +12,11 @@ import Footer from "../../../components/footer/Footer";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../../zustand/auth/auth";
 import useContaStore from "../../../zustand/conta/conta.js";
+import { notify } from "../../../index.js";
 
 
 function UpdateUser() {
-  // const { id } = useParams();
+  const { id } = useParams();
   const { conta } = useAuthStore();
   const theme = createTheme({
     palette: {
@@ -34,14 +35,24 @@ function UpdateUser() {
     },
   });
   
+  const [ cpfInput, setCPFInput] = useState(conta.cpf);
+  const [ nomeInput, setNomeInput] = useState(conta.nome);
+  const [ emailInput, setEmailInput] = useState(conta.email);
+
+  useEffect(() => {
+    setCPFInput(conta.cpf);
+    setNomeInput(conta.nome);
+    setEmailInput(conta.email);
+
+  }, [conta]);
   // useEffect(()=>{
 
   // })
   // const navigate = useNavigate();
   const initialValues = {
-    CPF: conta.cpf,
-    nome: conta.nome,
-    email: conta.email,
+    CPF: cpfInput,
+    nome: nomeInput,
+    email: emailInput,
     senha: "",
   };
 
@@ -54,7 +65,7 @@ function UpdateUser() {
     email: Yup.string()
       .required("O email é obrigatório.")
       .email("Coloque um email válido"),
-    senha: Yup.string().required("A senha é obrigatória."),
+    senha: Yup.string(),
   });
   // const handleDeleteUser = async (e) => {
   //   e.preventDefault();
@@ -66,10 +77,31 @@ function UpdateUser() {
   //   }
     
   // };
+  const { updateConta } = useContaStore();
+  const navigate = useNavigate();
 
-  const handleUpdate = async (values) =>{
+  const handleUpdate = async (values) => {
+    console.log(values);
+    const contaUpdate = {
+      email: values.email,
+      nome:  values.nome
+    }
+
+    if(values.senha.length !== 0){
+      contaUpdate.senha = values.senha
+    }
+
+    await updateConta(id, contaUpdate);
+
+    console.log(conta);
+
+    navigate("/home");
+    
+    
+    // notify("success", "Usuario atualizado com sucesso.");
 
   }
+
   return (
     <>
       <Navbar />
@@ -80,13 +112,11 @@ function UpdateUser() {
                     <Formik
                     initialValues={{ ...initialValues }}
                     validationSchema={validationSchema}
-                    // onSubmit={(values) => {
-                    //     handleSubmit(values);
-                    // }}
+                    onSubmit={handleUpdate}
                     >
                     {({ isValid, dirty }) => (
                         <Form className="inputs_form_update">
-                        <Input
+                        {/* <Input
                             name="CPF"
                             label="CPF"
                             placeholder="Digite seu CPF"
@@ -97,7 +127,7 @@ function UpdateUser() {
                             },
                             }}
                             size="large"
-                        />
+                        /> */}
                         <Input
                             name="nome"
                             label="nome"
@@ -122,10 +152,11 @@ function UpdateUser() {
                         <Box component="div" className="btn_update-user_div">
                             <ThemeProvider theme={theme}>
                             <Button
-                                className="btn_update-user"
-                                variant="contained"
-                                color="blues"
-                                size="large"
+                              type="submit"
+                              className="btn_update-user"
+                              variant="contained"
+                              color="blues"
+                              size="large"
                             >
                                 Atualizar dados
                             </Button>
