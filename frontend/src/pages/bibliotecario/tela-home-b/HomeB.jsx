@@ -30,38 +30,49 @@ export default function HomeB() {
 
     //att contagens
     // useEffect(() => {
-        
+
     //     console.log({livros});
     // }, [livros, reservas, emprestimos]);
 
+    //livros
     useEffect(() => {
         fetchLivros();
-        setLivrosCount(livros.length);
-        // if(reservas.lenght == undefined){
-        //     setReservasCount(1);
-        // }
-        // if(emprestimos.lenght ==undefined){
-        //     setEmprestimosCount(1);
-        // }
     }, []);
 
-    //reservas 
+    useEffect(() => {
+        setLivrosCount(livros.length || 0);
+    }, [livros]);
+
+    //reservas ATIVAS
     useEffect(() => {
         fetchReservas();
-        setReservasCount(reservas.length);
-        console.log("reservas: "+ JSON.stringify(useReservaStore.getState().reservas, null, 2))
-    }, [])
-    //emprestimos
-    useEffect(() => {
-        fetchAllEmprestimos();
-        setEmprestimosCount(emprestimos.length);
-        console.log("empretimos: "+ emprestimos)
-    }, [])
+    }, []);
 
     useEffect(() => {
-        fetchEmprestimosEmAtraso();
-        setPendentesCount(emprestimosAtrasados.length);
+        const reservasAtivas = reservas.filter(reserva => reserva.status === "Ativa");
+        setReservasCount(reservasAtivas.length || 0);
+    }, [reservas]);
+
+    //emprestimos 
+    useEffect(() => {
+        fetchAllEmprestimos();
     }, []);
+
+    useEffect(() => {
+        const emprestimosArray = Array.isArray(emprestimos) ? emprestimos : [emprestimos]; // Se for objeto, transforma em array
+        setEmprestimosCount(emprestimosArray.length);
+        console.log("Empréstimos corrigidos:", emprestimosArray);
+    }, [emprestimos]);
+
+    //emprestimos EM ATRASO
+    useEffect(() => {
+        fetchEmprestimosEmAtraso();
+    }, []);
+
+    useEffect(() => {
+        setPendentesCount(emprestimosAtrasados.length || 0);
+    }, [emprestimosAtrasados]);
+
 
     return (
         <div>
@@ -82,7 +93,7 @@ export default function HomeB() {
                         <Grid item xs={12} md={6}>
                             <DashboardCard
                                 icon={BookIcon}
-                                title="Livros Reservados"
+                                title="Reservas ativas"
                                 value={reservasCount}
                                 buttonLabel="Ver Reservas"
                                 onButtonClick={() => handleNavigation("/reservas-b")}
