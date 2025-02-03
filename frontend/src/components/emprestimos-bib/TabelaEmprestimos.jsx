@@ -106,14 +106,16 @@ export default function TabelaEmprestimos({ rows, onAddDevolucao }) {
                 slots={{ toolbar: GridToolbar }}
                 disableColumnFilter={false}
             />
-            <ModalDevolucao open={openModalDevolucao} handleClose={handleCloseModalDevolucao} idEmprestimo={selectedEmprestimo} />
-            <ModalRenovacao
+            {/* <ModalDevolucao open={openModalDevolucao} handleClose={handleCloseModalDevolucao} idEmprestimo={selectedEmprestimo} /> */}
+            {selectedEmprestimo && (
+                <ModalRenovacao
                 open={openModalRenovacao}
                 handleClose={handleCloseModalRenovacao} 
                 idEmprestimo={selectedEmprestimo}
                 dataFim={rows.find((e) => e.id === selectedEmprestimo)?.dataFim || ""}
                 // renovarEmprestimo={renovarEmprestimo}
-            />
+                />
+            )}       
         </div>
     );
 }
