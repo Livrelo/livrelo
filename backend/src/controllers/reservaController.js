@@ -29,6 +29,13 @@ class ReservaController{
             let reservas = await ReservaServices.findByCPF(cpf);
 
             const reservasResponse = [];
+
+            if(reservas.length === undefined){
+                const array = [];
+                array.push(reservas);
+                reservas = array
+            }
+
             for(const reserva of reservas){
                 const livro = await LivroService.findById(reserva.idLivro);
                 reservasResponse.push({

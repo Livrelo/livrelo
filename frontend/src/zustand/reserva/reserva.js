@@ -10,7 +10,7 @@ const authState = useAuthStore.getState();
 // console.log("O que vem aqui"+ API_HEADER)
 // const headers = API_HEADER(userState.token)
 
-const useReservaStore = create((set) => ({
+const useReservaStore = create((set, get) => ({
   reservas: [],
   reserva: null,
   isLoading: false,
@@ -55,7 +55,7 @@ const useReservaStore = create((set) => ({
     try {
       const { token } = useAuthStore.getState();
       const response = await api.post('/reserva', {...reserva, cpfUsuario: reserva.cpf}, API_HEADER(token));
-      set((state) => ({ reservas: [...state.reservas, response.data], isLoading: false }));
+      await get().fetchReservasByCPF();
       notify("success", response.data.message);
       
     } catch (error) {
