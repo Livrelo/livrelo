@@ -49,7 +49,9 @@ class ReservaServices{
                 cpfUsuario: cpf
             }
         })
-        return reservas
+        const ReservaBuilder = new ReservaResponseBuilder();
+        const reservasFormatted = ReservaBuilder.addReservaData(reservas).dataValues().withoutTimestamps().build();
+        return reservasFormatted
     }
 
     static async create(reserva, cpf){

@@ -78,7 +78,7 @@ function Detalhamento(){
                                 <Button className="btn_reservar" variant="contained" color="blues" size='large' 
                                     onClick={() => {setIsModalOpen(true)}}
                                     // onClick={() => navigate(`/reservar/${livro.idLivro}`)} 
-                                    disabled={livro.status == "Reservado" ? true : false}
+                                    disabled={(livro.status == "Reservado" || livro.status === "Emprestado") ? true : false}
                                 >Solicitar Reserva</Button>
                             </ThemeProvider>
                         </Box>
