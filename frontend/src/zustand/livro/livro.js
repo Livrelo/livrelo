@@ -4,6 +4,7 @@ import useAuthStore from "../auth/auth";
 // import { devtools } from "zustand/middleware";
 import { API_HEADER } from '../../utils/config';
 const api = await CreateAxios.getAxiosInstance();
+const authState = useAuthStore.getState();
 
 const useLivrosStore = create((set) => ({
     livros: [],
@@ -14,8 +15,9 @@ const useLivrosStore = create((set) => ({
     fetchLivros: async () => {
         set({ loading: true, error: null });
         try {
+           
             const { token } = useAuthStore.getState();
-            const response = await api.get('/livro',API_HEADER);
+            const response = await api.get('/livro', API_HEADER(token));
             set({ livros: response.data.livros });
         } catch (error) {
             set({ error: error.message });

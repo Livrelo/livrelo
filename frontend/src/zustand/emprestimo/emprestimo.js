@@ -6,6 +6,7 @@ import { notify } from "../..";
 import { API_HEADER } from '../../utils/config';
 
 const api = await CreateAxios.getAxiosInstance();
+const authState = useAuthStore.getState();
 
 const useEmprestimoStore = create(((set, get) => ({
     emprestimos: [],
@@ -17,11 +18,11 @@ const useEmprestimoStore = create(((set, get) => ({
 
     fetchAllEmprestimos: async () => {
         set({ loading: true, error: null });
-        const { token } = useAuthStore.getState();
+        // const { token } = useAuthStore.getState();
 
         try {
-        
-            const response = await api.get('/emprestimos', API_HEADER);
+            const { token } = useAuthStore.getState();
+            const response = await api.get('/emprestimos', API_HEADER(token));
             console.log(response.data);
             set({ emprestimos: [...response.data] });
         } catch (error) {
@@ -38,7 +39,8 @@ const useEmprestimoStore = create(((set, get) => ({
             // if (!cpf) throw new Error("CPF não fornecido");
             const authState = useAuthStore.getState()
             const cpf = authState.conta.cpf;
-            const response = await api.get(`/emprestimos/${cpf}`, API_HEADER);
+            const { token } = useAuthStore.getState();
+            const response = await api.get(`/emprestimos/${cpf}`, API_HEADER(token));
             console.log(response.data);
             //array push data
             let array = []
@@ -57,7 +59,8 @@ const useEmprestimoStore = create(((set, get) => ({
     fetchEmprestimoByID: async (idEmprestimo) => {
         set({ loading: true, error: null });
         try {
-            const response = await api.get(`/emprestimos/${idEmprestimo}`, API_HEADER);
+            const { token } = useAuthStore.getState();
+            const response = await api.get(`/emprestimos/${idEmprestimo}`, API_HEADER(token));
             set({ emprestimoSelecionado: response.data });
         } catch (error) {
             set({ error: error.message });
@@ -71,7 +74,8 @@ const useEmprestimoStore = create(((set, get) => ({
     fetchEmprestimosEmAtraso: async () => {
         set({ loading: true, error: null });
         try {
-            const response = await api.get('/emprestimosAtrasados', API_HEADER);
+            const { token } = useAuthStore.getState();
+            const response = await api.get('/emprestimosAtrasados', API_HEADER(token));
             set({ emprestimosAtrasados: response.data });
         } catch (error) {
             set({ error: error.message });
@@ -84,7 +88,8 @@ const useEmprestimoStore = create(((set, get) => ({
     fetchEmprestimosEmAtrasoByCPF: async (cpf) => {
         set({ loading: true, error: null });
         try {
-            const response = await api.get(`/emprestimosAtrasados;${cpf}`, API_HEADER);
+            const { token } = useAuthStore.getState();
+            const response = await api.get(`/emprestimosAtrasados;${cpf}`, API_HEADER(token));
             set({ emprestimosAtrasados: response.data });
         } catch (error) {
             set({ error: error.message });
@@ -98,15 +103,16 @@ const useEmprestimoStore = create(((set, get) => ({
     createEmprestimo: async (preEmprestimo) => {
         set({ loading: true, error: null });
         try {
-            const { token } = useAuthStore.getState();
+            // const { token } = useAuthStore.getState();
             const isThereReserva = preEmprestimo?.idReserva ? true : false;
 
             if(isThereReserva){
-                await api.post(`/emprestimo/${preEmprestimo.idLivro}?idReserva=${preEmprestimo.idReserva}`, preEmprestimo, API_HEADER);
+                const { token } = useAuthStore.getState();
+                await api.post(`/emprestimo/${preEmprestimo.idLivro}?idReserva=${preEmprestimo.idReserva}`, preEmprestimo, API_HEADER(token));
             } else {
                 await api.post(`/emprestimos/${preEmprestimo.idLivro}`, preEmprestimo, {
                     headers: {
-                        ["x-access-token"]:`${token}`
+                        ["x-access-token"]:authState.token
                     }
                 });
             }
@@ -127,7 +133,7 @@ const useEmprestimoStore = create(((set, get) => ({
         set({ loading: true, error: null });
         try {
             const { token } = useAuthStore.getState();
-            const response = await api.post(`/emprestimos/${preEmprestimo.idLivro}`, preEmprestimo, API_HEADER);
+            const response = await api.post(`/emprestimos/${preEmprestimo.idLivro}`, preEmprestimo, API_HEADER(token));
             await get().fetchAllEmprestimos();
             // set((state) => ({ emprestimos: [...state.emprestimos, response.data] }));
            
@@ -143,7 +149,8 @@ const useEmprestimoStore = create(((set, get) => ({
     updateEmprestimo: async (idEmprestimo, newDataFim) => {
         set({ loading: true, error: null });
         try {
-            const response = await api.put(`/emprestimos/${idEmprestimo}`, { dataFim: newDataFim }, API_HEADER);
+            const { token } = useAuthStore.getState();
+            const response = await api.put(`/emprestimos/${idEmprestimo}`, { dataFim: newDataFim }, API_HEADER(token));
             set((state) => ({
                 emprestimos: state.emprestimos.map((emp) =>
                     emp.idEmprestimo === idEmprestimo ? response.data : emp

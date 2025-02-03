@@ -21,8 +21,8 @@ const useContaStore = create(
     updateConta: async (idConta, contaAtualizada) => {
         set({ loading: true, error: null });
         try {
-            const authState = useAuthStore.getState();
-            const response = await api.put(`/conta/${idConta}`, contaAtualizada, API_HEADER);
+            const { token } = useAuthStore.getState();
+            const response = await api.put(`/conta/${idConta}`, contaAtualizada, API_HEADER(token));
             set({ conta: response.data });
         } catch (error) {
             set({ error: error.response?.data?.message || error.message });
@@ -46,7 +46,8 @@ const useContaStore = create(
                     // })
             const resp = await deleteUsuario(cpf);
             if(resp){
-                const response = await api.delete(`/conta/${idConta}`, API_HEADER );    
+                const { token } = useAuthStore.getState();
+                const response = await api.delete(`/conta/${idConta}`, API_HEADER(token) );    
                 notify("success", response.data.message);
             }
             set({ conta: null });

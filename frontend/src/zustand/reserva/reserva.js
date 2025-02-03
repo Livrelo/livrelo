@@ -19,10 +19,10 @@ const useReservaStore = create((set) => ({
   fetchReservas: async () => {
     set({ isLoading: true, error: null });
     try {
-      
-      const response = await api.get('/reserva/', API_HEADER);
+      const { token } = useAuthStore.getState();
+      const response = await api.get('/reserva/', API_HEADER(token));
       set({ reservas: [...response.data], isLoading: false });
-      console.log("reservas zustand:"+response);
+      console.log("reservas zustand:"+ JSON.stringify(response.data));
     } catch (error) {
       set({ error: error.message, isLoading: false });
     }
@@ -31,7 +31,8 @@ const useReservaStore = create((set) => ({
   fetchReservaById: async (id) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.get(`/reserva/${id}`, API_HEADER);
+      const { token } = useAuthStore.getState();
+      const response = await api.get(`/reserva/${id}`, API_HEADER(token));
       set({ reserva: response.data, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });
@@ -40,8 +41,9 @@ const useReservaStore = create((set) => ({
 
   fetchReservasByCPF: async () => {
     try{
+      const { token } = useAuthStore.getState();
       const userState = useAuthStore.getState();
-      const response = await api.get(`/reserva/cpf/${userState.conta.cpf}`, API_HEADER);
+      const response = await api.get(`/reserva/cpf/${userState.conta.cpf}`, API_HEADER(token));
       set({ reservas: [...response.data], isLoading: false });
     }catch(error){
       set({ error: error.message, isLoading: false });
@@ -51,7 +53,8 @@ const useReservaStore = create((set) => ({
   createReserva: async (reserva) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.post('/reserva', {...reserva, cpfUsuario: reserva.cpf}, API_HEADER);
+      const { token } = useAuthStore.getState();
+      const response = await api.post('/reserva', {...reserva, cpfUsuario: reserva.cpf}, API_HEADER(token));
       set((state) => ({ reservas: [...state.reservas, response.data], isLoading: false }));
       notify("success", response.data.message);
       

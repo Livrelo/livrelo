@@ -5,6 +5,7 @@ import useAuthStore from "../auth/auth";
 import { API_HEADER } from '../../utils/config';
 
 const api = await CreateAxios.getAxiosInstance();
+const authState = useAuthStore.getState();
 
 const useUsuarioStore = create((set, get) => ({
     usuarios: [],
@@ -50,8 +51,8 @@ const useUsuarioStore = create((set, get) => ({
     updateUsuario: async (cpf, usuarioAtualizado) => {
         set({ loading: true, error: null });
         try {
-            const authState = useAuthStore.getState();
-            const response = await api.put(`/usuario/${cpf}`, usuarioAtualizado, API_HEADER);
+            const { token } = useAuthStore.getState();
+            const response = await api.put(`/usuario/${cpf}`, usuarioAtualizado, API_HEADER(token));
             set((state) => ({
                 usuarios: state.usuarios.map((usuario) => usuario.cpf === cpf ? response.data : usuario),
                 usuario: state.usuario?.cpf === cpf ? response.data : state.usuario
@@ -67,10 +68,10 @@ const useUsuarioStore = create((set, get) => ({
     deleteUsuario: async (cpf) => {
         set({ loading: true, error: null });
         try {
-            const authState = useAuthStore.getState();
             console.log(cpf);
             console.log(authState.conta.cpf)
-            await api.delete(`/usuario/${cpf}`, API_HEADER)
+            const { token } = useAuthStore.getState();
+            await api.delete(`/usuario/${cpf}`, API_HEADER(token))
             set((state) => ({
                 usuarios: state.usuarios.filter((usuario) => usuario.cpf !== cpf),
                 usuario: state.usuario?.cpf === cpf ? null : state.usuario
