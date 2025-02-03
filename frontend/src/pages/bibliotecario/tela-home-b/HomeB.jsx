@@ -61,7 +61,7 @@ export default function HomeB() {
     useEffect(() => {
         fetchEmprestimosEmAtraso();
         setPendentesCount(emprestimosAtrasados.length);
-    }, [emprestimosAtrasados]);
+    }, []);
 
     return (
         <div>

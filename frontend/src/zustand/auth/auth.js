@@ -4,7 +4,7 @@
 import { create, useStore } from "zustand";
 import CreateAxios from "../../utils/api";
 import { notify } from "../..";
-import { persist } from "zustand/middleware";
+
 
 
 //import useReservaStore from "../reserva/reserva.js";
@@ -12,7 +12,7 @@ import { persist } from "zustand/middleware";
 
 const api = await CreateAxios.getAxiosInstance();
 
-const useAuthStore = create(persist(
+const useAuthStore = create(
     (set, get) => ({
     conta: JSON.parse(localStorage.getItem("conta")) || null,
     token: localStorage.getItem("token") || null,
@@ -88,7 +88,7 @@ const useAuthStore = create(persist(
     isAuthenticated: () => {
         return !!localStorage.getItem("token");
     },
-})));
+}));
 
 export default useAuthStore;
 
