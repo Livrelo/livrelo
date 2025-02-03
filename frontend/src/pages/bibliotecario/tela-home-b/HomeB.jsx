@@ -49,13 +49,13 @@ export default function HomeB() {
     useEffect(() => {
         fetchReservas();
         setReservasCount(reservas.length);
-        console.log("reservas: "+reservas.length)
+        console.log("reservas: "+ JSON.stringify(useReservaStore.getState().reservas, null, 2))
     }, [])
     //emprestimos
     useEffect(() => {
         fetchAllEmprestimos();
         setEmprestimosCount(emprestimos.length);
-        console.log("empretimos: "+emprestimos)
+        console.log("empretimos: "+ emprestimos)
     }, [])
 
     useEffect(() => {

@@ -4,12 +4,15 @@ import CreateAxios from "../../utils/api";
 import useAuthStore from "../auth/auth.js";
 import useUsuarioStore from "../usuario/usuario.js"
 import { notify } from "../..";
+import { API_HEADER } from '../../utils/config';
+
 
 const api = await CreateAxios.getAxiosInstance();
 
 
 
-const useContaStore = create((set) => ({
+const useContaStore = create(
+    (set, get) => ({
     conta: null,
     loading: false,
     error: null,
@@ -19,11 +22,7 @@ const useContaStore = create((set) => ({
         set({ loading: true, error: null });
         try {
             const authState = useAuthStore.getState();
-            const response = await api.put(`/conta/${idConta}`, contaAtualizada, {
-                headers: {
-                    ['x-access-token']:authState.token
-                }
-            });
+            const response = await api.put(`/conta/${idConta}`, contaAtualizada, API_HEADER);
             set({ conta: response.data });
         } catch (error) {
             set({ error: error.response?.data?.message || error.message });
@@ -47,11 +46,7 @@ const useContaStore = create((set) => ({
                     // })
             const resp = await deleteUsuario(cpf);
             if(resp){
-                const response = await api.delete(`/conta/${idConta}`, {
-                            headers: {
-                                ["x-access-token"]:`${authState.token}`
-                            }
-                } );    
+                const response = await api.delete(`/conta/${idConta}`, API_HEADER );    
                 notify("success", response.data.message);
             }
             set({ conta: null });

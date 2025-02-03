@@ -1,9 +1,12 @@
+
 import CreateAxios from "../../utils/api";
 import { create } from "zustand";
+import { API_HEADER } from '../../utils/config';
 
 const api = await CreateAxios.getAxiosInstance();
 
-const useCategoriaStore = create((set) => ({
+const useCategoriaStore = create(
+    (set, get) => ({
     categorias: [],
     categoria: null,
     loading: false,
@@ -12,7 +15,7 @@ const useCategoriaStore = create((set) => ({
     fetchCategorias: async () => {
         set({ loading: true, error: null });
     try {
-      const response = await api.get('/categoria');
+      const response = await api.get('/categoria', API_HEADER);
       set({ categorias: response.data, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });
@@ -22,7 +25,7 @@ const useCategoriaStore = create((set) => ({
     fetchCategoriaById: async (idCategoria) => {
       set({ loading: true, error: null });
       try {
-        const response = await api.get(`/categoria/${idCategoria}`);
+        const response = await api.get(`/categoria/${idCategoria}`, API_HEADER);
         set({ categoria: response.data, loading: false });
       } catch (error) {
         set({ error: error.message, loading: false });
@@ -33,7 +36,7 @@ const useCategoriaStore = create((set) => ({
     createCategoria: async ( categoria ) => {
       set({ loading: true, error: null });
       try {
-        const response = await api.post('/categoria', categoria);
+        const response = await api.post('/categoria', categoria, API_HEADER);
         set((state) => ({ categorias: [...state.categorias, response.data], loading: false }));
       } catch (error) {
         set({ error: error.message, loading: false });
@@ -43,7 +46,7 @@ const useCategoriaStore = create((set) => ({
     updateCategoria: async (id, categoria ) =>{
         set({loading: true, error: null});
         try { 
-            const response = await api.put(`categoria/${id}`, categoria);
+            const response = await api.put(`categoria/${id}`, categoria, API_HEADER);
             set((state) => ({
                 categorias: state.categorias.map((cat) =>
                     cat.idCategoria === id ? response.data : cat
@@ -60,7 +63,7 @@ const useCategoriaStore = create((set) => ({
     deleteByIdCategoria: async (idCategoria) => {
       set({ loading: true, error: null });
       try {
-        await api.delete(`/livrocategoria/categoria/${idCategoria}`);
+        await api.delete(`/livrocategoria/categoria/${idCategoria}`, API_HEADER);
         set((state) => ({ categorias: state.categorias.filter(item => item.idCategoria !== idCategoria), loading: false }));
       } catch (error) {
         set({ error: error.message, loading: false });

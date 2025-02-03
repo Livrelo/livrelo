@@ -1,6 +1,6 @@
 import CreateAxios from "../../utils/api";
 import { create } from "zustand";
-
+import { API_HEADER } from '../../utils/config';
 const api = await CreateAxios.getAxiosInstance();
 
 const useLivroCategoriaStore = create((set) => ({
@@ -11,7 +11,7 @@ const useLivroCategoriaStore = create((set) => ({
     fetchCategorias: async () => {
         set({ isLoading: true, error: null });
     try {
-      const response = await api.get('/livrocategoria');
+      const response = await api.get('/livrocategoria',API_HEADER);
       set({ livroCategorias: response.data, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });
@@ -22,7 +22,7 @@ const useLivroCategoriaStore = create((set) => ({
     fetchCategoriasByLivroId: async (idLivro) => {
       set({ loading: true, error: null });
       try {
-        const response = await api.get(`/livrocategoria/livro/${idLivro}`);
+        const response = await api.get(`/livrocategoria/livro/${idLivro}`, API_HEADER);
         set({ livroCategorias: response.data, loading: false });
       } catch (error) {
         set({ error: error.message, loading: false });
@@ -33,7 +33,7 @@ const useLivroCategoriaStore = create((set) => ({
     fetchLivrosByCategoriaId: async (idCategoria) => {
       set({ loading: true, error: null });
       try {
-        const response = await api.get(`/livrocategoria/categoria/${idCategoria}`);
+        const response = await api.get(`/livrocategoria/categoria/${idCategoria}`, API_HEADER);
         set({ livroCategorias: response.data, loading: false });
       } catch (error) {
         set({ error: error.message, loading: false });
@@ -44,7 +44,7 @@ const useLivroCategoriaStore = create((set) => ({
     createLivroCategoria: async (idLivro, idCategoria) => {
       set({ loading: true, error: null });
       try {
-        const response = await api.post('/livrocategoria', { idLivro, idCategoria });
+        const response = await api.post('/livrocategoria', { idLivro, idCategoria }, API_HEADER);
         set((state) => ({ livroCategorias: [...state.livroCategorias, response.data], loading: false }));
       } catch (error) {
         set({ error: error.message, loading: false });
@@ -55,7 +55,7 @@ const useLivroCategoriaStore = create((set) => ({
     deleteByIdLivro: async (idLivro) => {
       set({ loading: true, error: null });
       try {
-        await api.delete(`/livrocategoria/livro/${idLivro}`);
+        await api.delete(`/livrocategoria/livro/${idLivro}`, API_HEADER);
         set((state) => ({ livroCategorias: state.livroCategorias.filter(item => item.idLivro !== idLivro), loading: false }));
       } catch (error) {
         set({ error: error.message, loading: false });
@@ -65,7 +65,7 @@ const useLivroCategoriaStore = create((set) => ({
     deleteByIdCategoria: async (idCategoria) => {
       set({ loading: true, error: null });
       try {
-        await api.delete(`/livrocategoria/categoria/${idCategoria}`);
+        await api.delete(`/livrocategoria/categoria/${idCategoria}`, API_HEADER);
         set((state) => ({ livroCategorias: state.livroCategorias.filter(item => item.idCategoria !== idCategoria), loading: false }));
       } catch (error) {
         set({ error: error.message, loading: false });

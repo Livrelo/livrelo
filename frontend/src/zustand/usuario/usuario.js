@@ -2,6 +2,7 @@ import { create } from "zustand";
 import CreateAxios from "../../utils/api";
 import { notify } from "../..";
 import useAuthStore from "../auth/auth";
+import { API_HEADER } from '../../utils/config';
 
 const api = await CreateAxios.getAxiosInstance();
 
@@ -50,11 +51,7 @@ const useUsuarioStore = create((set, get) => ({
         set({ loading: true, error: null });
         try {
             const authState = useAuthStore.getState();
-            const response = await api.put(`/usuario/${cpf}`, usuarioAtualizado, {
-                headers: {
-                    ["x-access-token"]:`${authState.token}`
-                }
-            });
+            const response = await api.put(`/usuario/${cpf}`, usuarioAtualizado, API_HEADER);
             set((state) => ({
                 usuarios: state.usuarios.map((usuario) => usuario.cpf === cpf ? response.data : usuario),
                 usuario: state.usuario?.cpf === cpf ? response.data : state.usuario
@@ -73,11 +70,7 @@ const useUsuarioStore = create((set, get) => ({
             const authState = useAuthStore.getState();
             console.log(cpf);
             console.log(authState.conta.cpf)
-            await api.delete(`/usuario/${cpf}`, {
-                headers: {
-                    ["x-access-token"]:`${authState.token}`
-                }
-            })
+            await api.delete(`/usuario/${cpf}`, API_HEADER)
             set((state) => ({
                 usuarios: state.usuarios.filter((usuario) => usuario.cpf !== cpf),
                 usuario: state.usuario?.cpf === cpf ? null : state.usuario

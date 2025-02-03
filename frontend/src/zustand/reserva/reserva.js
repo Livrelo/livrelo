@@ -7,7 +7,7 @@ import { notify } from '../..';
 
 const api = await CreateAxios.getAxiosInstance();
 const authState = useAuthStore.getState();
-console.log("O que vem aqui"+API_HEADER)
+// console.log("O que vem aqui"+ API_HEADER)
 // const headers = API_HEADER(userState.token)
 
 const useReservaStore = create((set) => ({
@@ -19,13 +19,8 @@ const useReservaStore = create((set) => ({
   fetchReservas: async () => {
     set({ isLoading: true, error: null });
     try {
-      const authState = useAuthStore.getState();
       
-      const response = await api.get('/reserva/', {
-        headers: {
-          ["x-access-token"]:`${authState.token}`
-        }
-      });
+      const response = await api.get('/reserva/', API_HEADER);
       set({ reservas: [...response.data], isLoading: false });
       console.log("reservas zustand:"+response);
     } catch (error) {
@@ -36,11 +31,7 @@ const useReservaStore = create((set) => ({
   fetchReservaById: async (id) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.get(`/reserva/${id}`, {
-        headers: {
-            ["x-access-token"]:`${authState.token}`
-        }
-    });
+      const response = await api.get(`/reserva/${id}`, API_HEADER);
       set({ reserva: response.data, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });
@@ -50,11 +41,7 @@ const useReservaStore = create((set) => ({
   fetchReservasByCPF: async () => {
     try{
       const userState = useAuthStore.getState();
-      const response = await api.get(`/reserva/cpf/${userState.conta.cpf}`, {
-        headers: {
-        ["x-access-token"]:`${userState.token}`
-        }
-      });
+      const response = await api.get(`/reserva/cpf/${userState.conta.cpf}`, API_HEADER);
       set({ reservas: [...response.data], isLoading: false });
     }catch(error){
       set({ error: error.message, isLoading: false });
@@ -64,11 +51,7 @@ const useReservaStore = create((set) => ({
   createReserva: async (reserva) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.post('/reserva', {...reserva, cpfUsuario: reserva.cpf},{
-        headers: {
-          ["x-access-token"]:`${useAuthStore.getState().token}`
-        }
-      });
+      const response = await api.post('/reserva', {...reserva, cpfUsuario: reserva.cpf}, API_HEADER);
       set((state) => ({ reservas: [...state.reservas, response.data], isLoading: false }));
       notify("success", response.data.message);
       
