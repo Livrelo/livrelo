@@ -1,5 +1,6 @@
 import e from "express";
 
+import './mediatorHandler.js';
 import contaRouter from "./contaRoutes.js";
 import emprestimoRouter from "./emprestimoRoutes.js";
 import devolucaoRouter from "./devolucaoRoutes.js";
@@ -10,8 +11,10 @@ import livroRouter from "./livroRoutes.js";
 import categoriaRoutes from "./categoriaRoutes.js";
 import livroCategoriaRoutes from "./livroCategoriaRoutes.js";
 
-const routes = e.Router();
+// const routes = e.Router();
 //testar rotas aqui
+
+const routes = e.Router();
 
 routes.use(contaRouter);
 routes.use(emprestimoRouter);
