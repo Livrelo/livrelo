@@ -1,0 +1,49 @@
+body .header {
+    background-color: #ffffff;
+    border-bottom: 2px solid #162E62;
+    box-shadow: none;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+body .header-bar {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    width: 100vw;
+}
+
+body .header .header-logo {
+    height: 50px;
+    position: relative;
+    margin-right: 15px;
+    right: -45%;
+}
+
+body .header .header-livrelo {
+    height: 25px;
+    position: relative;
+    /* margin-right: 45%; */
+    right: -45%;
+}
+
+@media (max-width: 1100px) {
+    body .header .header-logo,
+    body .header .header-livrelo {
+        right: -40%;
+    }
+}
+@media (max-width: 800px) {
+    body .header .header-logo,
+    body .header .header-livrelo {
+        right: -35%;
+    }
+}
+@media (max-width: 580px) {
+    body .header .header-logo,
+    body .header .header-livrelo {
+        right: -30%;
+    }
+}

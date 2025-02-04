@@ -1,0 +1,65 @@
+body .livro-reservado-container {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #162E62;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body .livro-reservado-titulo {
+    color: #162E62;
+    font-size: 1.2rem;
+    text-align: left;
+    flex: 2;
+}
+
+body .livro-reservado-data {
+    color: #7e7e7e;
+    font-size: 1rem;
+    text-align: center;
+    flex: 1;
+}
+
+body .livro-reservado-botao {
+    border-radius: 5px;
+    padding: 7px 15px; 
+    background-color: #162E62;
+    color: white;
+    transition: background-color 0.3s ease;
+    flex: 1;
+    margin-left: 10px;
+}
+
+body .livro-reservado-botao:hover {
+    background-color: #0d2352;
+}
+
+@media (max-width: 768px) {
+    body .livro-reservado-container {
+        width: 90%;
+        flex-direction: column;
+        align-items: flex-start; 
+    }
+
+    body .livro-reservado-titulo,
+    body .livro-reservado-data,
+    body .livro-reservado-botao {
+        flex: none;
+        width: 100%; 
+        text-align: left; 
+        margin-bottom: 10px; 
+    }
+
+    body .livro-reservado-botao {
+        margin-left: 0; 
+        padding: 8px 15px; 
+    }
+}

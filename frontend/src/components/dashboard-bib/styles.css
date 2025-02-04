@@ -1,0 +1,46 @@
+body .dashboard-card {
+    width: 100%;
+    box-shadow: 3px 7px 7px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+body .dashboard-card:hover {
+    transform: scale(1.02);
+}
+
+body .dashboard-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+}
+
+body .dashboard-card-title {
+    color: #162E62;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+body .dashboard-card-value {
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+    font-weight: bold;
+    color: #d8b90c;
+}
+
+body .dashboard-card-button {
+    text-transform: none;
+    background-color: #162E62;
+    color: #fff;
+    padding: 6px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+body .dashboard-card-button:hover {
+    background-color: #115293;
+}

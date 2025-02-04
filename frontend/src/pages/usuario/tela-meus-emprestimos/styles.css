@@ -1,0 +1,13 @@
+body .page-content-emprestimos {
+    padding: 20px;
+    margin-top: 80px;
+}
+
+
+body .emprestimos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 800px;
+    margin: 0 auto;
+}
