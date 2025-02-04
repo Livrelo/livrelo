@@ -138,6 +138,7 @@ function UpdateLivro(){
             console.log(selectedCategorias)
             console.log(initialCategoriasList)
             //alguma coisa
+            navigate("/acervo-b")
         }catch(error){
             console.log(error);
         }

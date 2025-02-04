@@ -80,6 +80,7 @@ const useLivrosStore = create((set, get) => ({
             const { token } = useAuthStore.getState();
             const response = await api.put(`/livro/${id}`, livroAtualizado, API_HEADER(token));
             await get().fetchLivros();
+            notify("success", "Livro Atualizado com sucesso");
         } catch (error) {
             set({ error: error.message });
         } finally {
