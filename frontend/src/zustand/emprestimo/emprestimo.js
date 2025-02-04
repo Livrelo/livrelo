@@ -26,6 +26,8 @@ const useEmprestimoStore = create(((set, get) => ({
 
             let responseArray = [];
 
+            console.log(response.data.length);
+            console.log(response.data);
             if(response.data.length === undefined){
                 responseArray.push(response.data);
             }else {
@@ -52,9 +54,14 @@ const useEmprestimoStore = create(((set, get) => ({
             // console.log(response.data);
             //array push data
             // let array = []
+            let responseArray = [];
             // array.push(response.data)
-            set({ emprestimos: response.data });
-            console.log(get().emprestimos)
+            if(response.data.length === undefined){
+                responseArray.push(response.data);
+            }else {
+                responseArray = response.data;
+            }
+            set({ emprestimos: responseArray });
 
         } catch (error) {
             console.log("erro")
