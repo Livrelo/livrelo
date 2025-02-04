@@ -23,7 +23,7 @@ function HomeUser() {
         <div className="home-container">
             
             <Grid container spacing={0.5} className="books-grid"> 
-                {livros.map((livro) => (
+                {livros.filter((livro) => livro.status !== "Deletado").map((livro) => (
                     <Grid item xs={12} sm={6} md={2} key={livro.id}>
                         <LivroCard 
                             idlivro={livro.idLivro}

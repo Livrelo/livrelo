@@ -64,7 +64,7 @@ const useLivrosStore = create((set, get) => ({
             });
             await get().fetchLivros();
             notify("success", response.data.message);
-            set((state) => ({ livros: [...state.livros, response.data] }));
+            // set((state) => ({ livros: [...state.livros, response.data] }));
             return response;
         } catch (error) {
             notify("error", error.message);
@@ -77,10 +77,9 @@ const useLivrosStore = create((set, get) => ({
     updateLivro: async (id, livroAtualizado) => {
         set({ loading: true, error: null });
         try {
-            const response = await api.put(`/livro/${id}`, livroAtualizado);
-            set((state) => ({
-                livros: state.livros.map((livro) => livro.idLivro === id ? response.data : livro)
-            }));
+            const { token } = useAuthStore.getState();
+            const response = await api.put(`/livro/${id}`, livroAtualizado, API_HEADER(token));
+            await get().fetchLivros();
         } catch (error) {
             set({ error: error.message });
         } finally {
@@ -91,10 +90,10 @@ const useLivrosStore = create((set, get) => ({
     deleteLivro: async (id) => {
         set({ loading: true, error: null });
         try {
-            await api.delete(`/livro/${id}`);
-            set((state) => ({
-                livros: state.livros.filter((livro) => livro.idLivro !== id)
-            }));
+            const { token } = useAuthStore.getState();
+            await api.put(`/livro/${id}`, {status: "Deletado"}, API_HEADER(token));
+            await get().fetchLivros();
+            notify("success","Livro Deletado com sucesso.");
         } catch (error) {
             set({ error: error.message });
         } finally {

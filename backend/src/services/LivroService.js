@@ -15,6 +15,7 @@ class LivroService{
                 }
             })
             console.log("17")
+            console.log(livroCategorias);
             let categoriasArray = [];
             for(const livroCategoria of livroCategorias){
                 const categoria = await Categoria.findAll({
@@ -22,9 +23,11 @@ class LivroService{
                         idCategoria: livroCategoria.dataValues.idCategoria
                     }
                 })
+                console.log(categoria[0].dataValues);
                 categoriasArray.push(categoria[0].dataValues);
 
             }
+            console.log(categoriasArray);
             livro.dataValues.categorias = categoriasArray;
         }
 

@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../components/header-signup/Header";
 import Footer from "../../components/footer/Footer";
 import "./home.css";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, Grid, Button, Box, Card, CardContent } from "@mui/material";
+import useLogOutStore from "../../zustand/auth/logout";
 
 export default function Home() {
     const navigate = useNavigate();
     const handleNavigation = (route) => {
         navigate(route);
     };
+
+    const {logout} = useLogOutStore();
+
+    useEffect(() => {
+        logout();
+    }, []);
+    
     return (
         <div>
             <Header />

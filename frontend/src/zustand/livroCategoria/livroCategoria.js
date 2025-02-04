@@ -2,6 +2,7 @@ import CreateAxios from "../../utils/api";
 import useAuthStore from "../auth/auth";
 import { create } from "zustand";
 import { API_HEADER } from '../../utils/config';
+import useLivrosStore from "../livro/livro";
 const api = await CreateAxios.getAxiosInstance();
 const authState = useAuthStore.getState();
 const useLivroCategoriaStore = create((set) => ({
@@ -50,7 +51,7 @@ const useLivroCategoriaStore = create((set) => ({
       try {
         const { token } = useAuthStore.getState();
         const response = await api.post('/livrocategoria', { idLivro, idCategoria }, API_HEADER(token));
-        set((state) => ({ livroCategorias: [...state.livroCategorias, response.data], loading: false }));
+        await useLivrosStore.getState().fetchLivros();
         return response;
       } catch (error) {
         set({ error: error.message, loading: false });
@@ -74,7 +75,7 @@ const useLivroCategoriaStore = create((set) => ({
       try {
         const { token } = useAuthStore.getState();
         await api.delete(`/livrocategoria/categoria/${idCategoria}`, API_HEADER(token));
-        set((state) => ({ livroCategorias: state.livroCategorias.filter(item => item.idCategoria !== idCategoria), loading: false }));
+        await useLivrosStore.getState().fetchLivros();
       } catch (error) {
         set({ error: error.message, loading: false });
       }
