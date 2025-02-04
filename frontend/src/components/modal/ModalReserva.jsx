@@ -4,7 +4,10 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Input from "../Input/Input";
 import TextMaskCustom from "../Input/maskinput";
+import useReservaStore from "../../zustand/reserva/reserva";
 import "./styles.css";
+import useAuthStore from "../../zustand/auth/auth";
+import { useNavigate } from "react-router-dom";
 
 //prazo 2 dias apos a retirada
 const calculatePrazo = (dataReserva) => {
@@ -13,17 +16,22 @@ const calculatePrazo = (dataReserva) => {
     return data.toISOString().split("T")[0]; 
 };
 
-export default function ModalReserva({ open, handleClose }) {
+export default function ModalReserva({ open, handleClose , idLivro, cpf}) {
+    const { token } = useAuthStore();
+    const navigate = useNavigate();
+    
+    const { createReserva } = useReservaStore();
+
     const initialValues = {
-        idLivro: "",
+        idLivro: idLivro || "",
         dataReserva: "",
         dataFim: "",
         prazo: "",
-        cpf: "",
+        cpf: cpf,
     };
 
     const validationSchema = Yup.object({
-        idLivro: Yup.number().required("O ID do livro é obrigatório."),
+        // idLivro: Yup.number().required("O ID do livro é obrigatório."),
         dataReserva: Yup.date().required("A data de reserva é obrigatória."),
         prazo: Yup.date()
             .min(
@@ -37,7 +45,13 @@ export default function ModalReserva({ open, handleClose }) {
 
     });
 
-    const handleSubmit = (values, { resetForm }) => {
+    const handleSubmit = async (values, { resetForm }) => {
+        try{
+            await createReserva(values);
+            navigate("/home");
+        }catch(error){
+            console.log(error);
+        }
         resetForm(); 
         handleClose();
         //registra reserva
@@ -54,11 +68,12 @@ export default function ModalReserva({ open, handleClose }) {
                 {({ isValid, dirty, setFieldValue, values }) => (
                     <Form>
                         <DialogContent>
-                            <Input
+                        <Input
                                 name="idLivro"
                                 label="ID do Livro"
                                 placeholder="Digite o ID do Livro"
                                 required
+                                disabled={!!initialValues.idLivro}
                             />
                             <Input
                                 name="dataReserva"

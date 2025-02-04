@@ -14,6 +14,7 @@ class UsuarioService{
     }
 
     static async create(usuario){
+        console.log(usuario);
         const usuarioCriado = await Usuario.create(usuario);
         return usuarioCriado;
     }

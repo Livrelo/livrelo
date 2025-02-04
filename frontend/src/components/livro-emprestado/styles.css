@@ -52,9 +52,6 @@ body .livro-emprestado-status.finalizado {
     color: white;
 }
 
-body .livro-emprestado-container:hover{
-    cursor: pointer;
-}
 
 @media (max-width: 768px) {
     body .livro-emprestado-container {

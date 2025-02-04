@@ -1,13 +1,17 @@
 import axios from "axios";
 
-const CreateAxios = () => {
+class CreateAxios {
+    static instance = null;
 
-  return axios.create({
-      baseURL: "http://localhost:5000",
-    //   headers: {
-    //     Authorization: `${token}`,
-    //   },
-  });    
+    static async getAxiosInstance(){
+
+
+      if (!this.instance) {
+        this.instance = axios.create({
+          baseURL: "http://localhost:5000",
+        });   
+      }
+    return this.instance;
+    }    
 };
-    
-    export default CreateAxios;
+export default CreateAxios;

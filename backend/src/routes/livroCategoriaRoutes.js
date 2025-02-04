@@ -10,7 +10,7 @@ livroCategoriaRoutes.get("/livrocategoria/livro/:id",  authenticateToken, author
 livroCategoriaRoutes.get("/livrocategoria/categoria/:id",  authenticateToken, authorizeTypes(['bibliotecario', 'usuario']), LivroCategoriaController.findLivrosByCategoriaId);
 livroCategoriaRoutes.post("/livrocategoria",  authenticateToken, authorizeTypes(['bibliotecario']), LivroCategoriaController.create);
 livroCategoriaRoutes.delete("/livrocategoria/livro/:id",  authenticateToken, authorizeTypes(['bibliotecario']), LivroCategoriaController.deleteByLivroId); // caso de delete de um livro.
-livroCategoriaRoutes.delete("livrocategoria/categoria/:id",  authenticateToken, authorizeTypes(['bibliotecario']), LivroCategoriaController.deleteByIdCategoria);
+livroCategoriaRoutes.delete("/livrocategoria/categoria/:id",  authenticateToken, authorizeTypes(['bibliotecario']), LivroCategoriaController.deleteByIdCategoria);
 
 
 export default livroCategoriaRoutes;

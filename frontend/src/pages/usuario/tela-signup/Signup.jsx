@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../../components/header-signup/Header.jsx";
@@ -9,9 +8,14 @@ import { Button, Typography, Box } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextMaskCustom from "../../../components/Input/maskinput";
 import img from "./bg.jpg";
+import useUsuarioStore from "../../../zustand/usuario/usuario.js";
+import { notify } from "../../../index.js";
 import "./styleSignup.css";
 
 function Signup() {
+  const { createUsuario } = useUsuarioStore();
+  const navigate = useNavigate();
+
   const theme = createTheme({
     palette: {
       blues: {
@@ -28,15 +32,16 @@ function Signup() {
       },
     },
   });
+
   const initialValues = {
-    CPF: "",
+    cpf: "",
     nome: "",
     email: "",
     senha: "",
   };
 
   const validationSchema = Yup.object({
-    CPF: Yup.string()
+    cpf: Yup.string()
       .required("O CPF é obrigatório.")
       .matches(/^.{14}$/, "O CPF deve ter 11 dígitos."),
     nome: Yup.string().required("O nome é obrigatório"),
@@ -45,31 +50,47 @@ function Signup() {
       .email("Coloque um email válido"),
     senha: Yup.string().required("A senha é obrigatória."),
   });
-  const handleSubmit = (values) => {
-    console.log(values);
+
+  const handleSubmit = async (values) => {
+    try {
+        // Para depuração: verifique os valores
+     const response = await createUsuario({
+        cpf: values.cpf,
+        nome: values.nome,
+        email: values.email,
+        senha: values.senha,
+      });
+      console.log(response);
+
+      // Navega para a tela de login
+      navigate("/signin");
+    } catch (error) {
+      console.error(error); // Depuração
+      // Notificação de erro
+      // notify.show(error.message || "Erro ao cadastrar usuário", "error", 3000);
+      notify("error", error.message);
+    }
   };
-  const navigate = useNavigate();
+
   return (
     <div className="Signup">
       <Header />
       <div className="Signup-Container">
-        <img src={img} alt="SignImg" className="SignImg"></img>
+        <img src={img} alt="SignImg" className="SignImg" />
         <div className="wrap-form-SignUp">
           <Box className="Signup-form">
             <Typography variant="h6" className="tittle-SignUp">
               Cadastro
             </Typography>
             <Formik
-              initialValues={{ ...initialValues }}
+              initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={(values) => {
-                handleSubmit(values);
-              }}
+              onSubmit={handleSubmit} // O Formik já gerencia o submit
             >
               {({ isValid, dirty }) => (
                 <Form>
                   <Input
-                    name="CPF"
+                    name="cpf"
                     label="CPF"
                     placeholder="Digite seu CPF"
                     type="text"
@@ -98,15 +119,19 @@ function Signup() {
                     name="senha"
                     label="senha"
                     placeholder="Digite sua senha"
-                    type="text"
+                    type="password" 
                     size="small"
                   />
-                  <Box
-                    component="div"
-                    className="btn-signUp-div"
-                  >
+                  <Box component="div" className="btn-signUp-div">
                     <ThemeProvider theme={theme}>
-                      <Button className="signUp-botao" variant="contained" color="blues" size="large">
+                      <Button
+                        type="submit"
+                        className="signUp-botao"
+                        variant="contained"
+                        color="blues"
+                        size="large"
+                        disabled={!isValid || !dirty}
+                      >
                         Cadastrar
                       </Button>
                     </ThemeProvider>
@@ -117,10 +142,7 @@ function Signup() {
           </Box>
           <span className="label-ToSignIn">Já possui conta?</span>
 
-          <Box
-            component="div"
-           className="btn-signUp-div"
-          >
+          <Box component="div" className="btn-signUp-div">
             <ThemeProvider theme={theme}>
               <Button
                 className="toSignIn-botao"

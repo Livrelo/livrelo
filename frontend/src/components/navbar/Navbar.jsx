@@ -12,7 +12,8 @@ import logo from './logo.png';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../../zustand/auth/auth';
 import './styles.css';
 
 const Search = styled('div')(({ theme, focused }) => ({
@@ -65,6 +66,9 @@ function Navbar() {
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate(); 
 
+    
+
+
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -111,8 +115,14 @@ function Navbar() {
                     <Button onClick={() => handleNavigation('/emprestimos')} className="navbar-button">
                         Meus empréstimos
                     </Button>
+                    <Button onClick={() => handleNavigation(`/perfil/${useAuthStore.getState().conta.idConta}`)} className="navbar-button">
+                        Meu perfil
+                    </Button>
+                    <Button color={"error"} onClick={() => handleNavigation('/')} >
+                        Sair
+                    </Button>
                     
-                    <Search>
+                    {/* <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
@@ -122,10 +132,8 @@ function Navbar() {
                             placeholder="Buscar livro..."
                             inputProps={{ 'aria-label': 'search' }}
                         />
-                    </Search>
-                    <Button onClick={() => handleNavigation('/perfil')} className="navbar-button">
-                        Meu perfil
-                    </Button>
+                    </Search> */}
+                    
                 </Box>
                 <Box className="menu-icon-box">
                     <IconButton onClick={handleMenuOpen}>
@@ -140,6 +148,7 @@ function Navbar() {
                         <MenuItem onClick={() => handleNavigation('/reservas')}>Minhas reservas</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/emprestimos')}>Meus empréstimos</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/perfil')}>Meu perfil</MenuItem>
+                        <MenuItem onClick={() => handleNavigation('/')}>Sair</MenuItem>
                     </Menu>
                 </Box>
             </Toolbar>

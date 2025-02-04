@@ -1,9 +1,35 @@
 import LivroResponseBuilder from "../builders/LivroResponseBuilder.js";
+import Categoria from "../models/Categoria.js";
 import Livro from "../models/Livro.js";
+import LivroCategoria from "../models/LivroCategoria.js";
 
 class LivroService{
     static async findAll(){
         const livros = await Livro.findAll();
+
+        let livrosArray = [];
+        for(const livro of livros){
+            const livroCategorias = await LivroCategoria.findAll({
+                where:{
+                    idLivro: livro.dataValues.idLivro
+                }
+            })
+            console.log("17")
+            console.log(livroCategorias);
+            let categoriasArray = [];
+            for(const livroCategoria of livroCategorias){
+                const categoria = await Categoria.findAll({
+                    where:{
+                        idCategoria: livroCategoria.dataValues.idCategoria
+                    }
+                })
+                console.log(categoria[0].dataValues);
+                categoriasArray.push(categoria[0].dataValues);
+
+            }
+            console.log(categoriasArray);
+            livro.dataValues.categorias = categoriasArray;
+        }
 
         const LivroBuilder = new LivroResponseBuilder()
         const respostaLivros = LivroBuilder.addData(livros).dataValues().withoutTimestamps().build();

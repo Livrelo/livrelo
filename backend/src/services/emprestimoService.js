@@ -6,6 +6,10 @@ import { ReservaIndisponivel, ReservaNaoEncontrada } from "../errors/reservaErro
 import { LimiteEmprestimoError, EmprestimoAtrasadoError } from "../errors/emprestimosError.js";
 import Livro from "../models/Livro.js";
 import EmprestimoResponseBuilder from "../builders/EmprestimoResponseBuilder.js";
+import Devolucao from "../models/Devolucao.js";
+import Usuario from "../models/Usuario.js";
+import Conta from "../models/Conta.js";
+import UsuarioService from "./UsuarioService.js";
 class EmprestimoService {
     //CONSULTAS DE EMPRESTIMOS ABAIXO -> GET 
     static diasEmprestimo = 14;
@@ -13,9 +17,34 @@ class EmprestimoService {
     static async findAll() {
         const emprestimos = await Emprestimo.findAll();
 
+        const emprestimosArray = [];
+        for(const emprestimo of emprestimos){
+            const livro = await Livro.findByPk(emprestimo.idLivro);
+            emprestimo.dataValues.livro = livro.dataValues;
+            const usuario = await Usuario.findAll({
+                where:{
+                    cpf: emprestimo.dataValues.cpf
+                }
+            })
+            const conta = await Conta.findByPk(Number(usuario[0].dataValues.idConta));
+
+            emprestimo.dataValues.usuario = {
+                ...conta.dataValues,
+                cpf: usuario[0].dataValues.cpf
+            }
+
+            const devolucao = await Devolucao.findByPk(emprestimo.dataValues.idEmprestimo)
+            if(devolucao){
+                emprestimo.dataValues.dataDevolucao = devolucao.dataValues.dataDevolucao;
+            } else {
+                emprestimo.dataValues.dataDevolucao = null;
+            }
+
+            emprestimosArray.push(emprestimo);
+        }
         const builder = new EmprestimoResponseBuilder();
         const response = builder
-            .addEmprestimoData(emprestimos)
+            .addEmprestimoData(emprestimosArray)
             .dataValues()
             .withoutTimestamps()
             .build();
@@ -30,9 +59,23 @@ class EmprestimoService {
         const emprestimosCPF = await Emprestimo.findAll({
             where: { cpf: cpf },
         });
+        const emprestimos = [];
+
+        for (let emprestimo of emprestimosCPF) {
+            const livro = await Livro.findByPk(emprestimo.idLivro);
+            emprestimo.dataValues.livro = livro;
+            const devolucao = await Devolucao.findByPk(emprestimo.idEmprestimo);
+            console.log(devolucao);
+            if(devolucao){
+                console.log(devolucao.dataValues)
+                emprestimo.dataValues.dataDevolucao = devolucao?.dataValues.dataDevolucao ? devolucao.dataValues.dataDevolucao : null;
+            }
+            emprestimos.push(emprestimo);
+        }
+
         const builder = new EmprestimoResponseBuilder();
         const response = builder
-            .addEmprestimoData(emprestimosCPF)
+            .addEmprestimoData(emprestimos)
             .dataValues()
             .withoutTimestamps()
             .build();
@@ -64,20 +107,26 @@ class EmprestimoService {
                 dataFim: {
                     [Op.lt]: dataAtual,
                 },
+                status: {
+                    [Op.ne]: "Atrasado",
+                }
             },
         });
-    
+
         //filtrar emprestimos sem data de devolucao
         //da pra fazer com left join, mas é melhor reutilizar a funçao ja existente de devolucaoService para verificar por ID
         const emprestimosEmAtraso = [];
         for (const emprestimo of emprestimosFinalizados) {
             const devolucao = await devolucaoService.findByID(emprestimo.idEmprestimo);
-            
+
             if (!devolucao) {
+                emprestimo.status = "Atrasado";
+                await emprestimo.save();
                 emprestimosEmAtraso.push(emprestimo);
+
             }
         }
-    
+
         const builder = new EmprestimoResponseBuilder();
         const response = builder
             .addEmprestimoData(emprestimosEmAtraso)
@@ -86,13 +135,14 @@ class EmprestimoService {
             .build();
         return response;
     }
-    static async findEmprestimosEmAtrasoByCPF(cpf){
+    static async findEmprestimosEmAtrasoByCPF(cpf) {
         const dataAtual = new Date();
 
         const emprestimosEmAtraso = await Emprestimo.findAll({
-            where:{
+            where: {
                 cpf: cpf,
-                dataFim:{ [Op.lte]:dataAtual},
+                dataFim: { [Op.lte]: dataAtual },
+                status: { [Op.ne]: "Atrasado" },
             }
         })
 
@@ -111,12 +161,12 @@ class EmprestimoService {
 
         const emprestimosEmAtraso = await this.findEmprestimosEmAtrasoByCPF(cpf);
 
-        if(emprestimosEmAtraso.length > 0){
+        if (emprestimosEmAtraso.length > 0) {
             throw new EmprestimoAtrasadoError();
         }
 
         const emprestimos = await Emprestimo.findAll({
-            where:{
+            where: {
                 cpf: cpf,
                 status: 'Ativo'
             }
@@ -124,7 +174,7 @@ class EmprestimoService {
 
 
 
-        if(emprestimos.length >= 5){
+        if (emprestimos.length >= 5) {
             throw new LimiteEmprestimoError();
         }
 
@@ -132,15 +182,15 @@ class EmprestimoService {
         //atualizar status reserva reserva
         const reserva = await Reserva.findByPk(idReserva);
 
-        if(!reserva && idReserva){
+        if (!reserva && idReserva) {
             throw new ReservaNaoEncontrada();
-        } 
+        }
 
-        if(reserva.status !== "Ativa"){
+        if (reserva.status !== "Ativa") {
             throw new ReservaIndisponivel();
         }
-        
-        if(reserva){
+
+        if (reserva) {
             reserva.status = 'Finalizada';
             await reserva.save();
         }

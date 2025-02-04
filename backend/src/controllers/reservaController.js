@@ -1,5 +1,6 @@
 import ReservaServices from "../services/reservaServices.js";
 import httpCodes from "../utils/httpCodes.js";
+import LivroService from "../services/LivroService.js";
 
 const {HttpCode, HttpError} = httpCodes
 
@@ -11,6 +12,40 @@ class ReservaController{
             const reservas = await ReservaServices.findAll();
             return res.status(200).json(reservas);
         } catch (e){
+            if(e instanceof HttpError){
+                return res.status(e.httpCode).send({
+                    message: "Erro ao carregar as reservas",
+                    error: e.message
+                });
+            }
+
+            return res.status(HttpCode.INTERNAL_SERVER_ERROR).json({ message: e.message });
+        }
+    }
+
+    static async findByCPF(req, res){
+        try{
+            const cpf = req.params.cpf;
+            let reservas = await ReservaServices.findByCPF(cpf);
+
+            const reservasResponse = [];
+
+            if(reservas.length === undefined){
+                const array = [];
+                array.push(reservas);
+                reservas = array
+            }
+
+            for(const reserva of reservas){
+                const livro = await LivroService.findById(reserva.idLivro);
+                reservasResponse.push({
+                    ...reserva,
+                    livro
+                })
+            }
+
+            return res.status(200).send(reservasResponse);
+        }catch(e){
             if(e instanceof HttpError){
                 return res.status(e.httpCode).send({
                     message: "Erro ao carregar as reservas",
@@ -43,7 +78,11 @@ class ReservaController{
         try{
             const reserva = req.body;
 
-            const cpf = req.cpf ? req.cpf : null;
+            const cpf = req.body.cpf ? req.body.cpf : null;
+
+            console.error(reserva);
+            console.error(cpf);
+            
             
             const response = await ReservaServices.create({...reserva}, cpf);
             

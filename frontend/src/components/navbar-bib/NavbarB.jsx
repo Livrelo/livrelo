@@ -14,6 +14,7 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useNavigate } from 'react-router-dom'; 
 import './styles.css';
+import useLogOutStore from '../../zustand/auth/logout';
 
 const Search = styled('div')(({ theme, focused }) => ({
     position: 'relative',
@@ -65,6 +66,16 @@ export default function NavbarB() {
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate(); 
 
+    const {logout} = useLogOutStore();
+
+    const handleLogOut = async () => {
+        // const result = await logout();
+
+        // if(result){
+            navigate("/");
+        // }
+    }
+
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -114,21 +125,10 @@ export default function NavbarB() {
                     <Button onClick={() => handleNavigation('/reservas-b')} className="navbar-button">
                         Reservas
                     </Button>
-                    <Button onClick={() => handleNavigation('/pendencias-b')} className="navbar-button">
-                        Pendências
+                    <Button color={"error"} onClick={handleLogOut}>
+                        Sair
                     </Button>
-                    
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                            placeholder="Buscar livro..."
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+                   
                 </Box>
                 <Box className="menu-icon-box">
                     <IconButton onClick={handleMenuOpen}>
@@ -143,7 +143,7 @@ export default function NavbarB() {
                         <MenuItem onClick={() => handleNavigation('/acervo-b')}>Acervo completo</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/emprestimos-b')}>Empréstimos</MenuItem>
                         <MenuItem onClick={() => handleNavigation('/reservas-b')}>Reservas</MenuItem>
-                        <MenuItem onClick={() => handleNavigation('/pendencias-b')}>Pendências</MenuItem>
+                        <MenuItem onClick={handleLogOut}>Sair</MenuItem>
                     </Menu>
                 </Box>
             </Toolbar>
