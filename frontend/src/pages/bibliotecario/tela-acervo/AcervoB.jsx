@@ -18,7 +18,7 @@ export default function AcervoB() {
         console.log(livros);
     }, []);
     const handleAddBook = () => {
-        //logica de adicionar novo livro
+        navigate("/register_book");
     };
 
     return (

@@ -51,6 +51,7 @@ const useLivroCategoriaStore = create((set) => ({
         const { token } = useAuthStore.getState();
         const response = await api.post('/livrocategoria', { idLivro, idCategoria }, API_HEADER(token));
         set((state) => ({ livroCategorias: [...state.livroCategorias, response.data], loading: false }));
+        return response;
       } catch (error) {
         set({ error: error.message, loading: false });
       }
