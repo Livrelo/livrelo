@@ -61,8 +61,6 @@ function Signup() {
         senha: values.senha,
       });
       console.log(response);
-      // Notificação de sucesso
-      notify("success", "Cadastro realizado com sucesso");
 
       // Navega para a tela de login
       navigate("/signin");
