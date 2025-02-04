@@ -62,14 +62,15 @@ function Signup() {
       });
       console.log(response);
       // Notificação de sucesso
-      notify.show("Cadastro realizado com sucesso", "success", 3000);
+      notify("success", "Cadastro realizado com sucesso");
 
       // Navega para a tela de login
       navigate("/signin");
     } catch (error) {
       console.error(error); // Depuração
       // Notificação de erro
-      notify.show(error.message || "Erro ao cadastrar usuário", "error", 3000);
+      // notify.show(error.message || "Erro ao cadastrar usuário", "error", 3000);
+      notify("error", error.message);
     }
   };
 
