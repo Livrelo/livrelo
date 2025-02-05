@@ -4,6 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardActionArea';
 import { useNavigate } from "react-router-dom";
 import './styles.css';
+import { uploadsURL } from '../../utils/imagePath';
 
 export default function LivroCard({idlivro, imagem}) {
     const navigate = useNavigate();
@@ -13,7 +14,8 @@ export default function LivroCard({idlivro, imagem}) {
                 <CardMedia
                     component="img"
                     className="card-media"
-                    image={require(`./../../../../backend/uploads/${imagem}`)}
+                    // image={`${uploadsURL}/${imagem}`}
+                    src={`${uploadsURL}/${imagem}`}
                 />
             </CardActionArea>
         </Card>

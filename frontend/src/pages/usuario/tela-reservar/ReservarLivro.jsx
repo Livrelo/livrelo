@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useAuthStore from "../../../zustand/auth/auth";
 import useLivrosStore from "../../../zustand/livro/livro";
 import useReservaStore from "../../../zustand/reserva/reserva";
+import { uploadsURL } from "../../../utils/imagePath";
 
 
 const calculatePrazo = (dataReserva) => {
@@ -91,7 +92,7 @@ export default function ReservarLivroYup() {
                     <div className="reservar-livro-container">
                         <Box className="livro-info">
                             <img
-                                src={require(`./../../../../../backend/uploads/${livroReservar.livroImage}`)}
+                                src={`${uploadsURL}/${livroReservar.livroImage}`}
                                 alt={`Capa do livro ${livroReservar.nome}`}
                                 className="livro-imagem"
                             />
