@@ -4,7 +4,11 @@ import DatabaseSingleton from "./database/DatabaseSingleton.js";
 import express from "express";
 import routes from "./routes/routes.js";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 class App {
     constructor(){
         this.server = express();
@@ -21,6 +25,7 @@ class App {
     middlewares(){
         this.server.use(express.json());
         this.server.use(cors())
+        this.server.use("/uploads",  express.static(path.join(__dirname, "..", "uploads")));
     }
 
     routes(){

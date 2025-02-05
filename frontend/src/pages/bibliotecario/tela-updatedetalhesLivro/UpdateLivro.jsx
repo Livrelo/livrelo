@@ -12,6 +12,7 @@ import useLivrosStore from '../../../zustand/livro/livro.js';
 import useCategoriaStore from '../../../zustand/categoria/categoria.js';
 import { compareCategorias } from '../../../utils/compareCategorias.js';
 import useLivroCategoriaStore from '../../../zustand/livroCategoria/livroCategoria.js';
+import { uploadsURL } from '../../../utils/imagePath.js';
 
 
 function UpdateLivro(){
@@ -200,7 +201,7 @@ function UpdateLivro(){
                                 <div className="status_book">
                                 <span>Status: <span style={{color, marginBottom:"-2px"}}>{livroAtual.status}</span></span>
                                 </div>
-                                    <img className = "imgLivro" src={require(`../../../../../backend/uploads/${livroAtual.livroImage}`)} alt="imgLivro" />
+                                    <img className = "imgLivro" src={`${uploadsURL}/${livroAtual.livroImage}`} alt="imgLivro" />
                                     <span className="nomeLivro">{livroAtual.titulo}</span>
                                     <Box component="div" className='btn-delete-div' sx={{ '& > :not(style)': { m: 1, ml:"10%" } }} 
                                     marginX={"6%"}

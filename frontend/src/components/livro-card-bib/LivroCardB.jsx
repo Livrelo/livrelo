@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardMedia, CardContent, Button } from "@mui/material";
 import "./styles.css";
+import { uploadsURL } from "../../utils/imagePath";
 
 export default function LivroCardB({ imagem, onEditClick }) {
     return (
@@ -8,7 +9,8 @@ export default function LivroCardB({ imagem, onEditClick }) {
             <CardMedia
                 component="img"
                 className="card-media-bib"
-                image={require(`./../../../../backend/uploads/${imagem}`)}
+                // image={require(`${uploadsURL}/${imagem}`)}
+                src={`${uploadsURL}/${imagem}`}
                 alt="Capa do Livro"
             />
             <CardContent className="livro-card-content-bib">

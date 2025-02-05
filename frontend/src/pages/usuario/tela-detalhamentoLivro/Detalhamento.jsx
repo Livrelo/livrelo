@@ -9,6 +9,7 @@ import Footer from "../../../components/footer/Footer";
 import useLivrosStore from "../../../zustand/livro/livro";
 import ModalReserva from "../../../components/modal/ModalReserva";
 import useAuthStore from "../../../zustand/auth/auth";
+import { uploadsURL } from "../../../utils/imagePath";
 
 
 function Detalhamento(){
@@ -63,7 +64,7 @@ function Detalhamento(){
             {livro && (
                 <div className="Container_Detalhamento_Livro">
                     <div className="imgLivro_nomeLivro_Detalhamento">
-                        <img className = "imgDetalhamentoLivro" src={require(`./../../../../../backend/uploads/${livro.livroImage}`)} alt="imgLivro" />
+                        <img className = "imgDetalhamentoLivro" src={`${uploadsURL}/${livro.livroImage}`} alt="imgLivro" />
                     </div>
                     <div className="quadro_detalhamento_livro">
                         <span className="detalhamento_livro_titulo">{livro.nome}</span>

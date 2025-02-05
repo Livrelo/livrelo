@@ -1,6 +1,6 @@
 export default {
     dialect: 'postgres',
-    host: 'localhost',
+    host: 'db',
     username: process.env.POSTGRES_USERNAME,
     password: process.env.POSTGRES_PASSWORD,
     database: 'livrelo',

@@ -55,8 +55,17 @@ const useReservaStore = create((set, get) => ({
     try{
       const { token } = useAuthStore.getState();
       const userState = useAuthStore.getState();
+      console.log(userState)
       const response = await api.get(`/reserva/cpf/${userState.conta.cpf}`, API_HEADER(token));
-      set({ reservas: [...response.data], isLoading: false });
+      let responseArray = [];
+            // array.push(response.data)
+            if(response.data.length === undefined){
+                responseArray.push(response.data);
+            }else {
+                responseArray = response.data;
+            }
+            set({ reservas: responseArray, isLoading: false  });
+      // set({ reservas: [...response.data], isLoading: false });
     }catch(error){
       set({ error: error.message, isLoading: false });
     }
