@@ -8,7 +8,7 @@ const TextMaskCustom = React.forwardRef(function TextMaskCustom(props, ref) {
         {...other}
         mask="000.000.000-00"
         definitions={{
-          '0': /[1-9]/,
+          '0': /[0-9]/,
         }}
         inputRef={ref}
         onAccept={(value) => onChange({ target: { name: props.name, value } })}
