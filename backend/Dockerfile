@@ -1,5 +1,5 @@
 # Dockerfile para o backend (Node.js com Express)
-FROM node:lts
+FROM node:23.1.0
 
 WORKDIR /app
 
