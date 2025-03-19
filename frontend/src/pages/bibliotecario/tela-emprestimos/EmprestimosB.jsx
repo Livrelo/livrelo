@@ -46,22 +46,11 @@ export default function EmprestimosB() {
             <div className="page-content-emprestimos">
                 <div className="emprestimos-header">
                     <h2 className="titulo">Empréstimos</h2>
-                    <Tooltip title="Adicionar Empréstimos" arrow>
-                        <IconButton
-                            color="primary"
-                            onClick={handleOpenModal}
-                            className="add-emprestimo-button"
-                        >
-                            <AddIcon sx={{ fontSize: 30 }} />
-                        </IconButton>
-                    </Tooltip>
                 </div>
             
                 <TabelaEmprestimos rows={emprestimosState} />
             </div>
             <Footer />
-            {}
-            {/* <ModalEmprestimo open={openModal} handleClose={handleCloseModal} /> */}
         </div>
     );
 }
